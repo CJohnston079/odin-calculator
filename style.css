@@ -21,7 +21,7 @@ ul {
 
 .button-container {
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: repeat(4, auto);
     justify-content: center;
     align-items: center;
 }
