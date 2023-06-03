@@ -7,25 +7,23 @@ body {
     font-family: 'Roboto Mono', monospace;
 }
 
-li {
+ul {
     list-style: none;
+    padding-inline-start: 0;
 }
 
 #device-housing {
     height: 80vh;
     width: 30rem;
     border-radius: 2rem;
-    background-color: hsl(0, 0%, 95%);
+    background-color: hsl(0, 0%, 90%);
 }
 
-#calculator {
+.button-container {
     display: grid;
-    grid-template-columns: auto auto;
-}
-
-.numbers {
-    display: grid;
-    grid-template-columns: auto auto auto auto
+    grid-template-columns: auto auto auto auto;
+    justify-content: center;
+    align-items: center;
 }
 
 .button {
@@ -33,7 +31,18 @@ li {
     justify-content: center;
     align-items: center;
     margin: 0.5rem;
-    height: 2rem;
-    width: 2rem;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 20%;
     background-color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.number {
+    font-weight: 200;  
+}
+
+.plus-minus {
+    letter-spacing: -0.2rem;
 }
