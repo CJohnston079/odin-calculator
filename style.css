@@ -10,9 +10,29 @@ li {
     list-style: none;
 }
 
-#calculator-housing {
+#device-housing {
     height: 80vh;
     width: 30rem;
     border-radius: 2rem;
     background-color: hsl(0, 0%, 95%);
+}
+
+#calculator {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.numbers {
+    display: grid;
+    grid-template-columns: auto auto auto auto
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+    height: 2rem;
+    width: 2rem;
+    background-color: white;
 }
