@@ -18,23 +18,22 @@ ul {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    height: 5rem;
+    height: 8rem;
     margin: 0.5rem;
     background-color: white;
-    border-radius: 1rem;
+    border-radius: 0.3rem;
 }
 
-#display h1 {
-    padding: 1.5rem;
-    font-size: 3rem;
-    font-weight: 400;
+#display p {
+    padding: 2rem;
+    font-size: 2rem;
 }
 
 #device-housing {
     /* height: 80vh; */
     /* width: 30rem; */
     padding: 0.5rem;
-    border-radius: 2rem;
+    border-radius: 0.5rem;
     background-color: hsl(0, 0%, 90%);
 }
 
@@ -52,7 +51,7 @@ ul {
     margin: 0.5rem;
     height: 5rem;
     width: 5rem;
-    border-radius: 1rem;
+    border-radius: 40%;
     background-color: white;
     font-size: 2rem;
     cursor: pointer;
