@@ -6,7 +6,7 @@
 }
 
 html {
-    background-color: blue;
+    background-color: teal;
 }
 
 body {
@@ -45,13 +45,12 @@ ul {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    height: 16rem;
     border-radius: 1rem 1rem 0 0;
     background-color: black;
-    background: linear-gradient(180deg, hsla(0, 0%, 0%, 0.0) 25%, hsla(0, 0%, 0%, 1.0) 100%),
-                linear-gradient(67.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 48%, hsla(0, 0%, 100%, 0.1) 50%),
-              black;
-    height: 16rem;
-    /* margin: 0.5rem; */
+    background: linear-gradient(180deg, hsla(0, 0%, 0%, 0.0) 10%, hsla(0, 0%, 0%, 1.0) 100%),
+                linear-gradient(67.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 58%, hsla(0, 0%, 100%, 0.12) 60%, hsla(0, 0%, 100%, 0.06) 100%),
+                black;
 }
 
 #display p {
@@ -89,12 +88,24 @@ ul {
     width: 4rem;
     font-size: 1.5rem;
     cursor: pointer;
+    user-select: none;
 }
 
 .operation {
-    border: solid 1px hsla(0, 0%, 100%, 0.5);
+    border: solid 1px hsla(0, 0%, 100%, 1.0);
     border-radius: 0.5rem;
-    transition: border 800ms;
+    transition: box-shadow 800ms, transform 800ms;
+}
+
+.operation:hover {
+    transform: translate(-0.1rem, -0.1rem);
+    box-shadow: 0.1rem 0.1rem 0 white;
+    transition: box-shadow 100ms, transform 100ms;
+}
+
+.operation:active {
+    transform: translate(0.0rem, 0.0rem);
+    box-shadow: 0.0rem 0.0rem 0 white;
 }
 
 .number {
@@ -102,20 +113,17 @@ ul {
     border-radius: 100%;
     font-weight: 200;
     transition: border 800ms;
-    user-select: none;
 }
 
-.number:hover,
-.operation:hover {
+.number:hover{
     border: solid 1px white;
-    transition: border 200ms, background-colour 800ms;
+    transition: border 200ms;
 }
 
 .number:active,
 .operation:active {
     background-color: white;
     color: black;
-    transition: background-color 0ms;
 }
 
 #plus-minus {
@@ -125,16 +133,4 @@ ul {
 #equals {
     grid-column: 1 / span 2;
     width: auto;
-    background-color: white;
-    color: black;
-    transition: background-color 200ms;
-}
-
-#equals:hover {
-    background-color: white;
-
-}
-
-#equals:active {
-    background-color: white;
 }
