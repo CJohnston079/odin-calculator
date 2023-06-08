@@ -34,6 +34,13 @@ ul {
     margin-block-end: 0;
 }
 
+#device-housing {
+    border-radius: 1rem;
+    border: solid 1px white;
+    background-color: var(--dark-trans-50);
+    box-shadow: 0.25rem 0.25rem 0rem white, 0 0 0.5rem var(--dark-trans-50);
+}
+
 #display {
     display: flex;
     justify-content: flex-end;
@@ -50,19 +57,24 @@ ul {
     margin: 0.5rem;
 }
 
-#device-housing {
-    border-radius: 1rem;
-    border: solid 1px white;
-    background-color: var(--dark-trans-50);
-    box-shadow: 0.25rem 0.25rem 0rem white, 0 0 0.5rem var(--dark-trans-50);
+#calculator {
+    display: grid;
+    grid-template-columns: auto auto;
 }
 
 .button-container {
     display: grid;
-    grid-template-columns: repeat(4, auto);
     justify-content: center;
     align-items: center;
     margin: 0.5rem;
+}
+
+.numbers {
+    grid-template-columns: repeat(3, auto);
+}
+
+.operations {
+    grid-template-columns: repeat(2, auto);
 }
 
 .button {
@@ -78,7 +90,7 @@ ul {
 
 .operation {
     border: solid 1px white;
-    border-radius: 10%;
+    border-radius: 0.5rem;
     transition: background-color 800ms;
 }
 
@@ -107,6 +119,22 @@ ul {
     transition: background-color 0ms;
 }
 
-.plus-minus {
+#plus-minus {
     letter-spacing: -0.2rem;
+}
+
+#equals {
+    grid-column: 1 / span 2;
+    width: auto;
+    background-color: white;
+    color: black;
+    transition: background-color 200ms;
+}
+
+#equals:hover {
+    background-color: red;
+}
+
+#equals:active {
+    background-color: white;
 }
