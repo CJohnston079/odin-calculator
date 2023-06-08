@@ -45,8 +45,9 @@ ul {
 }
 
 #display p {
-    padding: 0rem 2rem;
-    font-size: 2rem;
+    padding: 1rem 2rem;
+    font-size: 3rem;
+    margin: 0.5rem;
 }
 
 #device-housing {
