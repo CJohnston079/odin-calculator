@@ -6,7 +6,7 @@
 }
 
 html {
-    background-color: red;
+    background-color: blue;
 }
 
 body {
@@ -46,7 +46,8 @@ ul {
     justify-content: flex-end;
     align-items: flex-end;
     border-radius: 1rem 1rem 0 0;
-    background: black;
+    background-color: black;
+    background: linear-gradient(180deg, hsla(0, 0%, 0%, 0.0) 25%, hsla(0, 0%, 0%, 1.0) 100%), linear-gradient(67.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 48%, hsla(0, 0%, 100%, 0.1) 50%), black;
     height: 16rem;
     /* margin: 0.5rem; */
 }
@@ -89,14 +90,9 @@ ul {
 }
 
 .operation {
-    border: solid 1px white;
+    border: solid 1px hsla(0, 0%, 100%, 0.5);
     border-radius: 0.5rem;
-    transition: background-color 800ms;
-}
-
-.operation:hover {
-    background-color: hsla(0, 0%, 100%, 0.2);
-    transition: background-color 200ms;
+    transition: border 800ms;
 }
 
 .number {
@@ -107,7 +103,8 @@ ul {
     user-select: none;
 }
 
-.number:hover {
+.number:hover,
+.operation:hover {
     border: solid 1px white;
     transition: border 200ms, background-colour 800ms;
 }
@@ -132,7 +129,8 @@ ul {
 }
 
 #equals:hover {
-    background-color: red;
+    background-color: white;
+
 }
 
 #equals:active {
