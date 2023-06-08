@@ -1,3 +1,12 @@
+:root {
+    --dark-bg-grad: linear-gradient(180deg, hsla(0, 0%, 0%, 0.0), hsla(0, 0%, 0%, 0.4));
+    --light-bg-grad: linear-gradient(180deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
+}
+
+html {
+    background-color: red;
+}
+
 body {
     margin: 0;
     height: 100vh;
@@ -5,6 +14,14 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Roboto Mono', monospace;
+}
+
+.dark {  
+    background: var(--dark-bg-grad);
+}
+
+.light {  
+    background: var(--light-bg-grad);
 }
 
 ul {
@@ -19,9 +36,7 @@ ul {
     justify-content: flex-end;
     align-items: center;
     height: 8rem;
-    margin: 0.5rem;
-    background-color: white;
-    border-radius: 0.3rem;
+    /* margin: 0.5rem; */
 }
 
 #display p {
@@ -30,11 +45,8 @@ ul {
 }
 
 #device-housing {
-    /* height: 80vh; */
-    /* width: 30rem; */
-    padding: 0.5rem;
     border-radius: 0.5rem;
-    background-color: hsl(0, 0%, 90%);
+    background-color: gray;
 }
 
 .button-container {
@@ -42,6 +54,7 @@ ul {
     grid-template-columns: repeat(4, auto);
     justify-content: center;
     align-items: center;
+    margin: 0.5rem;
 }
 
 .button {
@@ -51,7 +64,7 @@ ul {
     margin: 0.5rem;
     height: 5rem;
     width: 5rem;
-    border-radius: 40%;
+    border-radius: 100%;
     background-color: white;
     font-size: 2rem;
     cursor: pointer;
