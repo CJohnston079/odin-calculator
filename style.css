@@ -59,9 +59,16 @@ ul {
     margin: 0.5rem;
 }
 
-#calculator {
+#numpad {
     display: grid;
     grid-template-columns: auto auto;
+    border-radius: 1rem 1rem;
+}
+
+#functions {
+    border: solid 1px white;
+    border-radius: 1rem 1rem 0 0;
+    background-color: hsla(0, 0%, 0%, 0.4);
 }
 
 .button-container {
@@ -69,6 +76,12 @@ ul {
     justify-content: center;
     align-items: center;
     margin: 0.5rem;
+}
+
+.functions li {
+    height: 3rem;
+    border-radius: 0.5rem;
+    font-weight: 400;
 }
 
 .numbers {
@@ -79,6 +92,10 @@ ul {
     grid-template-columns: repeat(2, auto);
 }
 
+.functions {
+    grid-template-columns: repeat(5, auto);
+}
+
 .button {
     display: flex;
     justify-content: center;
@@ -87,6 +104,7 @@ ul {
     height: 4rem;
     width: 4rem;
     font-size: 1.5rem;
+    font-weight: 200;
     cursor: pointer;
     user-select: none;
 }
@@ -94,6 +112,7 @@ ul {
 .operation {
     border: solid 1px hsla(0, 0%, 100%, 1.0);
     border-radius: 0.5rem;
+    font-weight: 400;
     transition: box-shadow 800ms, transform 800ms;
 }
 
@@ -111,7 +130,6 @@ ul {
 .number {
     border: solid 1px hsla(0, 0%, 100%, 0.0);
     border-radius: 100%;
-    font-weight: 200;
     transition: border 800ms;
 }
 
