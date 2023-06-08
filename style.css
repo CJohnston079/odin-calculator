@@ -1,6 +1,8 @@
 :root {
     --dark-bg-grad: linear-gradient(180deg, hsla(0, 0%, 0%, 0.0), hsla(0, 0%, 0%, 0.4));
     --light-bg-grad: linear-gradient(180deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
+    --light-trans-50: hsla(0, 0%, 100%, 0.5);
+    --dark-trans-50: hsla(0, 0%, 0%, 0.5);
 }
 
 html {
@@ -14,13 +16,14 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Roboto Mono', monospace;
+    color: white;
 }
 
-.dark {  
+.dark-background {  
     background: var(--dark-bg-grad);
 }
 
-.light {  
+.light-background {  
     background: var(--light-bg-grad);
 }
 
@@ -45,8 +48,10 @@ ul {
 }
 
 #device-housing {
-    border-radius: 0.5rem;
-    background-color: gray;
+    border-radius: 1rem;
+    border: solid 1px white;
+    background-color: var(--dark-trans-50);
+    box-shadow: 0.25rem 0.25rem 0rem white, 0 0 0.5rem var(--dark-trans-50);
 }
 
 .button-container {
@@ -62,16 +67,41 @@ ul {
     justify-content: center;
     align-items: center;
     margin: 0.5rem;
-    height: 5rem;
-    width: 5rem;
-    border-radius: 100%;
-    background-color: white;
-    font-size: 2rem;
+    height: 4rem;
+    width: 4rem;
+    font-size: 1.5rem;
     cursor: pointer;
 }
 
+.operation {
+    border: solid 1px white;
+    border-radius: 10%;
+    transition: background-color 800ms;
+}
+
+.operation:hover {
+    background-color: hsla(0, 0%, 100%, 0.2);
+    transition: background-color 200ms;
+}
+
 .number {
-    font-weight: 200;  
+    border: solid 1px hsla(0, 0%, 100%, 0.0);
+    border-radius: 100%;
+    font-weight: 200;
+    transition: border 800ms;
+    user-select: none;
+}
+
+.number:hover {
+    border: solid 1px white;
+    transition: border 200ms, background-colour 800ms;
+}
+
+.number:active,
+.operation:active {
+    background-color: white;
+    color: black;
+    transition: background-color 0ms;
 }
 
 .plus-minus {
