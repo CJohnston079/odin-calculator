@@ -70,7 +70,9 @@ ul {
 #functions {
     border: solid 0.1rem white;
     border-radius: 1rem 1rem 0 0;
-    background-color: hsla(0, 0%, 0%, 0.4);
+    background: linear-gradient(180deg, hsla(0, 0%, 0%, 0.0) 10%, hsla(0, 0%, 0%, 1.0) 100%),
+    linear-gradient(67.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 68%, hsla(0, 0%, 100%, 0.12) 70%, hsla(0, 0%, 100%, 0.06) 100%),
+    hsla(0, 0%, 0%, 0.4);
 }
 
 .button-container {
