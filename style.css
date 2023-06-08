@@ -37,13 +37,15 @@ ul {
 #display {
     display: flex;
     justify-content: flex-end;
-    align-items: center;
-    height: 8rem;
+    align-items: flex-end;
+    border-radius: 1rem 1rem 0 0;
+    background: black;
+    height: 16rem;
     /* margin: 0.5rem; */
 }
 
 #display p {
-    padding: 2rem;
+    padding: 0rem 2rem;
     font-size: 2rem;
 }
 
