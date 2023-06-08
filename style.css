@@ -1,12 +1,14 @@
 :root {
-    --dark-bg-grad: linear-gradient(180deg, hsla(0, 0%, 0%, 0.0), hsla(0, 0%, 0%, 0.4));
-    --light-bg-grad: linear-gradient(180deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
+    --dark-bg-grad: linear-gradient(135deg, hsla(0, 0%, 0%, 0.2), hsla(0, 0%, 0%, 0.6));
+    --light-bg-grad: linear-gradient(135deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
     --light-trans-50: hsla(0, 0%, 100%, 0.5);
     --dark-trans-50: hsla(0, 0%, 0%, 0.5);
 }
 
 html {
-    background-color: teal;
+    background-color: red;
+    font-size: 1rem;
+    font-size: 1.5vh;
 }
 
 body {
@@ -36,7 +38,7 @@ ul {
 
 #device-housing {
     border-radius: 1rem;
-    border: solid 1px white;
+    border: solid 0.2rem white;
     background-color: var(--dark-trans-50);
     box-shadow: 0.25rem 0.25rem 0rem white, 0 0 0.5rem var(--dark-trans-50);
 }
@@ -45,7 +47,7 @@ ul {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    height: 16rem;
+    height: 18rem;
     border-radius: 1rem 1rem 0 0;
     background-color: black;
     background: linear-gradient(180deg, hsla(0, 0%, 0%, 0.0) 10%, hsla(0, 0%, 0%, 1.0) 100%),
@@ -66,7 +68,7 @@ ul {
 }
 
 #functions {
-    border: solid 1px white;
+    border: solid 0.1rem white;
     border-radius: 1rem 1rem 0 0;
     background-color: hsla(0, 0%, 0%, 0.4);
 }
@@ -110,7 +112,7 @@ ul {
 }
 
 .operation {
-    border: solid 1px hsla(0, 0%, 100%, 1.0);
+    border: solid 0.1rem hsla(0, 0%, 100%, 1.0);
     border-radius: 0.5rem;
     font-weight: 400;
     transition: box-shadow 800ms, transform 800ms;
@@ -128,13 +130,13 @@ ul {
 }
 
 .number {
-    border: solid 1px hsla(0, 0%, 100%, 0.0);
+    border: solid 0.1rem hsla(0, 0%, 100%, 0.0);
     border-radius: 100%;
     transition: border 800ms;
 }
 
 .number:hover{
-    border: solid 1px white;
+    border: solid 0.1rem white;
     transition: border 200ms;
 }
 
