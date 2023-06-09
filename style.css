@@ -40,7 +40,7 @@ ul {
     border-radius: 1rem;
     border: solid 0.1rem white;
     background-color: var(--dark-trans-50);
-    box-shadow: 0.25rem 0.25rem 0rem white, 0 0 0.5rem var(--dark-trans-50);
+    box-shadow: 0.25rem 0.25rem 0rem white, 0 0 1rem var(--dark-trans-50);
 }
 
 #display {
