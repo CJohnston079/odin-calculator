@@ -45,14 +45,16 @@ ul {
 
 #display {
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
-    align-items: flex-end;
-    height: 18rem;
+    align-items: center;
+    height: 28rem;
     border-radius: 1rem 1rem 0 0;
     background-color: black;
     background: linear-gradient(180deg, hsla(0, 0%, 0%, 0.0) 10%, hsla(0, 0%, 0%, 1.0) 100%),
                 linear-gradient(67.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 58%, hsla(0, 0%, 100%, 0.12) 60%, hsla(0, 0%, 100%, 0.06) 100%),
-                black;
+                hsla(0, 0%, 0%, 1.0);
+    overflow: hidden;
 }
 
 #display p {
@@ -61,25 +63,28 @@ ul {
     margin: 0.5rem;
 }
 
-#numpad {
-    display: grid;
-    grid-template-columns: auto auto;
-    border-radius: 1rem 1rem;
+#panel {
+    max-height: 100%;
+    transition: 600ms;
 }
 
-#panel {
-    border: solid 0.1rem white;
-    border-radius: 1rem 1rem 0 0;
-    background: linear-gradient(180deg, hsla(0, 0%, 0%, 0.0) 10%, hsla(0, 0%, 0%, 1.0) 100%),
-    linear-gradient(67.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 68%, hsla(0, 0%, 100%, 0.12) 70%, hsla(0, 0%, 100%, 0.06) 100%),
-    hsla(0, 0%, 0%, 0.4);
+/* #panel:active {
+    max-height: 0%;
+} */
+
+#numpad {
+    border-top: solid 0.1rem white;
+    display: grid;
+    grid-template-columns: auto auto;
+    border-radius: 0 0 1rem 1rem;
 }
 
 .button-container {
     display: grid;
     justify-content: center;
     align-items: center;
-    margin: 0.5rem;
+    margin: 0 0.5rem;
+    padding: 0.5rem 0;
 }
 
 .functions li {
@@ -98,6 +103,7 @@ ul {
 
 .functions {
     grid-template-columns: repeat(5, auto);
+    border-top: solid 0.1rem hsl(0, 0%, 25%);
 }
 
 .button {
