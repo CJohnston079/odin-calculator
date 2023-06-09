@@ -45,6 +45,7 @@ ul {
 
 #display {
     display: flex;
+    border-bottom: none;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
@@ -73,10 +74,9 @@ ul {
 } */
 
 #numpad {
-    border-top: solid 0.1rem white;
+    border-top: solid 0.1rem hsl(0, 0%, 100%);
     display: grid;
     grid-template-columns: auto auto;
-    border-radius: 0 0 1rem 1rem;
 }
 
 .button-container {
