@@ -5,6 +5,11 @@
     --dark-trans-50: hsla(0, 0%, 0%, 0.5);
 }
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
 html {
     background-color: red;
     font-size: 0.8rem;
@@ -64,12 +69,12 @@ ul {
     margin: 0.5rem;
 }
 
-#panel {
+#function-panel {
     max-height: 100%;
     transition: 600ms;
 }
 
-/* #panel:active {
+/* #function-panel:active {
     max-height: 0%;
 } */
 
@@ -87,11 +92,6 @@ ul {
     padding: 0.5rem 0;
 }
 
-.functions li {
-    height: 3rem;
-    border-radius: 0.5rem;
-    font-weight: 400;
-}
 
 .numbers {
     grid-template-columns: repeat(3, auto);
@@ -135,6 +135,13 @@ ul {
 .operation:active {
     transform: translate(0.0rem, 0.0rem);
     box-shadow: 0.0rem 0.0rem 0 white;
+}
+
+.functions li {
+    height: 3rem;
+    border-radius: 0.5rem;
+    font-weight: 400;
+    color: hsl(0, 0%, 75%);
 }
 
 .number {
