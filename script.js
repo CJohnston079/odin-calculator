@@ -1,4 +1,4 @@
-const mainDisplay = document.querySelector('#display').firstElementChild;
+const calculationDisplay = document.querySelector('#calculation')
 
 const functionsKeysArray = document.querySelector('#function-panel').querySelectorAll('.button');
 const numberKeysArray = document.querySelector('#numpad').querySelectorAll('.button');
@@ -41,7 +41,7 @@ const operationKeys = {
 }
 
 function updateMainDisplay(key) {
-    mainDisplay.textContent = key.textContent;
+    calculationDisplay.textContent = key.textContent;
 }
 
 for (const key in numberKeys) {
