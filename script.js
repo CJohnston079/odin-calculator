@@ -1,43 +1,43 @@
 const calculationDisplay = document.querySelector('#calculation')
 
-const functionsKeysArray = document.querySelector('#function-panel').querySelectorAll('.button');
-const numberKeysArray = document.querySelector('#numpad').querySelectorAll('.button');
-const operationKeysArray = document.querySelectorAll('.operation');
+const functionKeyElements = document.querySelector('#function-panel').querySelectorAll('.button');
+const numberKeyElements = document.querySelector('#numpad').querySelectorAll('.button');
+const operationKeyElements = document.querySelectorAll('.operation');
 
 const functionKeys = {
-    equals: operationKeysArray[6],
-    clear: operationKeysArray[1],
-    allClear: operationKeysArray[0],
-    memoryClear: functionsKeysArray[0],
-    memoryAdd: functionsKeysArray[1],
-    memorySubtract: functionsKeysArray[2],
-    memoryRecall: functionsKeysArray[3],
-    brackets: functionsKeysArray[4],
-    pi: functionsKeysArray[5],
-    factorial: functionsKeysArray[6],
-    percent: functionsKeysArray[7],
-    power: functionsKeysArray[8],
-    root: functionsKeysArray[9]
+    equals: operationKeyElements[6],
+    clear: operationKeyElements[1],
+    allClear: operationKeyElements[0],
+    memoryClear: functionKeyElements[0],
+    memoryAdd: functionKeyElements[1],
+    memorySubtract: functionKeyElements[2],
+    memoryRecall: functionKeyElements[3],
+    brackets: functionKeyElements[4],
+    pi: functionKeyElements[5],
+    factorial: functionKeyElements[6],
+    percent: functionKeyElements[7],
+    power: functionKeyElements[8],
+    root: functionKeyElements[9]
 }
 
 const numberKeys = {
-    '0': numberKeysArray[10],
-    '1': numberKeysArray[0],
-    '2': numberKeysArray[1],
-    '3': numberKeysArray[2],
-    '4': numberKeysArray[3],
-    '5': numberKeysArray[4],
-    '6': numberKeysArray[5],
-    '7': numberKeysArray[6],
-    '8': numberKeysArray[7],
-    '9': numberKeysArray[8]
-};
+    '0': { element: numberKeyElements[10], value: 0 },
+    '1': { element: numberKeyElements[0], value: 1 },
+    '2': { element: numberKeyElements[1], value: 2 },
+    '3': { element: numberKeyElements[2], value: 3 },
+    '4': { element: numberKeyElements[3], value: 4 },
+    '5': { element: numberKeyElements[4], value: 5 },
+    '6': { element: numberKeyElements[5], value: 6 },
+    '7': { element: numberKeyElements[6], value: 7 },
+    '8': { element: numberKeyElements[7], value: 8 },
+    '9': { element: numberKeyElements[8], value: 9 },
+}
 
 const operationKeys = {
-    add: operationKeysArray[2],
-    subtract: operationKeysArray[3],
-    multiply: operationKeysArray[4],
-    divide: operationKeysArray[5],
+    add: { element: operationKeyElements[2], value: '+' },
+    subtract: { element: operationKeyElements[3], value: '-' },
+    multiply: { element: operationKeyElements[4], value: '*' },
+    divide: { element: operationKeyElements[5], value: '/' }
 }
 
 let calculation = 0;
@@ -47,19 +47,16 @@ function updateMainDisplay() {
     calculationDisplay.textContent = calculation;
 }
 
-function updateCalculation(key) {
-    if (calculation !== 0) {
-        calculation += key.textContent;
-    } else {
-        calculation = key.textContent
-    }
+function updateCalculation(value) {
+    calculation += value;
+    console.log(calculation);
     return calculation
 }
 
 function inputEquation(object) {
     for (const key in object) {
-        object[key].addEventListener('mousedown', () => {
-            updateCalculation(object[key]);
+        object[key].element.addEventListener('mousedown', () => {
+            updateCalculation(object[key].value);
             updateMainDisplay();
         });
     } 
