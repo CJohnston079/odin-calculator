@@ -37,8 +37,9 @@ const operationKeys = {
     subtract: operationKeysArray[3],
     multiply: operationKeysArray[4],
     divide: operationKeysArray[5],
-    equals: operationKeysArray[6]
 }
+
+const equalsKey = operationKeysArray[6];
 
 let calculation
 
@@ -64,5 +65,5 @@ function inputEquation(object) {
     } 
 }
 
-inputEquation(numberKeys)
-inputEquation(operationKeys)
+inputEquation(numberKeys);
+inputEquation(operationKeys);
