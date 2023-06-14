@@ -40,12 +40,29 @@ const operationKeys = {
     equals: operationKeysArray[6]
 }
 
-function updateMainDisplay(key) {
-    calculationDisplay.textContent = key.textContent;
+let calculation
+
+function updateMainDisplay() {
+    calculationDisplay.textContent = calculation;
 }
 
-for (const key in numberKeys) {
-    numberKeys[key].addEventListener('mousedown', () => {
-        updateMainDisplay(numberKeys[key]);
-    });
+function updateCalculation(key) {
+    if (calculation !== undefined) {
+        calculation += key.textContent;
+    } else {
+        calculation = key.textContent
+    }
+    return calculation
 }
+
+function inputEquation(object) {
+    for (const key in object) {
+        object[key].addEventListener('mousedown', () => {
+            updateCalculation(object[key]);
+            updateMainDisplay()
+        });
+    } 
+}
+
+inputEquation(numberKeys)
+inputEquation(operationKeys)
