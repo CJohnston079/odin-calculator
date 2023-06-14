@@ -3,6 +3,7 @@
     --light-bg-grad: linear-gradient(135deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
     --light-trans-50: hsla(0, 0%, 100%, 0.5);
     --dark-trans-50: hsla(0, 0%, 0%, 0.5);
+    --light-gradient-fade: linear-gradient(hsla(0, 0%, 100%, 0.0), hsla(0, 0%, 100%, 1.0));
 }
 
 * {
@@ -48,7 +49,7 @@ ul {
     box-shadow: 0.25rem 0.25rem 0rem white, 0 0 1rem var(--dark-trans-50);
 }
 
-#display {
+#screen {
     display: flex;
     border-bottom: none;
     flex-direction: column;
@@ -63,12 +64,17 @@ ul {
     overflow: hidden;
 }
 
-#display p {
+#screen p {
     align-self: flex-end;
     margin: 0.5rem;
-    padding: 1rem 2rem;
-    font-size: 3rem;
+    padding: 0 2rem;
     text-align: right;
+}
+
+#calculation {
+    align-self: flex-end;
+    font-size: 3rem;
+    padding-bottom: 1rem !important;
 }
 
 #function-panel {
