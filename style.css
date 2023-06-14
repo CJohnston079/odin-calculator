@@ -64,9 +64,11 @@ ul {
 }
 
 #display p {
+    align-self: flex-end;
+    margin: 0.5rem;
     padding: 1rem 2rem;
     font-size: 3rem;
-    margin: 0.5rem;
+    text-align: right;
 }
 
 #function-panel {
