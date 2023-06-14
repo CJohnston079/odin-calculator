@@ -5,6 +5,9 @@ const numberKeysArray = document.querySelector('#numpad').querySelectorAll('.but
 const operationKeysArray = document.querySelectorAll('.operation');
 
 const functionKeys = {
+    equals: operationKeysArray[6],
+    clear: operationKeysArray[1],
+    allClear: operationKeysArray[0],
     memoryClear: functionsKeysArray[0],
     memoryAdd: functionsKeysArray[1],
     memorySubtract: functionsKeysArray[2],
@@ -31,24 +34,21 @@ const numberKeys = {
 };
 
 const operationKeys = {
-    allClear: operationKeysArray[0],
-    clear: operationKeysArray[1],
     add: operationKeysArray[2],
     subtract: operationKeysArray[3],
     multiply: operationKeysArray[4],
     divide: operationKeysArray[5],
 }
 
-const equalsKey = operationKeysArray[6];
-
-let calculation
+let calculation = 0;
+let history = [];
 
 function updateMainDisplay() {
     calculationDisplay.textContent = calculation;
 }
 
 function updateCalculation(key) {
-    if (calculation !== undefined) {
+    if (calculation !== 0) {
         calculation += key.textContent;
     } else {
         calculation = key.textContent
@@ -60,10 +60,33 @@ function inputEquation(object) {
     for (const key in object) {
         object[key].addEventListener('mousedown', () => {
             updateCalculation(object[key]);
-            updateMainDisplay()
+            updateMainDisplay();
         });
     } 
 }
 
 inputEquation(numberKeys);
 inputEquation(operationKeys);
+
+functionKeys.equals.addEventListener('mousedown', calculate);
+
+function calculate() {
+    console.log('calculating...')
+    history.push(calculation);
+}
+
+functionKeys.clear.addEventListener('mousedown', () => {
+    clearCharacter(),
+    updateMainDisplay();
+})
+
+function clearCharacter() {
+    calculation = calculation.slice(0,-1)
+    return calculation
+}
+
+functionKeys.allClear.addEventListener('mousedown', () => {
+    calculation = 0;
+    updateMainDisplay();
+    return calculation
+})
