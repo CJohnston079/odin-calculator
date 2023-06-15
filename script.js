@@ -73,6 +73,7 @@ inputEquation(operationButtons);
 functionButtons.equals.addEventListener('mousedown', calculate);
 
 function calculate() {
+    if (isNaN(Number(equation[equation.length-1])) === true) return
     console.log('calculating...')
     updateHistory()
 }
