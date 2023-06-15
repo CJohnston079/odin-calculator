@@ -54,7 +54,6 @@ function updateMainDisplay() {
 function updateEquation(object, key) {
     if (object === operationButtons && isNaN(Number(equation[equation.length-1])) === true) return 
     equation += object[key].value;
-    console.log(equation);
     return equation
 }
 
@@ -83,8 +82,6 @@ function updateHistory() {
     if (history.length > 3) {
         history.pop();
     }
-    console.log(history)
-    console.log(history.length)
     return history
 }
 
