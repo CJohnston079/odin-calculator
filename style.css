@@ -173,6 +173,10 @@ ul {
     letter-spacing: -0.2rem;
 }
 
+#multiply {
+    rotate: 45deg;
+}
+
 #equals {
     grid-column: 1 / span 2;
     width: auto;
