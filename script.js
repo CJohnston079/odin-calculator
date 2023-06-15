@@ -40,23 +40,28 @@ const operationButtons = {
     divide: { element: operationButtonElements[5], value: '/' }
 }
 
-let calculation = '';
+let equation = '';
 let history = [];
 
 function updateMainDisplay() {
-    calculationDisplay.textContent = calculation;
+    if (equation === '') {
+        calculationDisplay.textContent = 0;
+        return
+    }
+    calculationDisplay.textContent = equation;
 }
 
-function updateCalculation(button) {
-    calculation += button.element.textContent;
-    console.log(calculation);
-    return calculation
+function updateequation(object, key) {
+    if (object === operationButtons && isNaN(Number(equation[equation.length-1])) === true) return 
+    equation += object[key].value;
+    console.log(equation);
+    return equation
 }
 
 function inputEquation(object) {
     for (const key in object) {
         object[key].element.addEventListener('mousedown', () => {
-            updateCalculation(object[key]);
+            updateequation(object, key);
             updateMainDisplay();
         });
     } 
@@ -69,7 +74,7 @@ functionButtons.equals.addEventListener('mousedown', calculate);
 
 function calculate() {
     console.log('calculating...')
-    history.push(calculation);
+    history.push(equation);
 }
 
 functionButtons.clear.addEventListener('mousedown', () => {
@@ -78,12 +83,12 @@ functionButtons.clear.addEventListener('mousedown', () => {
 })
 
 function clearCharacter() {
-    calculation = calculation.slice(0,-1)
-    return calculation
+    equation = equation.slice(0,-1)
+    return equation
 }
 
 functionButtons.allClear.addEventListener('mousedown', () => {
-    calculation = 0;
+    equation = '';
     updateMainDisplay();
-    return calculation
+    return equation
 })
