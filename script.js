@@ -51,7 +51,7 @@ function updateMainDisplay() {
     calculationDisplay.textContent = equation;
 }
 
-function updateequation(object, key) {
+function updateEquation(object, key) {
     if (object === operationButtons && isNaN(Number(equation[equation.length-1])) === true) return 
     equation += object[key].value;
     console.log(equation);
@@ -61,7 +61,7 @@ function updateequation(object, key) {
 function inputEquation(object) {
     for (const key in object) {
         object[key].element.addEventListener('mousedown', () => {
-            updateequation(object, key);
+            updateEquation(object, key);
             updateMainDisplay();
         });
     } 
@@ -74,7 +74,22 @@ functionButtons.equals.addEventListener('mousedown', calculate);
 
 function calculate() {
     console.log('calculating...')
-    history.push(equation);
+    updateHistory()
+}
+
+function updateHistory() {
+    history.push(equation)
+    if (history.length > 3) {
+        history.pop();
+    }
+    console.log(history)
+    console.log(history.length)
+    return history
+}
+
+function clearHistory() {
+    history = [];
+    return history
 }
 
 functionButtons.clear.addEventListener('mousedown', () => {
@@ -89,6 +104,7 @@ function clearCharacter() {
 
 functionButtons.allClear.addEventListener('mousedown', () => {
     equation = '';
+    clearHistory();
     updateMainDisplay();
     return equation
 })
