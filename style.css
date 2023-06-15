@@ -79,6 +79,7 @@ ul {
 
 #function-panel {
     max-height: 100%;
+    opacity: 75%;
     transition: 600ms;
 }
 
@@ -111,7 +112,7 @@ ul {
 
 .functions {
     grid-template-columns: repeat(5, auto);
-    border-top: solid 0.1rem hsl(0, 0%, 25%);
+    border-top: solid 0.1rem hsl(0, 0%, 50%);
 }
 
 .button {
@@ -149,7 +150,6 @@ ul {
     height: 3rem;
     border-radius: 0.5rem;
     font-weight: 400;
-    color: hsl(0, 0%, 75%);
 }
 
 .number {
