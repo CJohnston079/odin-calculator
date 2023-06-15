@@ -42,6 +42,8 @@ const operationButtons = {
 
 let equation = '';
 let history = [];
+let equationArray = [];
+let previousNumberSlice = 0;
 
 function updateMainDisplay() {
     if (equation === '') {
@@ -54,7 +56,24 @@ function updateMainDisplay() {
 function updateEquation(object, key) {
     if (object === operationButtons && isNaN(Number(equation[equation.length-1])) === true) return 
     equation += object[key].value;
+
+    if (object === operationButtons) {
+        pushNumber();
+        pushOperation();
+    }
+
     return equation
+}
+
+function pushNumber() {
+    equationArray.push(Number(equation.slice(previousNumberSlice, equation.length-1)));
+    previousNumberSlice = equation.length;
+    console.log(equationArray)
+}
+
+function pushOperation() {
+    equationArray.push(equation[equation.length-1])
+    console.log(equationArray)
 }
 
 function inputEquation(object) {
@@ -73,6 +92,7 @@ functionButtons.equals.addEventListener('mousedown', calculate);
 
 function calculate() {
     if (isNaN(Number(equation[equation.length-1])) === true) return
+    pushNumber()
     console.log('calculating...')
     updateHistory()
 }
