@@ -113,8 +113,32 @@ function convertItemsToNumbers(array) {
 }
 
 function calculate() {
+    // if (isNaN(Number(equation[equation.length-1])) === true) return
+    for (let i =0; i < equationArray.length; i++) {
+        if (equationArray[i] === '*') {
+            equationArray.splice(i-1, 3, equationArray[i-1]*equationArray[i+1]);
+        }
+        if (equationArray[i] === '/') {
+            equationArray.splice(i-1, 3, equationArray[i-1]/equationArray[i+1]);
+        }
+    }
+    for (let i =0; i < equationArray.length; i++) {
+        if (equationArray[i] === '+') {
+            equationArray.splice(i-1, 3, equationArray[i-1]+equationArray[i+1]);
+        }
+        if (equationArray[i] === '-') {
+            equationArray.splice(i-1, 3, equationArray[i-1]-equationArray[i+1]);
+        }
+    }
+    calculationDisplay.textContent = equationArray.toString();
+    return equationArray.toString();
+}
+
+function calculateOld() {
     if (isNaN(Number(equation[equation.length-1])) === true) return
-    console.log('calculating...')
+    console.log(equationArray)
+    equation = equationArray;
+    updateMainDisplay()
     clearEquationArray()
     updateHistory()
 }
