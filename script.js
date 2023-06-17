@@ -103,31 +103,9 @@ function calculate() {
             equationArray.splice(i-1, 3, equationArray[i-1]-equationArray[i+1]);
         }
     }
-    showResult();
-    updateMainDisplay();
-    updateHistory();
-}
-
-function convertItemsToNumbers(array) {
-    let slicePosition = 0;
-    let temporaryArray = [];
-
-    for (let i=0; i <= array.length; i++) {
-        if (isNaN(array[i]) || i === array.length) {
-
-            let number = Number(array.slice(slicePosition, i).toString().replaceAll(',',''));
-            let operation = (array[i]);
-            slicePosition = i+1;
-            
-            temporaryArray.push(number)
-            
-            if (array[i] !== undefined) {
-                temporaryArray.push(operation)
-            }
-        }
-        array = temporaryArray;
-    }
-    return array;
+    equation = equationArray;
+    updateMainDisplay()
+    updateHistory()
 }
 
 function showResult() {
