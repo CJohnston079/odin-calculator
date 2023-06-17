@@ -42,37 +42,16 @@ const operationButtons = {
     divide: { element: operationButtonElements[5], value: '/' }
 }
 
-let equation = '';
+let equationDisplay = '';
 let equationArray = [];
 let history = [];
-// let previousNumberSlice = 0;
 
-function updateMainDisplay() {
-    if (equation === '') {
-        calculationDisplay.textContent = 0;
-        return
-    }
-    calculationDisplay.textContent = equation;
-}
+functionButtons.equals.addEventListener('mousedown', calculate);
 
-function updateEquation(object, key) {
-    if (object === operationButtons && isNaN(Number(equation[equation.length-1])) === true) return 
-    equation += object[key].value;
-    pushCharacter()
-    return equation
-}
+enableEquationInput(numberButtons);
+enableEquationInput(operationButtons);
 
-function pushCharacter() {
-    if (isNaN(Number(equation[equation.length-1])) === true) {
-        equationArray.push(equation[equation.length-1]);
-    } else {
-        equationArray.push(Number(equation[equation.length-1]));
-    }
-    
-    console.log(equationArray)
-}
-
-function inputEquation(object) {
+function enableEquationInput(object) {
     for (const key in object) {
         object[key].element.addEventListener('mousedown', () => {
             updateEquation(object, key);
@@ -81,37 +60,32 @@ function inputEquation(object) {
     } 
 }
 
-inputEquation(numberButtons);
-inputEquation(operationButtons);
+function updateEquation(object, key) {
+    if (object === operationButtons && isNaN(Number(equationDisplay[equationDisplay.length-1])) === true) return // prevents entering consecutive operations
+    equationDisplay += object[key].value;
+    pushToEquationArray();
+    return equationDisplay
+}
 
-// functionButtons.equals.addEventListener('mousedown', pushCharacter);
-functionButtons.equals.addEventListener('mousedown', calculate);
-
-function convertItemsToNumbers(array) {
-    let slicePosition = 0;
-    let equationArrayTemp = [];
-
-    for (let i=0; i <= array.length; i++) {
-        if (isNaN(array[i]) || i === array.length) {
-
-            let number = Number(array.slice(slicePosition, i).toString().replaceAll(',',''));
-            let operation = (array[i]);
-            slicePosition = i+1;
-            
-            equationArrayTemp.push(number)
-            
-            if (array[i] !== undefined) {
-                equationArrayTemp.push(operation)
-            }
-            
-        }
-        equationArray = equationArrayTemp;
+function updateMainDisplay() {
+    if (equationDisplay === '') {
+        calculationDisplay.textContent = 0;
+        return
     }
-    return equationArray;
+    calculationDisplay.textContent = equationDisplay;
+    console.log(equationArray);
+}
+
+function pushToEquationArray() {
+    if (isNaN(Number(equationDisplay[equationDisplay.length-1])) === true) {
+        equationArray.push(equationDisplay[equationDisplay.length-1]);
+    } else {
+        equationArray.push(equationDisplay[equationDisplay.length-1]);
+    }
 }
 
 function calculate() {
-    if (isNaN(Number(equation[equation.length-1])) === true) return
+    if (isNaN(Number(equationDisplay[equationDisplay.length-1])) === true) return
     convertItemsToNumbers(equationArray)
     for (let i =0; i < equationArray.length; i++) {
         if (equationArray[i] === '*') {
@@ -129,21 +103,61 @@ function calculate() {
             equationArray.splice(i-1, 3, equationArray[i-1]-equationArray[i+1]);
         }
     }
-    equation = equationArray;
-    updateMainDisplay()
-    updateHistory()
+    showResult();
+    updateMainDisplay();
+    updateHistory();
+}
+
+function convertItemsToNumbers(array) {
+    let slicePosition = 0;
+    let temporaryArray = [];
+
+    for (let i=0; i <= array.length; i++) {
+        if (isNaN(array[i]) || i === array.length) {
+
+            let number = Number(array.slice(slicePosition, i).toString().replaceAll(',',''));
+            let operation = (array[i]);
+            slicePosition = i+1;
+            
+            temporaryArray.push(number)
+            
+            if (array[i] !== undefined) {
+                temporaryArray.push(operation)
+            }
+        }
+        array = temporaryArray;
+    }
+    return array;
 }
 
 function showResult() {
-    equation = equationArray;
+    equationDisplay = equationArray.toString();
 }
 
 function updateHistory() {
-    history.push(equation)
+    history.push(equationDisplay)
     if (history.length > 3) {
         history.pop();
     }
     return history
+}
+
+functionButtons.clear.addEventListener('mousedown', clearCharacter);
+functionButtons.allClear.addEventListener('mousedown', clearAll);
+
+function clearCharacter() {
+    equationDisplay = equationDisplay.slice(0,-1);
+    equationArray.pop();
+    updateMainDisplay();
+    return equationDisplay
+}
+
+function clearAll() {
+    equationDisplay = '';
+    clearEquationArray();
+    clearHistory();
+    updateMainDisplay();
+    return equationDisplay
 }
 
 function clearHistory() {
@@ -155,23 +169,3 @@ function clearEquationArray() {
     equationArray = [];
     return equationArray
 }
-
-function clearCharacter() {
-    equation = equation.slice(0,-1);
-    equationArray.pop();
-    console.log(equationArray)
-    return equation
-}
-
-functionButtons.clear.addEventListener('mousedown', () => {
-    clearCharacter(),
-    updateMainDisplay();
-})
-
-functionButtons.allClear.addEventListener('mousedown', () => {
-    equation = '';
-    clearEquationArray();
-    clearHistory();
-    updateMainDisplay();
-    return equation
-})
