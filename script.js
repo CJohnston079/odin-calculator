@@ -84,10 +84,8 @@ function inputEquation(object) {
 inputEquation(numberButtons);
 inputEquation(operationButtons);
 
-functionButtons.equals.addEventListener('mousedown', pushCharacter);
+// functionButtons.equals.addEventListener('mousedown', pushCharacter);
 functionButtons.equals.addEventListener('mousedown', calculate);
-
-let test = [3, 5, '+', 9, 8, '-', 3, 2, 2, '*', 6, 7, 1]; // should equal -222639
 
 function convertItemsToNumbers(array) {
     let slicePosition = 0;
@@ -113,7 +111,8 @@ function convertItemsToNumbers(array) {
 }
 
 function calculate() {
-    // if (isNaN(Number(equation[equation.length-1])) === true) return
+    if (isNaN(Number(equation[equation.length-1])) === true) return
+    convertItemsToNumbers(equationArray)
     for (let i =0; i < equationArray.length; i++) {
         if (equationArray[i] === '*') {
             equationArray.splice(i-1, 3, equationArray[i-1]*equationArray[i+1]);
@@ -130,17 +129,14 @@ function calculate() {
             equationArray.splice(i-1, 3, equationArray[i-1]-equationArray[i+1]);
         }
     }
-    calculationDisplay.textContent = equationArray.toString();
-    return equationArray.toString();
-}
-
-function calculateOld() {
-    if (isNaN(Number(equation[equation.length-1])) === true) return
-    console.log(equationArray)
     equation = equationArray;
     updateMainDisplay()
     clearEquationArray()
     updateHistory()
+}
+
+function showResult() {
+    equation = equationArray;
 }
 
 function updateHistory() {
