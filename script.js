@@ -1,4 +1,4 @@
-const calculationDisplay = document.querySelector('#calculation')
+const calculationDisplay = document.querySelector('#calculation');
 
 const functionButtonElements = document.querySelector('#function-panel').querySelectorAll('.button');
 const numberButtonElements = document.querySelector('#numpad').querySelectorAll('.button');
@@ -69,10 +69,10 @@ function updateEquation(object, key) {
 function updateMainDisplay() {
     if (equationDisplay === '') {
         calculationDisplay.textContent = 0;
-        return
+        return;
     }
     calculationDisplay.textContent = equationDisplay;
-    console.log(equationArray)
+    console.log(equationArray);
 }
 
 function pushToEquationArray() {
@@ -102,8 +102,9 @@ function calculate() {
             equationArray.splice(i-1, 3, equationArray[i-1]-equationArray[i+1]);
         }
     }
-    showResult();
+    resultToString();
     updateMainDisplay();
+    resetEquationArray()
     updateHistory();
 }
 
@@ -121,16 +122,22 @@ function convertItemsToNumbers(array) {
             equationArrayTemp.push(number);
             
             if (array[i] !== undefined) {
-                equationArrayTemp.push(operation)
+                equationArrayTemp.push(operation);
             }
         }
-        equationArray = equationArrayTemp;
     }
+    equationArray = equationArrayTemp;
     return equationArray;
 }
 
-function showResult() {
+function resultToString() {
     equationDisplay = equationArray.toString();
+    return equationDisplay;
+}
+
+function resetEquationArray() {
+    equationArray = Array.from(equationDisplay);
+    return equationArray;
 }
 
 function updateHistory() {
@@ -138,7 +145,7 @@ function updateHistory() {
     if (history.length > 3) {
         history.pop();
     }
-    return history
+    return history;
 }
 
 functionButtons.clear.addEventListener('mousedown', clearCharacter);
@@ -157,15 +164,15 @@ function clearAll() {
     clearHistory();
     updateMainDisplay();
     console.clear();
-    return equationDisplay
+    return equationDisplay;
 }
 
 function clearHistory() {
     history = [];
-    return history
+    return history;
 }
 
 function clearEquationArray() {
     equationArray = [];
-    return equationArray
+    return equationArray;
 }
