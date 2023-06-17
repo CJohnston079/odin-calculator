@@ -131,7 +131,6 @@ function calculate() {
     }
     equation = equationArray;
     updateMainDisplay()
-    clearEquationArray()
     updateHistory()
 }
 
