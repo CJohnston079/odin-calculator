@@ -31,7 +31,7 @@ const numberButtons = {
     '7': { element: numberButtonElements[6], value: 7 },
     '8': { element: numberButtonElements[7], value: 8 },
     '9': { element: numberButtonElements[8], value: 9 },
-    // '.': { element: numberButtonElements[11], value: '.' },
+    '.': { element: numberButtonElements[11], value: '.' },
     // 'plusMinus': { element: numberButtonElements[9], value: 'plusMinus' },
 }
 
@@ -61,10 +61,9 @@ function enableEquationInput(object) {
 }
 
 function updateEquation(object, key) {
-    if (object === operationButtons && isNaN(Number(equationDisplay[equationDisplay.length-1])) === true) return // prevents entering consecutive operations
+    if (object === operationButtons && isNaN(Number(equationDisplay[equationDisplay.length-1])) === true) return // prevents user from entering consecutive operations
     equationDisplay += object[key].value;
     pushToEquationArray();
-    return equationDisplay
 }
 
 function updateMainDisplay() {
@@ -73,20 +72,20 @@ function updateMainDisplay() {
         return
     }
     calculationDisplay.textContent = equationDisplay;
-    console.log(equationArray);
+    console.log(equationArray)
 }
 
 function pushToEquationArray() {
     if (isNaN(Number(equationDisplay[equationDisplay.length-1])) === true) {
         equationArray.push(equationDisplay[equationDisplay.length-1]);
     } else {
-        equationArray.push(equationDisplay[equationDisplay.length-1]);
+        equationArray.push(Number(equationDisplay[equationDisplay.length-1]));
     }
 }
 
 function calculate() {
     if (isNaN(Number(equationDisplay[equationDisplay.length-1])) === true) return
-    convertItemsToNumbers(equationArray)
+    convertItemsToNumbers(equationArray);
     for (let i =0; i < equationArray.length; i++) {
         if (equationArray[i] === '*') {
             equationArray.splice(i-1, 3, equationArray[i-1]*equationArray[i+1]);
@@ -103,9 +102,31 @@ function calculate() {
             equationArray.splice(i-1, 3, equationArray[i-1]-equationArray[i+1]);
         }
     }
-    equation = equationArray;
-    updateMainDisplay()
-    updateHistory()
+    showResult();
+    updateMainDisplay();
+    updateHistory();
+}
+
+function convertItemsToNumbers(array) {
+    let slicePosition = 0;
+    let equationArrayTemp = [];
+
+    for (let i=0; i <= array.length; i++) {
+        if (isNaN(array[i]) || i === array.length) {
+
+            let number = Number(array.slice(slicePosition, i).toString().replaceAll(',',''));
+            let operation = (array[i]);
+            slicePosition = i+1;
+            
+            equationArrayTemp.push(number);
+            
+            if (array[i] !== undefined) {
+                equationArrayTemp.push(operation)
+            }
+        }
+        equationArray = equationArrayTemp;
+    }
+    return equationArray;
 }
 
 function showResult() {
@@ -135,6 +156,7 @@ function clearAll() {
     clearEquationArray();
     clearHistory();
     updateMainDisplay();
+    console.clear();
     return equationDisplay
 }
 
