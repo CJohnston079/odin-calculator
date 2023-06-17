@@ -45,6 +45,7 @@ const operationButtons = {
 let equationDisplay = '';
 let equationArray = [];
 let history = [];
+let equationSolved = false;
 
 functionButtons.equals.addEventListener('mousedown', calculate);
 
@@ -62,6 +63,11 @@ function enableEquationInput(object) {
 
 function updateEquation(object, key) {
     if (object === operationButtons && isNaN(Number(equationDisplay[equationDisplay.length-1])) === true) return // prevents user from entering consecutive operations
+    if (object === numberButtons && equationSolved === true) {
+        equationDisplay = '';
+        equationArray = [];
+    }
+    equationSolved = false;
     equationDisplay += object[key].value;
     pushToEquationArray();
 }
@@ -102,9 +108,10 @@ function calculate() {
             equationArray.splice(i-1, 3, equationArray[i-1]-equationArray[i+1]);
         }
     }
-    resultToString();
+    equationSolved = true;
+    solutionToString();
+    solutionToArray();
     updateMainDisplay();
-    resetEquationArray()
     updateHistory();
 }
 
@@ -130,12 +137,12 @@ function convertItemsToNumbers(array) {
     return equationArray;
 }
 
-function resultToString() {
+function solutionToString() {
     equationDisplay = equationArray.toString();
     return equationDisplay;
 }
 
-function resetEquationArray() {
+function solutionToArray() {
     equationArray = Array.from(equationDisplay);
     return equationArray;
 }
