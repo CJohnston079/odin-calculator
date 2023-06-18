@@ -117,20 +117,20 @@ function calculate() {
     updateHistory();
 }
 
-function convertItemsToNumbers(array) {
+function convertItemsToNumbers(arr) {
     let slicePosition = 0;
     let tempArr = [];
 
-    for (let i=0; i <= array.length; i++) {
-        if (isNaN(array[i]) || i === array.length) {
+    for (let i=0; i <= arr.length; i++) {
+        if (arr[i] !== '.' && isNaN(arr[i]) || i === arr.length) {
 
-            let number = Number(array.slice(slicePosition, i).toString().replaceAll(',',''));
-            let operation = (array[i]);
+            let number = Number(arr.slice(slicePosition, i).toString().replaceAll(',',''));
+            let operation = (arr[i]);
             slicePosition = i+1;
             
             tempArr.push(number);
             
-            if (array[i] !== undefined) {
+            if (arr[i] !== undefined) {
                 tempArr.push(operation);
             }
         }
