@@ -51,14 +51,14 @@ let floatingPointAdded = false;
 functionButtons.equals.addEventListener('mousedown', calculate);
 
 numberButtons['.'].element.addEventListener('mousedown', () => {
-    addFloatingPoint()
+    addFloatingPoint();
 });
 
 function addFloatingPoint() {
     if (floatingPointAdded === true) return
     floatingPointAdded = true;
 
-    if (equationStr === '' || isNaN(Number(equationStr[equationStr.length-1]))) {
+    if (equationSolved === true || equationStr === '' || isNaN(Number(equationStr[equationStr.length-1]))) {
         updateEquation(numberButtons, ['0'])
     }
 
