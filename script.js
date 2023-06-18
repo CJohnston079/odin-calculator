@@ -32,7 +32,7 @@ const numberButtons = {
     '8': { element: numberButtonElements[7], value: 8 },
     '9': { element: numberButtonElements[8], value: 9 },
     '.': { element: numberButtonElements[11], value: '.' },
-    'plusMinus': { element: numberButtonElements[9], value: 'plusMinus' },
+    '±': { element: numberButtonElements[9], value: '-' },
 }
 
 const operationButtons = {
@@ -48,30 +48,17 @@ let history = [];
 let equationSolved = false;
 let floatingPointAdded = false;
 
+numberButtons['.'].element.addEventListener('mousedown', addFloatingPoint);
+numberButtons['±'].element.addEventListener('mousedown', toggleNegativeNum);
+
 functionButtons.equals.addEventListener('mousedown', calculate);
-
-numberButtons['.'].element.addEventListener('mousedown', () => {
-    addFloatingPoint();
-});
-
-function addFloatingPoint() {
-    if (floatingPointAdded === true) return
-    floatingPointAdded = true;
-
-    if (equationSolved === true || equationStr === '' || isNaN(Number(equationStr[equationStr.length-1]))) {
-        updateEquation(numberButtons, ['0'])
-    }
-
-    updateEquation(numberButtons, ['.']),
-    updateMainDisplay();
-}
 
 enableEquationInput(numberButtons);
 enableEquationInput(operationButtons);
 
 function enableEquationInput(object) {
     for (const key in object) {
-        if (object[key].value === '.' || object[key].value === ['plusMinus']) continue;
+        if (object[key].value === '.' || object[key].value === '-') continue;
         object[key].element.addEventListener('mousedown', () => {
             updateEquation(object, key),
             updateMainDisplay();
@@ -103,12 +90,72 @@ function updateMainDisplay() {
     console.log(equationArr);
 }
 
+
+function addFloatingPoint() {
+    if (floatingPointAdded === true) return
+    floatingPointAdded = true;
+
+    if (equationSolved === true || equationStr === '' || isNaN(Number(equationStr[equationStr.length-1]))) {
+        updateEquation(numberButtons, ['0'])
+    }
+
+    updateEquation(numberButtons, ['.']),
+    updateMainDisplay();
+}
+
+function toggleNegativeNum() {
+    for (let i = equationStr.length-1; i >= 0; i--) {
+        if (i === 0) {
+            if (equationArr[i] > 0) {
+                equationStr = equationStr.substring(0,i) + '-' + equationStr.substring(i, equationStr.length);
+            } else if (equationArr[i] < 0) {
+                equationStr = equationStr.substring(i+1, equationStr.length);
+            }
+            equationArr[i] = equationArr[i]*-1;
+            break  
+        }
+        if (isNaN(Number(equationStr[i])) === true) {
+            if (equationArr[i+1] > 0) {
+                equationStr = equationStr.substring(0,i+1) + '-' + equationStr.substring(i+1, equationStr.length);
+                equationArr[i+1] = equationArr[i+1]*-1;
+            } else {
+                equationStr = equationStr.substring(0,i) + equationStr.substring(i+1, equationStr.length);
+                equationArr[i] = equationArr[i]*-1;
+            }
+            break
+        }
+    }
+    updateMainDisplay()
+}
+
 function pushToequationArr() {
     if (isNaN(Number(equationStr[equationStr.length-1])) === true) {
         equationArr.push(equationStr[equationStr.length-1]);
     } else {
         equationArr.push(Number(equationStr[equationStr.length-1]));
     }
+}
+
+function convertItemsToNumbers(arr) {
+    let slicePosition = 0;
+    let tempArr = [];
+
+    for (let i=0; i <= arr.length; i++) {
+        if (arr[i] !== '.' && isNaN(arr[i]) || i === arr.length) {
+
+            let num = Number(arr.slice(slicePosition, i).toString().replaceAll(',',''));
+            let operation = (arr[i]);
+            slicePosition = i+1;
+            
+            tempArr.push(num);
+            
+            if (arr[i] !== undefined) {
+                tempArr.push(operation);
+            }
+        }
+    }
+    equationArr = tempArr;
+    return equationArr;
 }
 
 function calculate() {
@@ -135,28 +182,6 @@ function calculate() {
     solutionToArray();
     updateMainDisplay();
     updateHistory();
-}
-
-function convertItemsToNumbers(arr) {
-    let slicePosition = 0;
-    let tempArr = [];
-
-    for (let i=0; i <= arr.length; i++) {
-        if (arr[i] !== '.' && isNaN(arr[i]) || i === arr.length) {
-
-            let number = Number(arr.slice(slicePosition, i).toString().replaceAll(',',''));
-            let operation = (arr[i]);
-            slicePosition = i+1;
-            
-            tempArr.push(number);
-            
-            if (arr[i] !== undefined) {
-                tempArr.push(operation);
-            }
-        }
-    }
-    equationArr = tempArr;
-    return equationArr;
 }
 
 function solutionToString() {
