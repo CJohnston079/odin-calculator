@@ -32,7 +32,7 @@ const numberButtons = {
     '8': { element: numberButtonElements[7], value: 8 },
     '9': { element: numberButtonElements[8], value: 9 },
     '.': { element: numberButtonElements[11], value: '.' },
-    // 'plusMinus': { element: numberButtonElements[9], value: 'plusMinus' },
+    'plusMinus': { element: numberButtonElements[9], value: 'plusMinus' },
 }
 
 const operationButtons = {
@@ -46,28 +46,48 @@ let equationStr = '';
 let equationArr = [];
 let history = [];
 let equationSolved = false;
+let floatingPointAdded = false;
 
 functionButtons.equals.addEventListener('mousedown', calculate);
+
+numberButtons['.'].element.addEventListener('mousedown', () => {
+    addFloatingPoint()
+});
+
+function addFloatingPoint() {
+    if (floatingPointAdded === true) return
+    floatingPointAdded = true;
+
+    if (equationStr === '' || isNaN(Number(equationStr[equationStr.length-1]))) {
+        updateEquation(numberButtons, ['0'])
+    }
+
+    updateEquation(numberButtons, ['.']),
+    updateMainDisplay();
+}
 
 enableEquationInput(numberButtons);
 enableEquationInput(operationButtons);
 
 function enableEquationInput(object) {
     for (const key in object) {
+        if (object[key].value === '.' || object[key].value === ['plusMinus']) continue;
         object[key].element.addEventListener('mousedown', () => {
-            updateEquation(object, key);
+            updateEquation(object, key),
             updateMainDisplay();
         });
     }
 }
 
 function updateEquation(object, key) {
-    if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) return // prevents user from entering consecutive operations
+    if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) return // prevents entry of consecutive operations
     
     if (object === numberButtons && equationSolved === true) {
         equationStr = '';
         equationArr = [];
     }
+
+    if (object === operationButtons) floatingPointAdded = false;
     
     equationSolved = false;
     equationStr += object[key].value;
@@ -161,6 +181,7 @@ functionButtons.clear.addEventListener('mousedown', clearCharacter);
 functionButtons.allClear.addEventListener('mousedown', clearAll);
 
 function clearCharacter() {
+    if (equationStr[equationStr.length-1] === '.') floatingPointAdded = false;
     equationStr = equationStr.slice(0,-1);
     equationArr.pop();
     updateMainDisplay();
@@ -169,6 +190,7 @@ function clearCharacter() {
 
 function clearAll() {
     equationStr = '';
+    floatingPointAdded = false;
     clearequationArr();
     clearHistory();
     updateMainDisplay();
