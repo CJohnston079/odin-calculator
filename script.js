@@ -42,8 +42,8 @@ const operationButtons = {
     divide: { element: operationButtonElements[5], value: '/' }
 }
 
-let equationDisplay = '';
-let equationArray = [];
+let equationStr = '';
+let equationArr = [];
 let history = [];
 let equationSolved = false;
 
@@ -58,54 +58,56 @@ function enableEquationInput(object) {
             updateEquation(object, key);
             updateMainDisplay();
         });
-    } 
+    }
 }
 
 function updateEquation(object, key) {
-    if (object === operationButtons && isNaN(Number(equationDisplay[equationDisplay.length-1])) === true) return // prevents user from entering consecutive operations
+    if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) return // prevents user from entering consecutive operations
+    
     if (object === numberButtons && equationSolved === true) {
-        equationDisplay = '';
-        equationArray = [];
+        equationStr = '';
+        equationArr = [];
     }
+    
     equationSolved = false;
-    equationDisplay += object[key].value;
-    pushToEquationArray();
+    equationStr += object[key].value;
+    pushToequationArr();
 }
 
 function updateMainDisplay() {
-    if (equationDisplay === '') {
+    if (equationStr === '') {
         calculationDisplay.textContent = 0;
         return;
     }
-    calculationDisplay.textContent = equationDisplay;
-    console.log(equationArray);
+    calculationDisplay.textContent = equationStr;
+    console.log(equationArr);
 }
 
-function pushToEquationArray() {
-    if (isNaN(Number(equationDisplay[equationDisplay.length-1])) === true) {
-        equationArray.push(equationDisplay[equationDisplay.length-1]);
+function pushToequationArr() {
+    if (isNaN(Number(equationStr[equationStr.length-1])) === true) {
+        equationArr.push(equationStr[equationStr.length-1]);
     } else {
-        equationArray.push(Number(equationDisplay[equationDisplay.length-1]));
+        equationArr.push(Number(equationStr[equationStr.length-1]));
     }
 }
 
 function calculate() {
-    if (isNaN(Number(equationDisplay[equationDisplay.length-1])) === true) return
-    convertItemsToNumbers(equationArray);
-    for (let i =0; i < equationArray.length; i++) {
-        if (equationArray[i] === '*') {
-            equationArray.splice(i-1, 3, equationArray[i-1]*equationArray[i+1]);
+    if (isNaN(Number(equationStr[equationStr.length-1])) === true) return
+    convertItemsToNumbers(equationArr);
+    for (let i =0; i < equationArr.length; i++) {
+        if (equationArr[i] === '*') {
+            equationArr.splice(i-1, 3, equationArr[i-1]*equationArr[i+1]);
         }
-        if (equationArray[i] === '/') {
-            equationArray.splice(i-1, 3, equationArray[i-1]/equationArray[i+1]);
+        if (equationArr[i] === '/') {
+            equationArr.splice(i-1, 3, equationArr[i-1]/equationArr[i+1]);
         }
     }
-    for (let i =0; i < equationArray.length; i++) {
-        if (equationArray[i] === '+') {
-            equationArray.splice(i-1, 3, equationArray[i-1]+equationArray[i+1]);
+    for (let i =0; i < equationArr.length; i++) {
+        if (equationArr[i] === '+') {
+            equationArr.splice(i-1, 3, equationArr[i-1]+equationArr[i+1]);
         }
-        if (equationArray[i] === '-') {
-            equationArray.splice(i-1, 3, equationArray[i-1]-equationArray[i+1]);
+        if (equationArr[i] === '-') {
+            equationArr.splice(i-1, 3, equationArr[i-1]-equationArr[i+1]);
         }
     }
     equationSolved = true;
@@ -117,7 +119,7 @@ function calculate() {
 
 function convertItemsToNumbers(array) {
     let slicePosition = 0;
-    let equationArrayTemp = [];
+    let tempArr = [];
 
     for (let i=0; i <= array.length; i++) {
         if (isNaN(array[i]) || i === array.length) {
@@ -126,29 +128,29 @@ function convertItemsToNumbers(array) {
             let operation = (array[i]);
             slicePosition = i+1;
             
-            equationArrayTemp.push(number);
+            tempArr.push(number);
             
             if (array[i] !== undefined) {
-                equationArrayTemp.push(operation);
+                tempArr.push(operation);
             }
         }
     }
-    equationArray = equationArrayTemp;
-    return equationArray;
+    equationArr = tempArr;
+    return equationArr;
 }
 
 function solutionToString() {
-    equationDisplay = equationArray.toString();
-    return equationDisplay;
+    equationStr = equationArr.toString();
+    return equationStr;
 }
 
 function solutionToArray() {
-    equationArray = Array.from(equationDisplay);
-    return equationArray;
+    equationArr = Array.from(equationStr);
+    return equationArr;
 }
 
 function updateHistory() {
-    history.push(equationDisplay)
+    history.push(equationStr)
     if (history.length > 3) {
         history.pop();
     }
@@ -159,19 +161,19 @@ functionButtons.clear.addEventListener('mousedown', clearCharacter);
 functionButtons.allClear.addEventListener('mousedown', clearAll);
 
 function clearCharacter() {
-    equationDisplay = equationDisplay.slice(0,-1);
-    equationArray.pop();
+    equationStr = equationStr.slice(0,-1);
+    equationArr.pop();
     updateMainDisplay();
-    return equationDisplay
+    return equationStr
 }
 
 function clearAll() {
-    equationDisplay = '';
-    clearEquationArray();
+    equationStr = '';
+    clearequationArr();
     clearHistory();
     updateMainDisplay();
     console.clear();
-    return equationDisplay;
+    return equationStr;
 }
 
 function clearHistory() {
@@ -179,7 +181,7 @@ function clearHistory() {
     return history;
 }
 
-function clearEquationArray() {
-    equationArray = [];
-    return equationArray;
+function clearequationArr() {
+    equationArr = [];
+    return equationArr;
 }
