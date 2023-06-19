@@ -47,7 +47,7 @@ let equationArr = [];
 let history = [];
 let equationSolved = false;
 let floatingPointAdded = false;
-let makeNegative = false;
+let addNegativeNum = false;
 
 numberButtons['.'].element.addEventListener('mousedown', addFloatingPoint);
 numberButtons['±'].element.addEventListener('mousedown', toggleNegativeNum);
@@ -61,18 +61,19 @@ function enableEquationInput(object) {
     for (const key in object) {
         if (object[key].value === '.' || object[key].value === '±') continue;
         object[key].element.addEventListener('mousedown', () => {
-            updateEquation(object, key),
-            updateMainDisplay();
+            updateEquation(object, key)
+            // updateMainDisplay();
         });
     }
 }
 
 function updateEquation(object, key) {
     if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) {
-        if (object[key].value === '-' && equationArr.length === 0 || isNaN(Number(equationArr[equationArr.length-2])) === false) {
-            makeNegative = true;
+        if (object[key].value === '-' && equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-2])) === false) {
+            addNegativeNum = true;
+            console.log(`Add negative: ${addNegativeNum}`)
             equationStr += object[key].value;
-            console.log(`Make next number negative: ${makeNegative}`)
+            updateMainDisplay();
             return
         } else return;
     }
@@ -87,6 +88,7 @@ function updateEquation(object, key) {
     equationSolved = false;
     equationStr += object[key].value;
     pushToEquationArr();
+    updateMainDisplay();
 }
 
 function updateMainDisplay() {
@@ -127,9 +129,9 @@ function pushToEquationArr() {
         equationArr.push(equationStr[equationStr.length-1]);
     } else {
         equationArr.push(Number(equationStr[equationStr.length-1]));
-        if (makeNegative === true) {
+        if (addNegativeNum === true) {
             equationArr[equationArr.length-1] = equationArr[equationArr.length-1]*-1;
-            makeNegative = false;
+            addNegativeNum = false;
         }
     }
 }
@@ -219,7 +221,7 @@ function clearCharacter() {
 function clearAll() {
     equationStr = '';
     floatingPointAdded = false;
-    clearequationArr();
+    clearEquationArr();
     clearHistory();
     updateMainDisplay();
     console.clear();
@@ -231,7 +233,7 @@ function clearHistory() {
     return history;
 }
 
-function clearequationArr() {
+function clearEquationArr() {
     equationArr = [];
     return equationArr;
 }
