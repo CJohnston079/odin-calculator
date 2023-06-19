@@ -230,6 +230,7 @@ function clearCharacter() {
 function clearAll() {
     equationStr = '';
     floatingPointAdded = false;
+    addNegativeNum = false;
     clearEquationArr();
     clearHistory();
     updateMainDisplay();
