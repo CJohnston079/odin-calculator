@@ -124,7 +124,7 @@ function toggleNegativeNum() {
                 equationArr[i+1] = equationArr[i+1]*-1;
                 equationArrToString();
             } else {
-                equationArr[i] = equationArr[i]*-1;
+                equationArr[i+1] = equationArr[i+1]*-1;
                 equationArrToString();
             }
             break
