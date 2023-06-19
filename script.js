@@ -47,6 +47,7 @@ let equationArr = [];
 let history = [];
 let equationSolved = false;
 let floatingPointAdded = false;
+let makeNegative = false;
 
 numberButtons['.'].element.addEventListener('mousedown', addFloatingPoint);
 numberButtons['±'].element.addEventListener('mousedown', toggleNegativeNum);
@@ -67,7 +68,14 @@ function enableEquationInput(object) {
 }
 
 function updateEquation(object, key) {
-    if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) return // prevents entry of consecutive operations
+    if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) {
+        if (object[key].value === '-' && equationArr.length === 0 || isNaN(Number(equationArr[equationArr.length-2])) === false) {
+            makeNegative = true;
+            equationStr += object[key].value;
+            console.log(`Make next number negative: ${makeNegative}`)
+            return
+        } else return;
+    }
     
     if (object === numberButtons && equationSolved === true) {
         equationStr = '';
@@ -78,7 +86,7 @@ function updateEquation(object, key) {
     
     equationSolved = false;
     equationStr += object[key].value;
-    pushToequationArr();
+    pushToEquationArr();
 }
 
 function updateMainDisplay() {
@@ -114,11 +122,15 @@ function toggleNegativeNum() {
     updateMainDisplay();
 }
 
-function pushToequationArr() {
+function pushToEquationArr() {
     if (isNaN(Number(equationStr[equationStr.length-1])) === true) {
         equationArr.push(equationStr[equationStr.length-1]);
     } else {
         equationArr.push(Number(equationStr[equationStr.length-1]));
+        if (makeNegative === true) {
+            equationArr[equationArr.length-1] = equationArr[equationArr.length-1]*-1;
+            makeNegative = false;
+        }
     }
 }
 
