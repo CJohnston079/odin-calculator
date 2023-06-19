@@ -104,33 +104,14 @@ function addFloatingPoint() {
 }
 
 function toggleNegativeNum() {
-    if (equationArr.length === 0) return;
-
     for (let i = equationArr.length-1; i >= 0; i--) {
-
-        if (i === 0) {
-            if (equationArr[i] > 0) {
-                equationArr[i] = equationArr[i]*-1;
-                equationArrToString();
-            } else {
-                equationArr[i] = equationArr[i]*-1;
-                equationArrToString();
-            }
-            break
-        }
-
-        if (isNaN(Number(equationArr[i])) === true && equationArr[i] !== '.') {
-            if (equationArr[i+1] > 0) {
-                equationArr[i+1] = equationArr[i+1]*-1;
-                equationArrToString();
-            } else {
-                equationArr[i+1] = equationArr[i+1]*-1;
-                equationArrToString();
-            }
-            break
+        if (i === 0 || isNaN(Number(equationArr[i-1])) === true && equationArr[i-1] !== '.') {
+            equationArr[i] = equationArr[i]*-1;
+            equationArrToString();
+            break;
         }
     }
-    updateMainDisplay()
+    updateMainDisplay();
 }
 
 function pushToequationArr() {
