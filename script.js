@@ -32,7 +32,7 @@ const numberButtons = {
     '8': { element: numberButtonElements[7], value: 8 },
     '9': { element: numberButtonElements[8], value: 9 },
     '.': { element: numberButtonElements[11], value: '.' },
-    '±': { element: numberButtonElements[9], value: '-' },
+    '±': { element: numberButtonElements[9], value: '±' },
 }
 
 const operationButtons = {
@@ -58,7 +58,7 @@ enableEquationInput(operationButtons);
 
 function enableEquationInput(object) {
     for (const key in object) {
-        if (object[key].value === '.' || object[key].value === '-') continue;
+        if (object[key].value === '.' || object[key].value === '±') continue;
         object[key].element.addEventListener('mousedown', () => {
             updateEquation(object, key),
             updateMainDisplay();
