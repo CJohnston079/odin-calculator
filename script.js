@@ -114,7 +114,7 @@ function toggleNegativeNum() {
             equationArr[i] = equationArr[i]*-1;
             break  
         }
-        if (isNaN(Number(equationStr[i])) === true) {
+        if (isNaN(Number(equationStr[i])) === true && equationStr[i] !== '.') {
             if (equationArr[i+1] > 0) {
                 equationStr = equationStr.substring(0,i+1) + '-' + equationStr.substring(i+1, equationStr.length);
                 equationArr[i+1] = equationArr[i+1]*-1;
