@@ -144,7 +144,7 @@ function convertItemsToNumbers(arr) {
         if (arr[i] !== '.' && isNaN(arr[i]) || i === arr.length) {
 
             let num = Number(arr.slice(slicePosition, i).toString().replaceAll(',',''));
-            let operation = (arr[i]);
+            let operation = arr[i];
             slicePosition = i+1;
             
             tempArr.push(num);
@@ -154,6 +154,7 @@ function convertItemsToNumbers(arr) {
             }
         }
     }
+    console.log(tempArr);
     equationArr = tempArr;
     return equationArr;
 }
@@ -164,17 +165,21 @@ function calculate() {
     for (let i =0; i < equationArr.length; i++) {
         if (equationArr[i] === '*') {
             equationArr.splice(i-1, 3, equationArr[i-1]*equationArr[i+1]);
+            i--;
         }
         if (equationArr[i] === '/') {
             equationArr.splice(i-1, 3, equationArr[i-1]/equationArr[i+1]);
+            i--;
         }
     }
     for (let i =0; i < equationArr.length; i++) {
         if (equationArr[i] === '+') {
             equationArr.splice(i-1, 3, equationArr[i-1]+equationArr[i+1]);
+            i--;
         }
         if (equationArr[i] === '-') {
             equationArr.splice(i-1, 3, equationArr[i-1]-equationArr[i+1]);
+            i--;
         }
     }
     equationSolved = true;
