@@ -212,6 +212,15 @@ functionButtons.allClear.addEventListener('mousedown', clearAll);
 
 function clearCharacter() {
     if (equationStr[equationStr.length-1] === '.') floatingPointAdded = false;
+
+    if (addNegativeNum === true) {
+        addNegativeNum = false;
+        equationStr = equationStr.slice(0,-1);
+        updateMainDisplay();
+        return
+    }
+    if (equationStr[equationStr.length-2] === '-' && isNaN(Number(equationStr[equationStr.length-3])) === true) addNegativeNum = true;
+
     equationStr = equationStr.slice(0,-1);
     equationArr.pop();
     updateMainDisplay();
