@@ -92,7 +92,7 @@ function updateMainDisplay() {
 
 
 function addFloatingPoint() {
-    if (floatingPointAdded === true) return
+    if (floatingPointAdded === true) return;
     floatingPointAdded = true;
 
     if (equationSolved === true || equationStr === '' || isNaN(Number(equationStr[equationStr.length-1]))) {
@@ -104,23 +104,16 @@ function addFloatingPoint() {
 }
 
 function toggleNegativeNum() {
-    for (let i = equationStr.length-1; i >= 0; i--) {
-        if (i === 0) {
-            if (equationArr[i] > 0) {
-                equationStr = equationStr.substring(0,i) + '-' + equationStr.substring(i, equationStr.length);
-            } else if (equationArr[i] < 0) {
-                equationStr = equationStr.substring(i+1, equationStr.length);
-            }
-            equationArr[i] = equationArr[i]*-1;
-            break  
-        }
-        if (isNaN(Number(equationStr[i])) === true && equationStr[i] !== '.') {
+    if (equationArr.length === 0) return;
+
+    for (let i = equationArr.length-1; i >= 0; i--) {
+        if (i === 0 || isNaN(Number(equationArr[i])) === true && equationArr[i] !== '.') {
             if (equationArr[i+1] > 0) {
-                equationStr = equationStr.substring(0,i+1) + '-' + equationStr.substring(i+1, equationStr.length);
                 equationArr[i+1] = equationArr[i+1]*-1;
+                equationArrToString();
             } else {
-                equationStr = equationStr.substring(0,i) + equationStr.substring(i+1, equationStr.length);
                 equationArr[i] = equationArr[i]*-1;
+                equationArrToString();
             }
             break
         }
@@ -183,14 +176,14 @@ function calculate() {
         }
     }
     equationSolved = true;
-    solutionToString();
+    equationArrToString();
     solutionToArray();
     updateMainDisplay();
     updateHistory();
 }
 
-function solutionToString() {
-    equationStr = equationArr.toString();
+function equationArrToString() {
+    equationStr = equationArr.join('');
     return equationStr;
 }
 
