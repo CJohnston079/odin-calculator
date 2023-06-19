@@ -116,7 +116,7 @@ function addFloatingPoint() {
 function toggleNegativeNum() {
     for (let i = equationArr.length-1; i >= 0; i--) {
         if (i === 0 || isNaN(Number(equationArr[i-1])) === true && equationArr[i-1] !== '.') {
-            equationArr[i] = equationArr[i]*-1;
+            equationArr[i] *= -1;
             equationArrToString();
             break;
         }
@@ -130,7 +130,7 @@ function pushToEquationArr() {
     } else {
         equationArr.push(Number(equationStr[equationStr.length-1]));
         if (addNegativeNum === true) {
-            equationArr[equationArr.length-1] = equationArr[equationArr.length-1]*-1;
+            equationArr[equationArr.length-1] *= -1;
             addNegativeNum = false;
         }
     }
