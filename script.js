@@ -251,7 +251,11 @@ function clearCharacter() {
     }
     if (equationStr[equationStr.length-2] === '-' && isNaN(Number(equationStr[equationStr.length-3])) === true) addNegativeNum = true;
 
-    bracketsEnabled === true ? bracketsEnabled = false : bracketsEnabled = true;
+    if (equationStr[equationStr.length-1] === '(') {
+        bracketsEnabled = false
+    } else if (equationStr[equationStr.length-1] === ')') {
+        bracketsEnabled = true;
+    }
 
     equationStr = equationStr.slice(0,-1);
     equationArr.pop();
