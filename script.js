@@ -185,31 +185,37 @@ function convertItemsToNumbers(arr) {
 function calculate() {
     if (isNaN(Number(equationStr[equationStr.length-1])) === true) return
     convertItemsToNumbers(equationArr);
-    for (let i =0; i < equationArr.length; i++) {
-        if (equationArr[i] === '*') {
-            equationArr.splice(i-1, 3, equationArr[i-1]*equationArr[i+1]);
-            i--;
-        }
-        if (equationArr[i] === '/') {
-            equationArr.splice(i-1, 3, equationArr[i-1]/equationArr[i+1]);
-            i--;
-        }
-    }
-    for (let i =0; i < equationArr.length; i++) {
-        if (equationArr[i] === '+') {
-            equationArr.splice(i-1, 3, equationArr[i-1]+equationArr[i+1]);
-            i--;
-        }
-        if (equationArr[i] === '-') {
-            equationArr.splice(i-1, 3, equationArr[i-1]-equationArr[i+1]);
-            i--;
-        }
-    }
+
+    performOperations(equationArr);
+
     equationSolved = true;
     equationArrToString();
     solutionToArray();
     updateMainDisplay();
     updateHistory();
+}
+
+function performOperations(arr) {
+    for (let i =0; i < arr.length; i++) {
+        if (arr[i] === '*') {
+            arr.splice(i-1, 3, arr[i-1]*arr[i+1]);
+            i--;
+        }
+        if (arr[i] === '/') {
+            arr.splice(i-1, 3, arr[i-1]/arr[i+1]);
+            i--;
+        }
+    }
+    for (let i =0; i < arr.length; i++) {
+        if (arr[i] === '+') {
+            arr.splice(i-1, 3, arr[i-1]+arr[i+1]);
+            i--;
+        }
+        if (arr[i] === '-') {
+            arr.splice(i-1, 3, arr[i-1]-arr[i+1]);
+            i--;
+        }
+    }
 }
 
 function equationArrToString() {
@@ -244,6 +250,8 @@ function clearCharacter() {
     }
     if (equationStr[equationStr.length-2] === '-' && isNaN(Number(equationStr[equationStr.length-3])) === true) addNegativeNum = true;
 
+    bracketsEnabled === true ? bracketsEnabled = false : bracketsEnabled = true;
+
     equationStr = equationStr.slice(0,-1);
     equationArr.pop();
     updateMainDisplay();
@@ -254,6 +262,7 @@ function clearAll() {
     equationStr = '';
     floatingPointAdded = false;
     addNegativeNum = false;
+    bracketsEnabled = false
     clearEquationArr();
     clearHistory();
     updateMainDisplay();
