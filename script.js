@@ -216,6 +216,7 @@ function performOperations(arr) {
             i--;
         }
     }
+    return arr;
 }
 
 function equationArrToString() {
