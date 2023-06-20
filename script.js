@@ -131,6 +131,7 @@ function toggleNegativeNum() {
 }
 
 function toggleBrackets() {
+    if (bracketsEnabled === true && equationStr[equationStr.length-1] === '(') return;
     if (bracketsEnabled === false) {
         equationStr += '(';
         bracketsEnabled = true;
@@ -247,12 +248,12 @@ function clearCharacter() {
         addNegativeNum = false;
         equationStr = equationStr.slice(0,-1);
         updateMainDisplay();
-        return
+        return;
     }
     if (equationStr[equationStr.length-2] === '-' && isNaN(Number(equationStr[equationStr.length-3])) === true) addNegativeNum = true;
 
     if (equationStr[equationStr.length-1] === '(') {
-        bracketsEnabled = false
+        bracketsEnabled = false;
     } else if (equationStr[equationStr.length-1] === ')') {
         bracketsEnabled = true;
     }
@@ -260,7 +261,7 @@ function clearCharacter() {
     equationStr = equationStr.slice(0,-1);
     equationArr.pop();
     updateMainDisplay();
-    return equationStr
+    return equationStr;
 }
 
 function clearAll() {
