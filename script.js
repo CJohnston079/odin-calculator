@@ -48,11 +48,14 @@ let history = [];
 let equationSolved = false;
 let floatingPointAdded = false;
 let addNegativeNum = false;
+let bracketsEnabled = false;
 
 numberButtons['.'].element.addEventListener('mousedown', addFloatingPoint);
 numberButtons['±'].element.addEventListener('mousedown', toggleNegativeNum);
 
 functionButtons.equals.addEventListener('mousedown', calculate);
+
+functionButtons.brackets.addEventListener('mousedown', toggleBrackets);
 
 enableEquationInput(numberButtons);
 enableEquationInput(operationButtons);
@@ -124,6 +127,18 @@ function toggleNegativeNum() {
             break;
         }
     }
+    updateMainDisplay();
+}
+
+function toggleBrackets() {
+    if (bracketsEnabled === false) {
+        equationStr += '(';
+        bracketsEnabled = true;
+    } else {
+        equationStr += ')';
+        bracketsEnabled = false;
+    }
+    pushToEquationArr();
     updateMainDisplay();
 }
 
