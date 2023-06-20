@@ -118,6 +118,9 @@ function toggleNegativeNum() {
         if (i === 0 || isNaN(Number(equationArr[i-1])) === true && equationArr[i-1] !== '.') {
             equationArr[i] *= -1;
             equationArrToString();
+            if (Object.is(equationArr[i], -0) === true) { // add minus sign to floating point numbers beginning with 0
+                equationStr[i] *= equationStr = equationStr.substring(0,i) + '-0' + equationStr.substring(i+1, equationStr.length); 
+            }
             break;
         }
     }
@@ -145,8 +148,13 @@ function convertItemsToNumbers(arr) {
 
             let num = Number(arr.slice(slicePosition, i).toString().replaceAll(',',''));
             let operation = arr[i];
-            slicePosition = i+1;
             
+            if (Object.is(arr[slicePosition], -0) === true) {
+                num *= -1; // convert floating points numbers beginning with 0 to negative
+            }
+
+            slicePosition = i+1;
+           
             tempArr.push(num);
             
             if (arr[i] !== undefined) {
