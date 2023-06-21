@@ -72,7 +72,7 @@ function enableEquationInput(object) {
 
 function updateEquation(object, key) {
     if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) {
-        if (object[key].value === '-' && equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-2])) === false) {
+        if (equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-2])) === false && object[key].value === '-' && ) {
             addNegativeNum = true;
             console.log(`Add negative: ${addNegativeNum}`)
             equationStr += object[key].value;
@@ -187,17 +187,21 @@ function calculate() {
     if (isNaN(Number(equationStr[equationStr.length-1])) === true) return
     convertItemsToNumbers(equationArr);
 
+    if (equationArr.includes('(') === true) {
+        calculateBrackets();
+    }
+
     performOperations(equationArr);
 
     equationSolved = true;
-    equationArrToString();
-    solutionToArray();
+    equationArrToString(equationArr);
+    solutionToArray(equationStr);
     updateMainDisplay();
     updateHistory();
 }
 
 function performOperations(arr) {
-    for (let i =0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
         if (arr[i] === '*') {
             arr.splice(i-1, 3, arr[i-1]*arr[i+1]);
             i--;
@@ -207,7 +211,7 @@ function performOperations(arr) {
             i--;
         }
     }
-    for (let i =0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
         if (arr[i] === '+') {
             arr.splice(i-1, 3, arr[i-1]+arr[i+1]);
             i--;
@@ -220,13 +224,13 @@ function performOperations(arr) {
     return arr;
 }
 
-function equationArrToString() {
-    equationStr = equationArr.join('');
+function equationArrToString(arr) {
+    equationStr = arr.join('');
     return equationStr;
 }
 
-function solutionToArray() {
-    equationArr = Array.from(equationStr);
+function solutionToArray(str) {
+    equationArr = Array.from(str);
     return equationArr;
 }
 
