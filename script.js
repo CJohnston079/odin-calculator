@@ -221,11 +221,14 @@ function calculateBrackets() {
     let deleteCount = 0
 
     for (let i = 0; i < equationArr.length; i++) {
+        console.log(equationArr[i]);
         if (equationArr[i] === '(') {
             slicePosition = i;
+            console.log(`Slice position updated.`)
         }
         if (equationArr[i] === ')') {
             console.log('Calculating brackets...');
+            console.log(`Slicing from ${equationArr[slicePosition+1]}, to ${equationArr[i]}`)
 
             bracketEquation = equationArr.slice(slicePosition+1, i);
             deleteCount = bracketEquation.length+2;
@@ -237,6 +240,8 @@ function calculateBrackets() {
             console.log(`Bracket equation after calculation: [${bracketEquation[0]}]`);
             
             equationArr.splice(slicePosition, deleteCount, bracketEquation[0]);
+
+            i = slicePosition+1;
         }
     }
 }
