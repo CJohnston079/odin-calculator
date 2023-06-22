@@ -86,9 +86,14 @@ function updateEquation(object, key) {
         }
     }
     
-    if (object === numberButtons && equationSolved === true) {
-        equationStr = '';
-        equationArr = [];
+    if (object === numberButtons) {
+        if (equationSolved === true) {
+            equationStr = '';
+            equationArr = [];
+        }
+        if (equationArr[equationArr.length-1] === ')') {
+            equationArr.push('*');
+        }
     }
 
     if (object === operationButtons) floatingPointAdded = false;
@@ -140,6 +145,9 @@ function toggleBrackets() {
     if (bracketsEnabled === false) {
         equationStr += '(';
         bracketsEnabled = true;
+        if (isNaN(equationArr[equationArr.length-1]) === false) {
+            equationArr.push('*');
+        }
     } else {
         equationStr += ')';
         bracketsEnabled = false;
