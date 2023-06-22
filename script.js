@@ -122,7 +122,7 @@ function toggleNegativeNum() {
     for (let i = equationArr.length-1; i >= 0; i--) {
         if (i === 0 || isNaN(Number(equationArr[i-1])) === true && equationArr[i-1] !== '.') {
             equationArr[i] *= -1;
-            equationArrToString();
+            equationArrToString(equationArr);
             if (Object.is(equationArr[i], -0) === true) { // add minus sign to floating point numbers beginning with 0
                 equationStr[i] *= equationStr = equationStr.substring(0,i) + '-0' + equationStr.substring(i+1, equationStr.length); 
             }
