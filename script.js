@@ -8,16 +8,19 @@ const functionButtons = {
     equals: operationButtonElements[6],
     clear: operationButtonElements[1],
     allClear: operationButtonElements[0],
-    memoryClear: functionButtonElements[0],
-    memoryAdd: functionButtonElements[1],
-    memorySubtract: functionButtonElements[2],
-    memoryRecall: functionButtonElements[3],
     brackets: functionButtonElements[4],
     pi: functionButtonElements[5],
     factorial: functionButtonElements[6],
     percent: functionButtonElements[7],
     power: functionButtonElements[8],
     root: functionButtonElements[9]
+}
+
+const memoryButtons = {
+    memoryClear: functionButtonElements[0],
+    memoryAdd: functionButtonElements[1],
+    memorySubtract: functionButtonElements[2],
+    memoryRecall: functionButtonElements[3]
 }
 
 const numberButtons = {
