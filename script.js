@@ -189,7 +189,7 @@ function convertItemsToNumbers(arr) {
 }
 
 function calculate() {
-    if (isNaN(Number(equationStr[equationStr.length-1])) === true) return
+    if (isNaN(Number(equationStr[equationStr.length-1])) === true && equationStr[equationStr.length-1] !== ')') return
     
     if (equationArr.includes('(') === true) {
         calculateBrackets();
