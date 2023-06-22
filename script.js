@@ -180,19 +180,19 @@ function convertItemsToNumbers(arr) {
             }
         }
     }
-    console.log(tempArr);
-    equationArr = tempArr;
-    return equationArr;
+    console.log(`Converted array: [${tempArr}]`);
+    arr = tempArr;
+    return arr;
 }
 
 function calculate() {
     if (isNaN(Number(equationStr[equationStr.length-1])) === true) return
-    convertItemsToNumbers(equationArr);
-
+    
     if (equationArr.includes('(') === true) {
         calculateBrackets();
     }
-
+    
+    convertItemsToNumbers(equationArr);
     performOperations(equationArr);
 
     equationSolved = true;
@@ -212,49 +212,49 @@ function calculateBrackets() {
             slicePosition = i;
         }
         if (equationArr[i] === ')') {
-            console.log('Calculating brackets');
+            console.log('Calculating brackets...');
 
             bracketEquation = equationArr.slice(slicePosition+1, i);
             deleteCount = bracketEquation.length+2;
-            console.log(`Bracket equation:[${bracketEquation}]`)
+            console.log(`Bracket equation:[${bracketEquation}]`);
+
+            convertItemsToNumbers(bracketEquation);
 
             performOperations(bracketEquation);
-            console.log(`Bracket equation after calculation: [${bracketEquation[0]}]`)
+            console.log(`Bracket equation after calculation: [${bracketEquation[0]}]`);
             
-            console.log(`Delete count: ${deleteCount}`)
-
-            equationArr.splice(slicePosition, deleteCount, bracketEquation[0])
-            console.log(`Full equation after removing brackets: [${equationArr}]`)
-            
-            console.log('Bracket finished calculating');
+            equationArr.splice(slicePosition, deleteCount, bracketEquation[0]);
         }
     }
 }
 
-// i = slicePosition - 1;
-
 function performOperations(arr) {
+    console.log(`Performing operations... ${arr}`);
+  
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] === '*') {
-            arr.splice(i-1, 3, arr[i-1]*arr[i+1]);
-            i--;
+            console.log(`${arr[i-1]} * ${arr[i+1]}`)
+            arr.splice(i - 1, 3, arr[i - 1] * arr[i + 1]);
+            i -= 1;
         }
         if (arr[i] === '/') {
-            arr.splice(i-1, 3, arr[i-1]/arr[i+1]);
-            i--;
+            arr.splice(i - 1, 3, arr[i - 1] / arr[i + 1]);
+            i -= 1;
         }
     }
+  
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] === '+') {
-            arr.splice(i-1, 3, arr[i-1]+arr[i+1]);
-            i--;
+            arr.splice(i - 1, 3, arr[i - 1] + arr[i + 1]);
+            i -= 1;
         }
         if (arr[i] === '-') {
-            arr.splice(i-1, 3, arr[i-1]-arr[i+1]);
-            i--;
+            arr.splice(i - 1, 3, arr[i - 1] - arr[i + 1]);
+            i -= 1;
         }
     }
-    return arr;
+    console.log(arr)
+    return arr[0];
 }
 
 function equationArrToString(arr) {
