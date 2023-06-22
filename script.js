@@ -73,19 +73,31 @@ function enableEquationInput(object) {
     }
 }
 
+// function createNegativeNum() {
+//     if (equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-1])) === false && object[key].value === '-') {
+//         addNegativeNum = true;
+//         console.log(`Add negative: ${addNegativeNum}`)
+//         equationStr += object[key].value;
+//         updateMainDisplay();
+//         return
+//     } else if (equationStr[equationStr.length-1] === '(' && object[key].value !== '-') {
+//         return // allow entry of minus sign after open bracket
+//     }
+// }
+
 function updateEquation(object, key) {
     if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) {
-        if (equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-2])) === false && object[key].value === '-') {
+        if (equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-1])) === false || equationStr[equationStr.length-1] === '(' && object[key].value === '-') {
             addNegativeNum = true;
             console.log(`Add negative: ${addNegativeNum}`)
             equationStr += object[key].value;
             updateMainDisplay();
             return
-        } else if (equationStr[equationStr.length-1] === '(' && object[key].value !== '-') {
+        } else {
             return // allow entry of minus sign after open bracket
         }
     }
-    
+
     if (object === numberButtons) {
         if (equationSolved === true) {
             equationStr = '';
@@ -129,6 +141,7 @@ function addFloatingPoint() {
 function toggleNegativeNum() {
     for (let i = equationArr.length-1; i >= 0; i--) {
         if (i === 0 || isNaN(Number(equationArr[i-1])) === true && equationArr[i-1] !== '.') {
+            if (equationArr[i] === '(' || equationArr[i] === ')') return;
             equationArr[i] *= -1;
             equationArrToString(equationArr);
             if (Object.is(equationArr[i], -0) === true) { // add minus sign to floating point numbers beginning with 0
