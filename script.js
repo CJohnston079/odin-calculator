@@ -191,8 +191,10 @@ function calculate() {
     if (equationArr.includes('(') === true) {
         calculateBrackets();
     }
+    equationArr = convertItemsToNumbers(equationArr);
+
+    console.log(`Equation to be passed into performOperations:\n${equationArr}`)
     
-    convertItemsToNumbers(equationArr);
     performOperations(equationArr);
 
     equationSolved = true;
@@ -218,7 +220,7 @@ function calculateBrackets() {
             deleteCount = bracketEquation.length+2;
             console.log(`Bracket equation:[${bracketEquation}]`);
 
-            convertItemsToNumbers(bracketEquation);
+            bracketEquation = convertItemsToNumbers(bracketEquation);
 
             performOperations(bracketEquation);
             console.log(`Bracket equation after calculation: [${bracketEquation[0]}]`);
