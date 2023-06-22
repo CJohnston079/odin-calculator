@@ -72,12 +72,14 @@ function enableEquationInput(object) {
 
 function updateEquation(object, key) {
     if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) {
-        if (equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-2])) === false && object[key].value === '-' && ) {
+        if (equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-2])) === false && object[key].value === '-') {
             addNegativeNum = true;
             console.log(`Add negative: ${addNegativeNum}`)
             equationStr += object[key].value;
             updateMainDisplay();
             return
+        } else if (equationStr[equationStr.length-1] === ')') {
+
         } else return;
     }
     
@@ -200,6 +202,37 @@ function calculate() {
     updateHistory();
 }
 
+function calculateBrackets() {
+    let slicePosition = 0;
+    let bracketEquation = [];
+    let deleteCount = 0
+
+    for (let i = 0; i < equationArr.length; i++) {
+        if (equationArr[i] === '(') {
+            slicePosition = i;
+        }
+        if (equationArr[i] === ')') {
+            console.log('Calculating brackets');
+
+            bracketEquation = equationArr.slice(slicePosition+1, i);
+            deleteCount = bracketEquation.length+2;
+            console.log(`Bracket equation:[${bracketEquation}]`)
+
+            performOperations(bracketEquation);
+            console.log(`Bracket equation after calculation: [${bracketEquation[0]}]`)
+            
+            console.log(`Delete count: ${deleteCount}`)
+
+            equationArr.splice(slicePosition, deleteCount, bracketEquation[0])
+            console.log(`Full equation after removing brackets: [${equationArr}]`)
+            
+            console.log('Bracket finished calculating');
+        }
+    }
+}
+
+// i = slicePosition - 1;
+
 function performOperations(arr) {
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] === '*') {
@@ -270,6 +303,7 @@ function clearCharacter() {
 
 function clearAll() {
     equationStr = '';
+    equationSolved = false;
     floatingPointAdded = false;
     addNegativeNum = false;
     bracketsEnabled = false
