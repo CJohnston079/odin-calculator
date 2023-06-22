@@ -78,9 +78,9 @@ function updateEquation(object, key) {
             equationStr += object[key].value;
             updateMainDisplay();
             return
-        } else if (equationStr[equationStr.length-1] === ')') {
-
-        } else return;
+        } else if (equationStr[equationStr.length-1] === '(' && object[key].value !== '-') {
+            return // allow entry of minus sign after open bracket
+        }
     }
     
     if (object === numberButtons && equationSolved === true) {
