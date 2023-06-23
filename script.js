@@ -143,6 +143,8 @@ function toggleNegativeNum() {
 function toggleBrackets() {
     addNegativeNum = false
     if (bracketsEnabled === true && equationStr[equationStr.length-1] === '(') return;
+    if (equationStr[equationStr.length-1] === '.') return;
+
     if (bracketsEnabled === false) {
         equationStr += '(';
         bracketsEnabled = true;
