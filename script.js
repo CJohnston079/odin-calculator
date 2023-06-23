@@ -87,7 +87,7 @@ function updateEquation(object, key) {
         }
     }
 
-    if (object === numberButtons) {
+    if (object === numberButtons ) {
         if (equationSolved === true) {
             equationStr = '';
             equationArr = [];
@@ -144,6 +144,13 @@ function toggleNegativeNum() {
 
 function toggleBrackets() {
     addNegativeNum = false
+
+    if (equationSolved === true) {
+        equationStr = '';
+        equationArr = [];
+        equationSolved = false;
+    }
+
     if (bracketsEnabled === true && equationStr[equationStr.length-1] === '(') return;
     if (equationStr[equationStr.length-1] === '.') return;
 
