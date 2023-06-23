@@ -76,13 +76,12 @@ function enableEquationInput(object) {
 function updateEquation(object, key) {
     if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) {
         if (equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-1])) === true && object[key].value === '-') {
+            if (addNegativeNum === true) return;
             addNegativeNum = true;
             console.log(`Add negative: ${addNegativeNum}`)
             equationStr += object[key].value;
             updateMainDisplay();
             return
-        // } else if (equationStr[equationStr.length-1] === '(' && object[key].value !== '-') {
-        //     return // allow entry of minus sign after open bracket
         }
     }
 
