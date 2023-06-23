@@ -73,28 +73,16 @@ function enableEquationInput(object) {
     }
 }
 
-// function createNegativeNum() {
-//     if (equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-1])) === false && object[key].value === '-') {
-//         addNegativeNum = true;
-//         console.log(`Add negative: ${addNegativeNum}`)
-//         equationStr += object[key].value;
-//         updateMainDisplay();
-//         return
-//     } else if (equationStr[equationStr.length-1] === '(' && object[key].value !== '-') {
-//         return // allow entry of minus sign after open bracket
-//     }
-// }
-
 function updateEquation(object, key) {
     if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) {
-        if (equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-1])) === false || equationStr[equationStr.length-1] === '(' && object[key].value === '-') {
+        if (equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-1])) === true && object[key].value === '-') {
             addNegativeNum = true;
             console.log(`Add negative: ${addNegativeNum}`)
             equationStr += object[key].value;
             updateMainDisplay();
             return
-        } else {
-            return // allow entry of minus sign after open bracket
+        // } else if (equationStr[equationStr.length-1] === '(' && object[key].value !== '-') {
+        //     return // allow entry of minus sign after open bracket
         }
     }
 
@@ -154,6 +142,7 @@ function toggleNegativeNum() {
 }
 
 function toggleBrackets() {
+    addNegativeNum = false
     if (bracketsEnabled === true && equationStr[equationStr.length-1] === '(') return;
     if (bracketsEnabled === false) {
         equationStr += '(';
