@@ -75,13 +75,15 @@ function enableEquationInput(object) {
 
 function updateEquation(object, key) {
     if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) {
-        if (equationStr.length === 0 || isNaN(Number(equationStr[equationStr.length-1])) === true) {
-            if (object[key].value !== '-' || addNegativeNum === true) return;
+        if (object[key].value === '-' && addNegativeNum === false) {
             addNegativeNum = true;
-            console.log(`Add negative: ${addNegativeNum}`)
+            console.log(`Add negative: ${addNegativeNum}`);
             equationStr += object[key].value;
             updateMainDisplay();
-            return
+            return;
+        } else if (equationStr[equationStr.length-1] !== ')') {
+            console.log('Please enter a valid sign before operating.');
+            return;
         }
     }
 
