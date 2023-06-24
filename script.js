@@ -9,7 +9,6 @@ const functionButtons = {
     clear: operationButtonElements[1],
     allClear: operationButtonElements[0],
     brackets: functionButtonElements[4],
-    pi: functionButtonElements[5],
     factorial: functionButtonElements[6],
     percent: functionButtonElements[7],
     power: functionButtonElements[8],
@@ -36,6 +35,7 @@ const numberButtons = {
     '9': { element: numberButtonElements[8], value: 9 },
     '.': { element: numberButtonElements[11], value: '.' },
     '±': { element: numberButtonElements[9], value: '±' },
+    'pi': { element: functionButtonElements[5], value: 3.141592653}
 }
 
 const operationButtons = {
