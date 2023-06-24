@@ -143,16 +143,17 @@ function toggleNegativeNum() {
 }
 
 function toggleBrackets() {
+    if (bracketsEnabled === true && equationStr[equationStr.length-1] === '(') return;
+    if (equationStr[equationStr.length-1] === '.') return;
+
     addNegativeNum = false
+    console.log(`Add negative: ${addNegativeNum}`);
 
     if (equationSolved === true) {
         equationStr = '';
         equationArr = [];
         equationSolved = false;
-    }
-
-    if (bracketsEnabled === true && equationStr[equationStr.length-1] === '(') return;
-    if (equationStr[equationStr.length-1] === '.') return;
+    }    
 
     if (bracketsEnabled === false) {
         equationStr += '(';
@@ -176,6 +177,7 @@ function pushToEquationArr() {
         if (addNegativeNum === true) {
             equationArr[equationArr.length-1] *= -1;
             addNegativeNum = false;
+            console.log(`Add negative: ${addNegativeNum}`);
         }
     }
 }
@@ -313,6 +315,7 @@ function clearCharacter() {
 
     if (addNegativeNum === true) {
         addNegativeNum = false;
+        console.log(`Add negative: ${addNegativeNum}`);
         equationStr = equationStr.slice(0,-1);
         updateMainDisplay();
         return;
