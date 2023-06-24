@@ -51,6 +51,7 @@ let history = [];
 let equationSolved = false;
 let floatingPointAdded = false;
 let addNegativeNum = false;
+let addNegativeBrackets = true;
 let bracketsEnabled = false;
 
 numberButtons['.'].element.addEventListener('mousedown', addFloatingPoint);
@@ -146,8 +147,12 @@ function toggleBrackets() {
     if (bracketsEnabled === true && equationStr[equationStr.length-1] === '(') return;
     if (equationStr[equationStr.length-1] === '.') return;
 
-    addNegativeNum = false
-    console.log(`Add negative: ${addNegativeNum}`);
+    if (addNegativeNum === true) {
+        addNegativeNum = false
+        console.log(`Add negative: ${addNegativeNum}`);
+        addNegativeBrackets = true;
+        console.log(`Add negative brackets: ${addNegativeBrackets}`);
+    }
 
     if (equationSolved === true) {
         equationStr = '';
@@ -235,23 +240,28 @@ function calculateBrackets() {
     let deleteCount = 0
 
     for (let i = 0; i < equationArr.length; i++) {
-        console.log(equationArr[i]);
         if (equationArr[i] === '(') {
             slicePosition = i;
-            console.log(`Slice position updated.`)
         }
         if (equationArr[i] === ')') {
             console.log('Calculating brackets...');
-            console.log(`Slicing from ${equationArr[slicePosition+1]}, to ${equationArr[i]}`)
 
             bracketEquation = equationArr.slice(slicePosition+1, i);
             deleteCount = bracketEquation.length+2;
             console.log(`Bracket equation:[${bracketEquation}]`);
 
             bracketEquation = convertItemsToNumbers(bracketEquation);
+            console.log(`Bracket equation after calculation: [${bracketEquation[0]}]`);
 
             performOperations(bracketEquation);
-            console.log(`Bracket equation after calculation: [${bracketEquation[0]}]`);
+            
+            if (addNegativeBrackets === true) {
+                bracketEquation[0] *= -1;
+                console.log(`Brackets multiplied by -1 = [${bracketEquation[0]}]`);
+
+                addNegativeBrackets = false;
+                console.log(`Add negative brackets: ${addNegativeBrackets}`);
+            }
             
             equationArr.splice(slicePosition, deleteCount, bracketEquation[0]);
 
@@ -274,7 +284,7 @@ function performOperations(arr) {
             i -= 1;
         }
     }
-  
+
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] === '+') {
             arr.splice(i - 1, 3, arr[i - 1] + arr[i + 1]);
