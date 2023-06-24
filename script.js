@@ -9,6 +9,7 @@ const functionButtons = {
     clear: operationButtonElements[1],
     allClear: operationButtonElements[0],
     brackets: functionButtonElements[4],
+    pi: functionButtonElements[5],
     factorial: functionButtonElements[6],
     percent: functionButtonElements[7],
     power: functionButtonElements[8],
@@ -35,7 +36,6 @@ const numberButtons = {
     '9': { element: numberButtonElements[8], value: 9 },
     '.': { element: numberButtonElements[11], value: '.' },
     '±': { element: numberButtonElements[9], value: '±' },
-    'pi': { element: functionButtonElements[5], value: 3.141592653}
 }
 
 const operationButtons = {
@@ -60,6 +60,7 @@ numberButtons['±'].element.addEventListener('mousedown', toggleNegativeNum);
 functionButtons.equals.addEventListener('mousedown', calculate);
 
 functionButtons.brackets.addEventListener('mousedown', toggleBrackets);
+functionButtons.pi.addEventListener('mousedown', insertPi);
 
 enableEquationInput(numberButtons);
 enableEquationInput(operationButtons);
@@ -72,6 +73,11 @@ function enableEquationInput(object) {
             // updateMainDisplay();
         });
     }
+}
+
+function round(num, decimalPlaces) {
+    num = Math.round(num*decimalPlaces)/decimalPlaces;
+    return num;
 }
 
 function updateEquation(object, key) {
@@ -115,6 +121,11 @@ function updateMainDisplay() {
     console.log(equationArr);
 }
 
+function insertPi() {
+    equationStr += round(Math.PI, 100);
+    equationArr.push(Math.PI);
+    updateMainDisplay()
+}
 
 function addFloatingPoint() {
     if (floatingPointAdded === true) return;
