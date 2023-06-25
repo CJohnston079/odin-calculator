@@ -123,8 +123,10 @@ function updateMainDisplay() {
 }
 
 function insertPi() {
+    if (floatingPointAdded === true) return;
     equationStr += round(Math.PI, 100);
     equationArr.push(Math.PI);
+    floatingPointAdded = true;
     updateMainDisplay()
 }
 
