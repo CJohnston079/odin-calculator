@@ -53,6 +53,7 @@ let floatingPointAdded = false;
 let addNegativeNum = false;
 let addNegativeBrackets = true;
 let bracketsEnabled = false;
+let decimalPlaces = 1000000000;
 
 numberButtons['.'].element.addEventListener('mousedown', addFloatingPoint);
 numberButtons['±'].element.addEventListener('mousedown', toggleNegativeNum);
@@ -249,6 +250,7 @@ function calculate() {
 
     equationSolved = true;
     equationArrToString(equationArr);
+    equationStr = (round(equationStr, decimalPlaces)).toString();
     solutionToArray(equationStr);
     updateMainDisplay();
     updateHistory();
