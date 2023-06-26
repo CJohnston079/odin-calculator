@@ -10,6 +10,7 @@ const functionButtons = {
     allClear: operationButtonElements[0],
     brackets: functionButtonElements[4],
     pi: functionButtonElements[5],
+    factorial: functionButtonElements[6],
     percent: functionButtonElements[7],
     power: functionButtonElements[8],
     root: functionButtonElements[9]
@@ -61,6 +62,7 @@ functionButtons.equals.addEventListener('mousedown', calculate);
 
 functionButtons.brackets.addEventListener('mousedown', toggleBrackets);
 functionButtons.pi.addEventListener('mousedown', insertPi);
+functionButtons.factorial.addEventListener('mousedown', insertFactorial);
 
 enableEquationInput(numberButtons);
 enableEquationInput(operationButtons);
@@ -81,7 +83,7 @@ function round(num, decimalPlaces) {
 }
 
 function updateEquation(object, key) {
-    if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true) {
+    if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true && equationArr[equationArr.length-1] !== '!') {
         if (object[key].value === '-' && addNegativeNum === false) {
             addNegativeNum = true;
             console.log(`Add negative: ${addNegativeNum}`);
@@ -130,8 +132,10 @@ function insertPi() {
 }
 
 function insertFactorial() {
+    if (isNaN(Number(equationStr[equationStr.length-1]))) return;
     equationStr += '!';
     equationArr.push('!');
+    updateMainDisplay()
 }
 
 function addFloatingPoint() {
