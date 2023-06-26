@@ -52,6 +52,7 @@ let equationSolved = false;
 let floatingPointAdded = false;
 let factorialAdded = false;
 let addNegativeNum = false;
+let isNegativeNum = false;
 let addNegativeBrackets = true;
 let bracketsEnabled = false;
 let decimalPlaces = 1000000000;
@@ -89,6 +90,7 @@ function updateEquation(object, key) {
             addNegativeNum = true;
             console.log(`Add negative: ${addNegativeNum}`);
             equationStr += object[key].value;
+            isNegativeNum = true;
             updateMainDisplay();
             return;
         } else if (equationStr[equationStr.length-1] !== ')') {
@@ -110,6 +112,7 @@ function updateEquation(object, key) {
     if (object === operationButtons) {
         floatingPointAdded = false;
         factorialAdded = false;
+        isNegativeNum = false;
     }
         
     
@@ -137,6 +140,7 @@ function insertPi() {
 }
 
 function insertFactorial() {
+    if (isNegativeNum === true) return;
     if (isNaN(Number(equationStr[equationStr.length-1])) && factorialAdded === false) return;
     equationStr += '!';
     equationArr.push('!');
@@ -157,6 +161,7 @@ function addFloatingPoint() {
 }
 
 function toggleNegativeNum() {
+    if (factorialAdded === true) return;
     for (let i = equationArr.length-1; i >= 0; i--) {
         if (i === 0 || isNaN(Number(equationArr[i-1])) === true && equationArr[i-1] !== '.') {
             if (equationArr[i] === '(' || equationArr[i] === ')') return;
@@ -168,6 +173,7 @@ function toggleNegativeNum() {
             break;
         }
     }
+    isNegativeNum = true;
     updateMainDisplay();
 }
 
@@ -403,6 +409,7 @@ function clearAll() {
     floatingPointAdded = false;
     factorialAdded = false;
     addNegativeNum = false;
+    isNegativeNum = false;
     bracketsEnabled = false
     clearEquationArr();
     clearHistory();
