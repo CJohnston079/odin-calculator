@@ -50,6 +50,7 @@ let equationArr = [];
 let history = [];
 let equationSolved = false;
 let floatingPointAdded = false;
+let factorialAdded = false;
 let addNegativeNum = false;
 let addNegativeBrackets = true;
 let bracketsEnabled = false;
@@ -106,7 +107,11 @@ function updateEquation(object, key) {
         }
     }
 
-    if (object === operationButtons) floatingPointAdded = false;
+    if (object === operationButtons) {
+        floatingPointAdded = false;
+        factorialAdded = false;
+    }
+        
     
     equationSolved = false;
     equationStr += object[key].value;
@@ -132,9 +137,10 @@ function insertPi() {
 }
 
 function insertFactorial() {
-    if (isNaN(Number(equationStr[equationStr.length-1]))) return;
+    if (isNaN(Number(equationStr[equationStr.length-1])) && factorialAdded === false) return;
     equationStr += '!';
     equationArr.push('!');
+    factorialAdded = true;
     updateMainDisplay()
 }
 
@@ -368,6 +374,7 @@ functionButtons.allClear.addEventListener('mousedown', clearAll);
 
 function clearCharacter() {
     if (equationStr[equationStr.length-1] === '.') floatingPointAdded = false;
+    if (equationStr[equationStr.length-1] === '!') factorialAdded = false;
 
     if (addNegativeNum === true) {
         addNegativeNum = false;
@@ -394,6 +401,7 @@ function clearAll() {
     equationStr = '';
     equationSolved = false;
     floatingPointAdded = false;
+    factorialAdded = false;
     addNegativeNum = false;
     bracketsEnabled = false
     clearEquationArr();
