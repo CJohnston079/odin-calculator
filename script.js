@@ -238,7 +238,7 @@ function convertItemsToNumbers(arr) {
 }
 
 function calculate() {
-    if (isNaN(Number(equationStr[equationStr.length-1])) === true && equationStr[equationStr.length-1] !== ')') return
+    if (isNaN(Number(equationStr[equationStr.length-1])) === true && equationStr[equationStr.length-1] !== ')' && equationStr[equationStr.length-1] !== '!') return
     
     if (bracketsEnabled === true) {
         if (isNaN(Number(equationStr[equationStr.length-1])) === false) {
@@ -304,31 +304,45 @@ function calculateBrackets() {
 
 function performOperations(arr) {
     console.log(`Performing operations... ${arr}`);
+
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === '!') {
+            arr.splice(i - 1, 3, calculateFactorial(arr[i-1]));
+            i--;
+        }
+    }
   
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] === '*') {
-            console.log(`${arr[i-1]} * ${arr[i+1]}`)
             arr.splice(i - 1, 3, arr[i - 1] * arr[i + 1]);
-            i -= 1;
+            i--;
         }
         if (arr[i] === '/') {
             arr.splice(i - 1, 3, arr[i - 1] / arr[i + 1]);
-            i -= 1;
+            i--;
         }
     }
 
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] === '+') {
             arr.splice(i - 1, 3, arr[i - 1] + arr[i + 1]);
-            i -= 1;
+            i--;
         }
         if (arr[i] === '-') {
             arr.splice(i - 1, 3, arr[i - 1] - arr[i + 1]);
-            i -= 1;
+            i--;
         }
     }
     console.log(arr)
     return arr[0];
+}
+
+function calculateFactorial(num) {
+    for (let i = num-1; i >= 1; i--) {
+        num *= i;
+        console.log(num);
+    }
+    return num
 }
 
 function equationArrToString(arr) {
