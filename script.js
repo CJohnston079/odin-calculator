@@ -141,6 +141,7 @@ function insertPi() {
 
 function insertFactorial() {
     if (isNegativeNum === true) return;
+    if (floatingPointAdded === true) return;
     if (isNaN(Number(equationStr[equationStr.length-1])) && factorialAdded === false) return;
     equationStr += '!';
     equationArr.push('!');
