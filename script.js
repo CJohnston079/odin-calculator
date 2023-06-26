@@ -10,7 +10,6 @@ const functionButtons = {
     allClear: operationButtonElements[0],
     brackets: functionButtonElements[4],
     pi: functionButtonElements[5],
-    factorial: functionButtonElements[6],
     percent: functionButtonElements[7],
     power: functionButtonElements[8],
     root: functionButtonElements[9]
@@ -128,6 +127,11 @@ function insertPi() {
     equationArr.push(Math.PI);
     floatingPointAdded = true;
     updateMainDisplay()
+}
+
+function insertFactorial() {
+    equationStr += '!';
+    equationArr.push('!');
 }
 
 function addFloatingPoint() {
