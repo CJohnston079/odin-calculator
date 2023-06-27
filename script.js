@@ -122,6 +122,10 @@ function updateEquation(object, key) {
     updateMainDisplay();
 }
 
+// function insertNumber(object, key) {
+
+// }
+
 function updateMainDisplay() {
     if (equationStr === '') {
         calculationDisplay.textContent = 0;
@@ -147,6 +151,24 @@ function insertFactorial() {
     equationArr.push('!');
     factorialAdded = true;
     updateMainDisplay()
+}
+
+function insertPercentage() {
+    /*
+    Determine what a specific percentage is of another number.
+    For example, enter 600 x 15 and hit the percent key.
+    You see the answer is 90, which means that 90 is 15 percent of 600.
+
+    Calculate a percentage of a number and add it to the number.
+    For example, enter 34 + 7 and hit the percent key.
+    You immediately see the answer is 36.38.
+    This is useful for figuring sales tax on purchase items.
+
+    Figure a percentage of a number and subtract it from the number.
+    For example, enter 79 – 30 and hit the percent key.
+    You see the answer is 55.3.
+    This is useful for figuring sale prices on purchase items.
+    */
 }
 
 function addFloatingPoint() {
@@ -376,55 +398,59 @@ function updateHistory() {
     return history;
 }
 
-functionButtons.clear.addEventListener('mousedown', clearCharacter);
-functionButtons.allClear.addEventListener('mousedown', clearAll);
-
-function clearCharacter() {
-    if (equationStr[equationStr.length-1] === '.') floatingPointAdded = false;
-    if (equationStr[equationStr.length-1] === '!') factorialAdded = false;
-
-    if (addNegativeNum === true) {
-        addNegativeNum = false;
-        console.log(`Add negative: ${addNegativeNum}`);
+const clearFunctions = {
+    clearCharacter() {
+        if (equationStr[equationStr.length-1] === '.') floatingPointAdded = false;
+        if (equationStr[equationStr.length-1] === '!') factorialAdded = false;
+    
+        if (addNegativeNum === true) {
+            addNegativeNum = false;
+            equationStr = equationStr.slice(0,-1);
+            updateMainDisplay();
+            return;
+        }
+    
+        if (equationStr[equationStr.length-2] === '-' && isNaN(Number(equationStr[equationStr.length-3])) === true) {
+            addNegativeNum = true;
+        }
+    
+        if (equationStr[equationStr.length-1] === '(') {
+            bracketsEnabled = false;
+        } else if (equationStr[equationStr.length-1] === ')') {
+            bracketsEnabled = true;
+        }
+    
         equationStr = equationStr.slice(0,-1);
+        equationArr.pop();
         updateMainDisplay();
-        return;
-    }
-    if (equationStr[equationStr.length-2] === '-' && isNaN(Number(equationStr[equationStr.length-3])) === true) addNegativeNum = true;
-
-    if (equationStr[equationStr.length-1] === '(') {
+        return equationStr;
+    },
+    clearAll() {
+        clearFunctions.resetVariables();
+        clearFunctions.clearEquation();
+        clearFunctions.clearHistory();
+        updateMainDisplay();
+        console.clear();
+        return equationArr;
+    },
+    clearEquation() {
+        equationStr = '';
+        equationArr = [];
+        return equationArr;
+    },
+    clearHistory() {
+        history = [];
+        return history;
+    },
+    resetVariables() {
+        equationSolved = false;
+        floatingPointAdded = false;
+        factorialAdded = false;
+        addNegativeNum = false;
+        isNegativeNum = false;
         bracketsEnabled = false;
-    } else if (equationStr[equationStr.length-1] === ')') {
-        bracketsEnabled = true;
-    }
-
-    equationStr = equationStr.slice(0,-1);
-    equationArr.pop();
-    updateMainDisplay();
-    return equationStr;
+    },
 }
 
-function clearAll() {
-    equationStr = '';
-    equationSolved = false;
-    floatingPointAdded = false;
-    factorialAdded = false;
-    addNegativeNum = false;
-    isNegativeNum = false;
-    bracketsEnabled = false
-    clearEquationArr();
-    clearHistory();
-    updateMainDisplay();
-    console.clear();
-    return equationStr;
-}
-
-function clearHistory() {
-    history = [];
-    return history;
-}
-
-function clearEquationArr() {
-    equationArr = [];
-    return equationArr;
-}
+functionButtons.clear.addEventListener('mousedown', clearFunctions.clearCharacter);
+functionButtons.allClear.addEventListener('mousedown', clearFunctions.clearAll);
