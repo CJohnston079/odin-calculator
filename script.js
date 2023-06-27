@@ -63,20 +63,34 @@ numberButtons['±'].element.addEventListener('mousedown', toggleNegativeNum);
 functionButtons.equals.addEventListener('mousedown', calculate);
 
 functionButtons.brackets.addEventListener('mousedown', toggleBrackets);
-functionButtons.pi.addEventListener('mousedown', insertPi);
-functionButtons.factorial.addEventListener('mousedown', insertFactorial);
+functionButtons.pi.addEventListener('mousedown', inputPi);
+functionButtons.factorial.addEventListener('mousedown', inputFactorial);
 
-enableEquationInput(numberButtons);
-enableEquationInput(operationButtons);
+enableInput(numberButtons);
+enableInput(operationButtons);
 
-function enableEquationInput(object) {
+function enableInput(object) {
     for (const key in object) {
         if (object[key].value === '.' || object[key].value === '±') continue;
         object[key].element.addEventListener('mousedown', () => {
-            updateEquation(object, key)
-            // updateMainDisplay();
+            updateEquationOld(object, key)
         });
     }
+}
+
+function udpdateEquation(object, key) {
+    equationStr += object[key].value;
+    pushToEquationArr();
+    updateDisplay();
+}
+
+function updateDisplay() {
+    if (equationStr === '') {
+        calculationDisplay.textContent = 0;
+        return;
+    }
+    calculationDisplay.textContent = equationStr;
+    console.log(equationArr);
 }
 
 function round(num, decimalPlaces) {
@@ -84,14 +98,14 @@ function round(num, decimalPlaces) {
     return num;
 }
 
-function updateEquation(object, key) {
+function updateEquationOld(object, key) {
     if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true && equationArr[equationArr.length-1] !== '!') {
         if (object[key].value === '-' && addNegativeNum === false) {
             addNegativeNum = true;
             console.log(`Add negative: ${addNegativeNum}`);
             equationStr += object[key].value;
             isNegativeNum = true;
-            updateMainDisplay();
+            updateDisplay();
             return;
         } else if (equationStr[equationStr.length-1] !== ')') {
             console.log('Please enter a valid sign before operating.');
@@ -118,41 +132,31 @@ function updateEquation(object, key) {
     equationSolved = false;
     equationStr += object[key].value;
     pushToEquationArr();
-    updateMainDisplay();
+    updateDisplay();
 }
 
-function insertNumber(object, key) {
-
+function inputNumber(object, key) {
 }
 
-function updateMainDisplay() {
-    if (equationStr === '') {
-        calculationDisplay.textContent = 0;
-        return;
-    }
-    calculationDisplay.textContent = equationStr;
-    console.log(equationArr);
-}
-
-function insertPi() {
+function inputPi() {
     if (floatingPointAdded === true) return;
     equationStr += round(Math.PI, 100);
     equationArr.push(Math.PI);
     floatingPointAdded = true;
-    updateMainDisplay()
+    updateDisplay()
 }
 
-function insertFactorial() {
+function inputFactorial() {
     if (isNegativeNum === true) return;
     if (floatingPointAdded === true) return;
     if (isNaN(Number(equationStr[equationStr.length-1])) && factorialAdded === false) return;
     equationStr += '!';
     equationArr.push('!');
     factorialAdded = true;
-    updateMainDisplay()
+    updateDisplay()
 }
 
-function insertPercentage() {
+function inputPercentage() {
     /*
     Determine what a specific percentage is of another number.
     For example, enter 600 x 15 and hit the percent key.
@@ -175,11 +179,11 @@ function addFloatingPoint() {
     floatingPointAdded = true;
 
     if (equationSolved === true || equationStr === '' || isNaN(Number(equationStr[equationStr.length-1]))) {
-        updateEquation(numberButtons, ['0'])
+        updateEquationOld(numberButtons, ['0'])
     }
 
-    updateEquation(numberButtons, ['.']),
-    updateMainDisplay();
+    updateEquationOld(numberButtons, ['.']),
+    updateDisplay();
 }
 
 function toggleNegativeNum() {
@@ -196,7 +200,7 @@ function toggleNegativeNum() {
         }
     }
     isNegativeNum = true;
-    updateMainDisplay();
+    updateDisplay();
 }
 
 function toggleBrackets() {
@@ -227,7 +231,7 @@ function toggleBrackets() {
         bracketsEnabled = false;
     }
     pushToEquationArr();
-    updateMainDisplay();
+    updateDisplay();
 }
 
 function pushToEquationArr() {
@@ -296,7 +300,7 @@ function calculate() {
     equationArrToString(equationArr);
     equationStr = (round(equationStr, decimalPlaces)).toString();
     solutionToArray(equationStr);
-    updateMainDisplay();
+    updateDisplay();
     updateHistory();
 }
 
@@ -415,7 +419,7 @@ const clear = {
         if (addNegativeNum === true) {
             addNegativeNum = false;
             equationStr = equationStr.slice(0,-1);
-            updateMainDisplay();
+            updateDisplay();
             return;
         }
     
@@ -431,14 +435,14 @@ const clear = {
     
         equationStr = equationStr.slice(0,-1);
         equationArr.pop();
-        updateMainDisplay();
+        updateDisplay();
         return equationArr;
     },
     all: function() {
         clear.variables();
         clear.equation();
         clear.equationHistory();
-        updateMainDisplay();
+        updateDisplay();
         console.clear();
         return equationArr;
     }
