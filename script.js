@@ -57,7 +57,20 @@ let addNegativeBrackets = true;
 let bracketsEnabled = false;
 let decimalPlaces = 1000000000;
 
-numberButtons['.'].element.addEventListener('mousedown', addFloatingPoint);
+for (const key in operationButtons) {
+    operationButtons[key].element.addEventListener('mousedown', () => {
+        inputOperation(key)
+    });
+}
+
+for (const key in numberButtons) {
+    if (numberButtons[key].value === '.' || numberButtons[key].value === '±') continue;
+    numberButtons[key].element.addEventListener('mousedown', () => {
+        inputNumber(key)
+    });
+}
+
+numberButtons['.'].element.addEventListener('mousedown', inputFloatingPoint);
 numberButtons['±'].element.addEventListener('mousedown', toggleNegativeNum);
 
 functionButtons.equals.addEventListener('mousedown', calculate);
@@ -66,30 +79,16 @@ functionButtons.brackets.addEventListener('mousedown', toggleBrackets);
 functionButtons.pi.addEventListener('mousedown', inputPi);
 functionButtons.factorial.addEventListener('mousedown', inputFactorial);
 
-enableInput(numberButtons);
-enableInput(operationButtons);
-
-function enableInput(object) {
-    for (const key in object) {
-        if (object[key].value === '.' || object[key].value === '±') continue;
-        object[key].element.addEventListener('mousedown', () => {
-            updateEquationOld(object, key)
-        });
-    }
-}
-
 function udpdateEquation(object, key) {
+    equationSolved === true ? equationSolved = false : {};
     equationStr += object[key].value;
     pushToEquationArr();
     updateDisplay();
 }
 
 function updateDisplay() {
-    if (equationStr === '') {
-        calculationDisplay.textContent = 0;
-        return;
-    }
-    calculationDisplay.textContent = equationStr;
+    equationStr !== '' ? calculationDisplay.textContent = equationStr : 
+    calculationDisplay.textContent = 0;
     console.log(equationArr);
 }
 
@@ -126,16 +125,40 @@ function updateEquationOld(object, key) {
         floatingPointAdded = false;
         factorialAdded = false;
         isNegativeNum = false;
-    }
-        
+    } 
     
     equationSolved = false;
-    equationStr += object[key].value;
-    pushToEquationArr();
-    updateDisplay();
+    udpdateEquation(object, key);
 }
 
-function inputNumber(object, key) {
+function inputOperation(key) {
+    if (isNaN(Number(equationStr[equationStr.length-1])) === true && equationArr[equationArr.length-1] !== '!') {
+        if (operationButtons[key].value === '-' && addNegativeNum === false) {
+            addNegativeNum = true;
+            console.log(`Add negative: ${addNegativeNum}`);
+            equationStr += operationButtons[key].value;
+            isNegativeNum = true;
+            updateDisplay();
+            return;
+        } else if (equationStr[equationStr.length-1] !== ')') {
+            console.log('Please enter a valid sign before operating.');
+            return;
+        }
+    }
+    floatingPointAdded = false;
+    factorialAdded = false;
+    isNegativeNum = false;
+    udpdateEquation(operationButtons, key);
+}
+
+function inputNumber(key) {
+    if (equationSolved === true) {
+        clear.equation();
+    }
+    if (equationArr[equationArr.length-1] === ')') {
+        equationArr.push('*'); // adds multipliers between brackets if no operation is specified
+    }
+    udpdateEquation(numberButtons, key)
 }
 
 function inputPi() {
@@ -174,7 +197,7 @@ function inputPercentage() {
     */
 }
 
-function addFloatingPoint() {
+function inputFloatingPoint() {
     if (floatingPointAdded === true) return;
     floatingPointAdded = true;
 
