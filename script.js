@@ -101,8 +101,7 @@ function updateEquation(object, key) {
 
     if (object === numberButtons ) {
         if (equationSolved === true) {
-            equationStr = '';
-            equationArr = [];
+            clear.equation();
         }
         if (equationArr[equationArr.length-1] === ')') {
             equationArr.push('*');
@@ -122,9 +121,9 @@ function updateEquation(object, key) {
     updateMainDisplay();
 }
 
-// function insertNumber(object, key) {
+function insertNumber(object, key) {
 
-// }
+}
 
 function updateMainDisplay() {
     if (equationStr === '') {
@@ -311,23 +310,16 @@ function calculateBrackets() {
             slicePosition = i;
         }
         if (equationArr[i] === ')') {
-            console.log('Calculating brackets...');
-
             bracketEquation = equationArr.slice(slicePosition+1, i);
             deleteCount = bracketEquation.length+2;
-            console.log(`Bracket equation:[${bracketEquation}]`);
 
             bracketEquation = convertItemsToNumbers(bracketEquation);
-            console.log(`Bracket equation after calculation: [${bracketEquation[0]}]`);
 
             performOperations(bracketEquation);
             
             if (addNegativeBrackets === true) {
                 bracketEquation[0] *= -1;
-                console.log(`Brackets multiplied by -1 = [${bracketEquation[0]}]`);
-
                 addNegativeBrackets = false;
-                console.log(`Add negative brackets: ${addNegativeBrackets}`);
             }
             
             equationArr.splice(slicePosition, deleteCount, bracketEquation[0]);
@@ -398,8 +390,25 @@ function updateHistory() {
     return history;
 }
 
-const clearFunctions = {
-    clearCharacter() {
+const clear = {
+    equation: function() {
+        equationStr = '';
+        equationArr = [];
+        return equationArr;
+    },
+    equationHistory: function() {
+        history = [];
+        return history;
+    },
+    variables: function() {
+        equationSolved = false;
+        floatingPointAdded = false;
+        factorialAdded = false;
+        addNegativeNum = false;
+        isNegativeNum = false;
+        bracketsEnabled = false;
+    },
+    character: function() {
         if (equationStr[equationStr.length-1] === '.') floatingPointAdded = false;
         if (equationStr[equationStr.length-1] === '!') factorialAdded = false;
     
@@ -423,34 +432,17 @@ const clearFunctions = {
         equationStr = equationStr.slice(0,-1);
         equationArr.pop();
         updateMainDisplay();
-        return equationStr;
+        return equationArr;
     },
-    clearAll() {
-        clearFunctions.resetVariables();
-        clearFunctions.clearEquation();
-        clearFunctions.clearHistory();
+    all: function() {
+        clear.variables();
+        clear.equation();
+        clear.equationHistory();
         updateMainDisplay();
         console.clear();
         return equationArr;
-    },
-    clearEquation() {
-        equationStr = '';
-        equationArr = [];
-        return equationArr;
-    },
-    clearHistory() {
-        history = [];
-        return history;
-    },
-    resetVariables() {
-        equationSolved = false;
-        floatingPointAdded = false;
-        factorialAdded = false;
-        addNegativeNum = false;
-        isNegativeNum = false;
-        bracketsEnabled = false;
-    },
+    }
 }
 
-functionButtons.clear.addEventListener('mousedown', clearFunctions.clearCharacter);
-functionButtons.allClear.addEventListener('mousedown', clearFunctions.clearAll);
+functionButtons.clear.addEventListener('mousedown', clear.character);
+functionButtons.allClear.addEventListener('mousedown', clear.all);
