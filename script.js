@@ -48,11 +48,12 @@ const operationButtons = {
 let equationStr = '';
 let equationArr = [];
 let history = [];
+let prevCharacter;
 
 let isEquationSolved = false;
 let floatingPointInputted = false;
 let isFactorialInputted = false;
-let insertNegativeNum = false;
+let inputNegativeNum = false;
 let isNegativeNum = false;
 let toggleNegativeBrackets = false;
 let areBracketsEnabled = false;
@@ -75,17 +76,36 @@ for (const key in numberButtons) {
 numberButtons['.'].element.addEventListener('mousedown', inputFloatingPoint);
 numberButtons['±'].element.addEventListener('mousedown', toggleNegativeNum);
 
-functionButtons.equals.addEventListener('mousedown', calculate);
-
 functionButtons.brackets.addEventListener('mousedown', toggleBrackets);
 functionButtons.pi.addEventListener('mousedown', inputPi);
 functionButtons.factorial.addEventListener('mousedown', inputFactorial);
 
+functionButtons.equals.addEventListener('mousedown', calculate);
+
 function udpdateEquation(object, key) {
     isEquationSolved === true ? isEquationSolved = false : {};
     equationStr += object[key].value;
-    pushToEquationArr();
+    updateEquationArr();
     updateDisplay();
+}
+
+function updateEquationArr() {
+    if (isNaN(Number(equationStr[equationStr.length-1])) === true) {
+        equationArr.push(equationStr[equationStr.length-1]);
+    } else {
+        equationArr.push(Number(equationStr[equationStr.length-1]));
+        if (inputNegativeNum === true) {
+            equationArr[equationArr.length-1] *= -1;
+            inputNegativeNum = false;
+            console.log(`Negative number inputted.`);
+        }
+    }
+    updatePrevCharacter();
+}
+
+function updatePrevCharacter() {
+    prevCharacter = equationArr[equationArr.length-1];
+    return prevCharacter
 }
 
 function updateDisplay() {
@@ -99,53 +119,12 @@ function round(num, decimalPlaces) {
     return num;
 }
 
-function updateEquationOld(object, key) {
-    // if (object === operationButtons && isNaN(Number(equationStr[equationStr.length-1])) === true && equationArr[equationArr.length-1] !== '!') {
-    //     if (object[key].value === '-' && insertNegativeNum === false) {
-    //         insertNegativeNum = true;
-    //         console.log(`Add negative: ${insertNegativeNum}`);
-    //         equationStr += object[key].value;
-    //         isNegativeNum = true;
-    //         updateDisplay();
-    //         return;
-    //     } else if (equationStr[equationStr.length-1] !== ')') {
-    //         console.log('Please enter a valid sign before operating.');
-    //         return;
-    //     }
-    // }
-
-    // if (object === numberButtons ) {
-    //     if (isEquationSolved === true) {
-    //         clear.equation();
-    //     }
-    //     if (equationArr[equationArr.length-1] === ')') {
-    //         equationArr.push('*');
-    //     }
-    // }
-
-    // if (object === operationButtons) {
-    //     floatingPointInputted = false;
-    //     isFactorialInputted = false;
-    //     isNegativeNum = false;
-    // } 
-    
-    // isEquationSolved = false;
-    // udpdateEquation(object, key);
-}
-
 function inputOperation(key) {
-    if (isNaN(Number(equationStr[equationStr.length-1])) === true && equationArr[equationArr.length-1] !== '!') {
-        if (operationButtons[key].value === '-' && insertNegativeNum === false) {
-            insertNegativeNum = true;
-            console.log(`Add negative: ${insertNegativeNum}`);
-            equationStr += operationButtons[key].value;
-            isNegativeNum = true;
-            updateDisplay();
-            return;
-        } else if (equationStr[equationStr.length-1] !== ')') {
-            console.log('Please enter a valid sign before operating.');
-            return;
+    if (isNaN(Number(prevCharacter)) === true && prevCharacter !== '!' && prevCharacter !== ')') {
+        if (operationButtons[key].value === '-') {
+            inputNegativeSign()
         }
+        return;
     }
     floatingPointInputted = false;
     isFactorialInputted = false;
@@ -157,7 +136,7 @@ function inputNumber(key) {
     if (isEquationSolved === true) {
         clear.equation();
     }
-    if (equationArr[equationArr.length-1] === ')') {
+    if (prevCharacter === ')') {
         equationArr.push('*'); // adds multipliers between brackets if no operation is specified
     }
     udpdateEquation(numberButtons, key)
@@ -173,7 +152,7 @@ function inputPi() {
 
 function inputFactorial() {
     if (isNegativeNum === true || floatingPointInputted === true) return;
-    if (isNaN(Number(equationStr[equationStr.length-1])) && isFactorialInputted === false) return;
+    if (isNaN(Number(prevCharacter)) && isFactorialInputted === false) return;
     // udpdateEquation(functionButtons, functionButtons.factorial)
     equationStr += '!';
     equationArr.push('!');
@@ -203,12 +182,25 @@ function inputFloatingPoint() {
     if (floatingPointInputted === true) return;
     floatingPointInputted = true;
 
-    if (isEquationSolved === true || equationStr === '' || isNaN(Number(equationStr[equationStr.length-1]))) {
+    if (isEquationSolved === true || equationStr === '' || isNaN(Number(prevCharacter))) {
         inputNumber(['0'])
     }
 
     inputNumber(['.']),
     updateDisplay();
+}
+
+function inputNegativeSign() {
+    if (inputNegativeNum === true) return;
+
+    inputNegativeNum = true;
+    isNegativeNum = true;
+    
+    equationStr += '-';
+    console.log(`Input negative: ${inputNegativeNum}`);
+
+    updateDisplay();
+    return;
 }
 
 function toggleNegativeNum() {
@@ -232,44 +224,29 @@ function toggleBrackets() {
     if (areBracketsEnabled === true && equationStr[equationStr.length-1] === '(') return;
     if (equationStr[equationStr.length-1] === '.') return;
 
-    if (insertNegativeNum === true) {
-        insertNegativeNum = false
-        console.log(`Add negative: ${insertNegativeNum}`);
+    if (inputNegativeNum === true) {
+        inputNegativeNum = false
         toggleNegativeBrackets = true;
-        console.log(`Add negative brackets: ${toggleNegativeBrackets}`);
+        console.log(`Negative brackets enabled.`);
     }
 
     if (isEquationSolved === true) {
-        equationStr = '';
-        equationArr = [];
+        clear.equation();
         isEquationSolved = false;
     }    
 
     if (areBracketsEnabled === false) {
         equationStr += '(';
         areBracketsEnabled = true;
-        if (isNaN(equationArr[equationArr.length-1]) === false) {
-            equationArr.push('*');
+        if (isNaN(prevCharacter) === false) {
+            equationArr.push('*'); // multiply brackets with adjacent numbers if no operation is specified
         }
     } else {
         equationStr += ')';
         areBracketsEnabled = false;
     }
-    pushToEquationArr();
+    updateEquationArr();
     updateDisplay();
-}
-
-function pushToEquationArr() {
-    if (isNaN(Number(equationStr[equationStr.length-1])) === true) {
-        equationArr.push(equationStr[equationStr.length-1]);
-    } else {
-        equationArr.push(Number(equationStr[equationStr.length-1]));
-        if (insertNegativeNum === true) {
-            equationArr[equationArr.length-1] *= -1;
-            insertNegativeNum = false;
-            console.log(`Add negative: ${insertNegativeNum}`);
-        }
-    }
 }
 
 function convertItemsToNumbers(arr) {
@@ -295,16 +272,15 @@ function convertItemsToNumbers(arr) {
             }
         }
     }
-    console.log(`Converted array: [${tempArr}]`);
     arr = tempArr;
     return arr;
 }
 
 function calculate() {
-    if (isNaN(Number(equationStr[equationStr.length-1])) === true && equationStr[equationStr.length-1] !== ')' && equationStr[equationStr.length-1] !== '!') return
+    if (isNaN(Number(prevCharacter)) === true && prevCharacter !== ')' && prevCharacter !== '!') return
     
     if (areBracketsEnabled === true) {
-        if (isNaN(Number(equationStr[equationStr.length-1])) === false) {
+        if (isNaN(Number(prevCharacter)) === false) {
             equationArr.push(')');
             areBracketsEnabled = false;
         } else {
@@ -440,7 +416,7 @@ const clear = {
         isEquationSolved = false;
         floatingPointInputted = false;
         isFactorialInputted = false;
-        insertNegativeNum = false;
+        inputNegativeNum = false;
         isNegativeNum = false;
         areBracketsEnabled = false;
     },
@@ -448,15 +424,15 @@ const clear = {
         if (equationStr[equationStr.length-1] === '.') floatingPointInputted = false;
         if (equationStr[equationStr.length-1] === '!') isFactorialInputted = false;
     
-        if (insertNegativeNum === true) {
-            insertNegativeNum = false;
+        if (inputNegativeNum === true) {
+            inputNegativeNum = false;
             equationStr = equationStr.slice(0,-1);
             updateDisplay();
             return;
         }
     
         if (equationStr[equationStr.length-2] === '-' && isNaN(Number(equationStr[equationStr.length-3])) === true) {
-            insertNegativeNum = true;
+            inputNegativeNum = true;
         }
     
         if (equationStr[equationStr.length-1] === '(') {
