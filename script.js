@@ -49,7 +49,7 @@ let equationStr = '';
 let equationArr = [];
 let history = [];
 let decimalPlaces = 1000000000;
-let lastCharacter;
+let lastChar;
 
 let isEquationSolved = false;
 let floatingPointInputted = false;
@@ -65,9 +65,9 @@ function round(num, decimalPlaces) {
 }
 
 const update = {
-    lastCharacter: function() {
-        lastCharacter = equationArr[equationArr.length-1];
-        return lastCharacter
+    lastChar: function() {
+        lastChar = equationArr[equationArr.length-1];
+        return lastChar
     },
     display: function() {
         equationStr !== '' ? calculationDisplay.textContent = equationStr : 
@@ -91,13 +91,13 @@ const update = {
                 console.log(`Negative number inputted.`);
             }
         }
-        update.lastCharacter();
+        update.lastChar();
     }
 }
 
 const input = {
     operation: function(key) {
-        if (isNaN(Number(lastCharacter)) === true && lastCharacter !== '!' && lastCharacter !== ')') {
+        if (isNaN(Number(lastChar)) === true && lastChar !== '!' && lastChar !== ')') {
             if (operationButtons[key].value === '-') {
                 input.negativeSign()
             }
@@ -112,7 +112,7 @@ const input = {
         if (isEquationSolved === true) {
             clear.equation();
         }
-        if (lastCharacter === ')') {
+        if (lastChar === ')') {
             equationArr.push('*'); // adds multipliers between brackets if no operation is specified
         }
         update.equation(numberButtons, key)
@@ -126,7 +126,7 @@ const input = {
     },
     factorial: function() {
         if (isNegativeNum === true || floatingPointInputted === true) return;
-        if (isNaN(Number(lastCharacter)) && isFactorialInputted === false) return;
+        if (isNaN(Number(lastChar)) && isFactorialInputted === false) return;
         // update.equation(functionButtons, functionButtons.factorial)
         equationStr += '!';
         equationArr.push('!');
@@ -154,7 +154,7 @@ const input = {
         if (floatingPointInputted === true) return;
         floatingPointInputted = true;
     
-        if (isEquationSolved === true || equationStr === '' || isNaN(Number(lastCharacter))) {
+        if (isEquationSolved === true || equationStr === '' || isNaN(Number(lastChar))) {
             input.number(['0']);
         }
     
@@ -210,7 +210,7 @@ const toggle = {
         if (areBracketsEnabled === false) {
             equationStr += '(';
             areBracketsEnabled = true;
-            if (isNaN(lastCharacter) === false) {
+            if (isNaN(lastChar) === false) {
                 equationArr.push('*'); // multiply brackets with adjacent numbers if no operation is specified
             }
         } else {
@@ -248,7 +248,7 @@ const convert = {
                 equation.push(num);
                 
                 if (arr[i] !== undefined) {
-                    tempArr.push(operation);
+                    equation.push(operation);
                 }
             }
         }
@@ -257,11 +257,13 @@ const convert = {
     }
 }
 
-function calculate() {
-    if (isNaN(Number(lastCharacter)) === true && lastCharacter !== ')' && lastCharacter !== '!') return
+function solveEquation() {
+    const operatableChars = [')', '!']
+
+    if (isNaN(Number(lastChar)) === true && operatableChars.includes(lastChar) === false) return
     
     if (areBracketsEnabled === true) {
-        if (isNaN(Number(lastCharacter)) === false) {
+        if (isNaN(Number(lastChar)) === false) {
             equationArr.push(')');
             areBracketsEnabled = false;
         } else {
@@ -270,7 +272,7 @@ function calculate() {
     }
     
     if (equationArr.includes('(') === true) {
-        calculateBrackets();
+        solveBrackets();
     }
     equationArr = convert.arrToEquation(equationArr);
 
@@ -286,7 +288,7 @@ function calculate() {
     updateHistory();
 }
 
-function calculateBrackets() {
+function solveBrackets() {
     let slicePosition = 0;
     let bracketEquation = [];
     let deleteCount = 0
@@ -320,6 +322,15 @@ function calculateBrackets() {
             i = slicePosition+1;
         }
     }
+}
+
+
+function calculateFactorial(num) {
+    for (let i = num-1; i >= 1; i--) {
+        num *= i;
+        console.log(num);
+    }
+    return num
 }
 
 function applyOperations(arr) {
@@ -357,14 +368,6 @@ function applyOperations(arr) {
     return arr[0];
 }
 
-function calculateFactorial(num) {
-    for (let i = num-1; i >= 1; i--) {
-        num *= i;
-        console.log(num);
-    }
-    return num
-}
-
 function updateHistory() {
     history.push(equationStr)
     if (history.length > 3) {
@@ -392,8 +395,8 @@ const clear = {
         areBracketsEnabled = false;
     },
     character: function() {
-        if (lastCharacter === '.') floatingPointInputted = false;
-        if (lastCharacter === '!') isFactorialInputted = false;
+        if (lastChar === '.') floatingPointInputted = false;
+        if (lastChar === '!') isFactorialInputted = false;
     
         if (inputNegativeNum === true) {
             inputNegativeNum = false;
@@ -406,12 +409,12 @@ const clear = {
             inputNegativeNum = true;
         }
     
-        if (lastCharacter === '(') {
+        if (lastChar === '(') {
             areBracketsEnabled = false;
             if (equationStr[equationStr.length-2] !== equationArr[equationArr.length-2] ) {
                 equationArr.pop()
             }
-        } else if (lastCharacter === ')') {
+        } else if (lastChar === ')') {
             areBracketsEnabled = true;
         }
     
@@ -451,6 +454,6 @@ functionButtons.brackets.addEventListener('mousedown', toggle.brackets);
 functionButtons.pi.addEventListener('mousedown', input.pi);
 functionButtons.factorial.addEventListener('mousedown', input.factorial);
 
-functionButtons.equals.addEventListener('mousedown', calculate);
+functionButtons.equals.addEventListener('mousedown', solveEquation);
 functionButtons.clear.addEventListener('mousedown', clear.character);
 functionButtons.allClear.addEventListener('mousedown', clear.all);
