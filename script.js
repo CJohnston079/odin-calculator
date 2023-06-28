@@ -48,8 +48,8 @@ const operationButtons = {
 let equationStr = '';
 let equationArr = [];
 let history = [];
-let lastCharacter;
 let decimalPlaces = 1000000000;
+let lastCharacter;
 
 let isEquationSolved = false;
 let floatingPointInputted = false;
@@ -175,77 +175,86 @@ const input = {
     },
 }
 
-function toggleNegativeNum() {
-    if (isFactorialInputted === true) return;
-    for (let i = equationArr.length-1; i >= 0; i--) {
-        if (i === 0 || isNaN(Number(equationArr[i-1])) === true && equationArr[i-1] !== '.') {
-            if (equationArr[i] === '(' || equationArr[i] === ')') return;
-            equationArr[i] *= -1;
-            equationArrToString(equationArr);
-            if (Object.is(equationArr[i], -0) === true) { // add minus sign to floating point numbers beginning with 0
-                equationStr[i] *= equationStr = equationStr.substring(0,i) + '-0' + equationStr.substring(i+1, equationStr.length); 
+const toggle = {
+    negativeNum() {
+        if (isFactorialInputted === true) return;
+        for (let i = equationArr.length-1; i >= 0; i--) {
+            if (i === 0 || isNaN(Number(equationArr[i-1])) === true && equationArr[i-1] !== '.') {
+                if (equationArr[i] === '(' || equationArr[i] === ')') return;
+                equationArr[i] *= -1;
+                equationStr = convert.arrToStr(equationArr);
+                if (Object.is(equationArr[i], -0) === true) { // add minus sign to floating point numbers beginning with 0
+                    equationStr[i] *= equationStr = equationStr.substring(0,i) + '-0' + equationStr.substring(i+1, equationStr.length); 
+                }
+                break;
             }
-            break;
         }
+        isNegativeNum = true;
+        update.display();
+    },
+    brackets() {
+        if (areBracketsEnabled === true && equationStr[equationStr.length-1] === '(') return;
+        if (equationStr[equationStr.length-1] === '.') return;
+    
+        if (inputNegativeNum === true) {
+            inputNegativeNum = false
+            toggleNegativeBrackets = true;
+            console.log(`Negative brackets enabled.`);
+        }
+    
+        if (isEquationSolved === true) {
+            clear.equation();
+            isEquationSolved = false;
+        }    
+    
+        if (areBracketsEnabled === false) {
+            equationStr += '(';
+            areBracketsEnabled = true;
+            if (isNaN(lastCharacter) === false) {
+                equationArr.push('*'); // multiply brackets with adjacent numbers if no operation is specified
+            }
+        } else {
+            equationStr += ')';
+            areBracketsEnabled = false;
+        }
+        update.equationArr();
+        update.display();
     }
-    isNegativeNum = true;
-    update.display();
 }
 
-function toggleBrackets() {
-    if (areBracketsEnabled === true && equationStr[equationStr.length-1] === '(') return;
-    if (equationStr[equationStr.length-1] === '.') return;
-
-    if (inputNegativeNum === true) {
-        inputNegativeNum = false
-        toggleNegativeBrackets = true;
-        console.log(`Negative brackets enabled.`);
-    }
-
-    if (isEquationSolved === true) {
-        clear.equation();
-        isEquationSolved = false;
-    }    
-
-    if (areBracketsEnabled === false) {
-        equationStr += '(';
-        areBracketsEnabled = true;
-        if (isNaN(lastCharacter) === false) {
-            equationArr.push('*'); // multiply brackets with adjacent numbers if no operation is specified
-        }
-    } else {
-        equationStr += ')';
-        areBracketsEnabled = false;
-    }
-    update.equationArr();
-    update.display();
-}
-
-function convertItemsToNumbers(arr) {
-    let slicePosition = 0;
-    let tempArr = [];
-
-    for (let i=0; i <= arr.length; i++) {
-        if (arr[i] !== '.' && isNaN(arr[i]) || i === arr.length) {
-
-            let num = Number(arr.slice(slicePosition, i).toString().replaceAll(',',''));
-            let operation = arr[i];
-            
-            if (Object.is(arr[slicePosition], -0) === true) {
-                num *= -1; // convert floating points numbers beginning with 0 to negative
-            }
-
-            slicePosition = i+1;
-           
-            tempArr.push(num);
-            
-            if (arr[i] !== undefined) {
-                tempArr.push(operation);
+const convert = {
+    arrToStr: function(arr) {
+        return arr.join('');
+    },
+    strToArr: function(str) {
+        return Array.from(str);
+    },
+    arrToEquation: function(arr) {
+        let slicePosition = 0;
+        let equation = [];
+    
+        for (let i=0; i <= arr.length; i++) {
+            if (arr[i] !== '.' && isNaN(arr[i]) || i === arr.length) {
+    
+                let num = Number(arr.slice(slicePosition, i).toString().replaceAll(',',''));
+                let operation = arr[i];
+                
+                if (Object.is(arr[slicePosition], -0) === true) {
+                    num *= -1; // convert floating points numbers beginning with 0 to negative
+                }
+    
+                slicePosition = i+1;
+               
+                equation.push(num);
+                
+                if (arr[i] !== undefined) {
+                    tempArr.push(operation);
+                }
             }
         }
+        arr = equation;
+        return arr;
     }
-    arr = tempArr;
-    return arr;
 }
 
 function calculate() {
@@ -263,16 +272,16 @@ function calculate() {
     if (equationArr.includes('(') === true) {
         calculateBrackets();
     }
-    equationArr = convertItemsToNumbers(equationArr);
+    equationArr = convert.arrToEquation(equationArr);
 
-    console.log(`Equation to be passed into performOperations:\n${equationArr}`)
+    console.log(`Equation to be passed into applyOperations:\n${equationArr}`)
     
-    performOperations(equationArr);
+    applyOperations(equationArr);
 
     isEquationSolved = true;
-    equationArrToString(equationArr);
+    equationStr = convert.arrToStr(equationArr);
     equationStr = (round(equationStr, decimalPlaces)).toString();
-    solutionToArray(equationStr);
+    equationArr = convert.strToArr(equationStr);
     update.display();
     updateHistory();
 }
@@ -293,10 +302,10 @@ function calculateBrackets() {
             deleteCount = bracketEquation.length+2;
             console.log(`Bracket equation:[${bracketEquation}]`);
 
-            bracketEquation = convertItemsToNumbers(bracketEquation);
+            bracketEquation = convert.arrToEquation(bracketEquation);
             console.log(`Bracket equation after calculation: [${bracketEquation[0]}]`);
 
-            performOperations(bracketEquation);
+            applyOperations(bracketEquation);
             
             if (toggleNegativeBrackets === true) {
                 bracketEquation[0] *= -1;
@@ -313,7 +322,7 @@ function calculateBrackets() {
     }
 }
 
-function performOperations(arr) {
+function applyOperations(arr) {
     console.log(`Performing operations... ${arr}`);
 
     for (let i = 0; i < arr.length; i++) {
@@ -354,16 +363,6 @@ function calculateFactorial(num) {
         console.log(num);
     }
     return num
-}
-
-function equationArrToString(arr) {
-    equationStr = arr.join('');
-    return equationStr;
-}
-
-function solutionToArray(str) {
-    equationArr = Array.from(str);
-    return equationArr;
 }
 
 function updateHistory() {
@@ -446,9 +445,9 @@ for (const key in numberButtons) {
 }
 
 numberButtons['.'].element.addEventListener('mousedown', input.floatingPoint);
-numberButtons['±'].element.addEventListener('mousedown', toggleNegativeNum);
+numberButtons['±'].element.addEventListener('mousedown', toggle.negativeNum);
 
-functionButtons.brackets.addEventListener('mousedown', toggleBrackets);
+functionButtons.brackets.addEventListener('mousedown', toggle.brackets);
 functionButtons.pi.addEventListener('mousedown', input.pi);
 functionButtons.factorial.addEventListener('mousedown', input.factorial);
 
