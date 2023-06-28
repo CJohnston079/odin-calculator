@@ -82,36 +82,35 @@ functionButtons.factorial.addEventListener('mousedown', inputFactorial);
 
 functionButtons.equals.addEventListener('mousedown', calculate);
 
-function udpdateEquation(object, key) {
-    isEquationSolved === true ? isEquationSolved = false : {};
-    equationStr += object[key].value;
-    updateEquationArr();
-    updateDisplay();
-}
-
-function updateEquationArr() {
-    if (isNaN(Number(equationStr[equationStr.length-1])) === true) {
-        equationArr.push(equationStr[equationStr.length-1]);
-    } else {
-        equationArr.push(Number(equationStr[equationStr.length-1]));
-        if (inputNegativeNum === true) {
-            equationArr[equationArr.length-1] *= -1;
-            inputNegativeNum = false;
-            console.log(`Negative number inputted.`);
+const update = {
+    lastCharacter: function() {
+        lastCharacter = equationArr[equationArr.length-1];
+        return lastCharacter
+    },
+    display: function() {
+        equationStr !== '' ? calculationDisplay.textContent = equationStr : 
+        calculationDisplay.textContent = 0;
+        console.log(equationArr);
+    },
+    equation: function(object, key) {
+        isEquationSolved === true ? isEquationSolved = false : {};
+        equationStr += object[key].value;
+        update.equationArr();
+        update.display();
+    },
+    equationArr: function() {
+        if (isNaN(Number(equationStr[equationStr.length-1])) === true) {
+            equationArr.push(equationStr[equationStr.length-1]);
+        } else {
+            equationArr.push(Number(equationStr[equationStr.length-1]));
+            if (inputNegativeNum === true) {
+                equationArr[equationArr.length-1] *= -1;
+                inputNegativeNum = false;
+                console.log(`Negative number inputted.`);
+            }
         }
+        update.lastCharacter();
     }
-    updatePrevCharacter();
-}
-
-function updatePrevCharacter() {
-    lastCharacter = equationArr[equationArr.length-1];
-    return lastCharacter
-}
-
-function updateDisplay() {
-    equationStr !== '' ? calculationDisplay.textContent = equationStr : 
-    calculationDisplay.textContent = 0;
-    console.log(equationArr);
 }
 
 function round(num, decimalPlaces) {
@@ -129,7 +128,7 @@ function inputOperation(key) {
     floatingPointInputted = false;
     isFactorialInputted = false;
     isNegativeNum = false;
-    udpdateEquation(operationButtons, key);
+    update.equation(operationButtons, key);
 }
 
 function inputNumber(key) {
@@ -139,7 +138,7 @@ function inputNumber(key) {
     if (lastCharacter === ')') {
         equationArr.push('*'); // adds multipliers between brackets if no operation is specified
     }
-    udpdateEquation(numberButtons, key)
+    update.equation(numberButtons, key)
 }
 
 function inputPi() {
@@ -147,16 +146,16 @@ function inputPi() {
     equationStr += round(Math.PI, 100);
     equationArr.push(Math.PI);
     floatingPointInputted = true;
-    updateDisplay()
+    update.display()
 }
 
 function inputFactorial() {
     if (isNegativeNum === true || floatingPointInputted === true) return;
     if (isNaN(Number(lastCharacter)) && isFactorialInputted === false) return;
-    // udpdateEquation(functionButtons, functionButtons.factorial)
+    // update.equation(functionButtons, functionButtons.factorial)
     equationStr += '!';
     equationArr.push('!');
-    updateDisplay()
+    update.display()
     isFactorialInputted = true;
 }
 
@@ -187,7 +186,7 @@ function inputFloatingPoint() {
     }
 
     inputNumber(['.']),
-    updateDisplay();
+    update.display();
 }
 
 function inputNegativeSign() {
@@ -199,7 +198,7 @@ function inputNegativeSign() {
     equationStr += '-';
     console.log(`Input negative: ${inputNegativeNum}`);
 
-    updateDisplay();
+    update.display();
     return;
 }
 
@@ -217,7 +216,7 @@ function toggleNegativeNum() {
         }
     }
     isNegativeNum = true;
-    updateDisplay();
+    update.display();
 }
 
 function toggleBrackets() {
@@ -245,8 +244,8 @@ function toggleBrackets() {
         equationStr += ')';
         areBracketsEnabled = false;
     }
-    updateEquationArr();
-    updateDisplay();
+    update.equationArr();
+    update.display();
 }
 
 function convertItemsToNumbers(arr) {
@@ -301,7 +300,7 @@ function calculate() {
     equationArrToString(equationArr);
     equationStr = (round(equationStr, decimalPlaces)).toString();
     solutionToArray(equationStr);
-    updateDisplay();
+    update.display();
     updateHistory();
 }
 
@@ -427,7 +426,7 @@ const clear = {
         if (inputNegativeNum === true) {
             inputNegativeNum = false;
             equationStr = equationStr.slice(0,-1);
-            updateDisplay();
+            update.display();
             return;
         }
     
@@ -446,14 +445,14 @@ const clear = {
     
         equationStr = equationStr.slice(0,-1);
         equationArr.pop();
-        updateDisplay();
+        update.display();
         return equationArr;
     },
     all: function() {
         clear.variables();
         clear.equation();
         clear.equationHistory();
-        updateDisplay();
+        update.display();
         console.clear();
         return equationArr;
     }
