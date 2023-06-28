@@ -88,7 +88,6 @@ const update = {
             if (inputNegativeNum === true) {
                 equationArr[equationArr.length-1] *= -1;
                 inputNegativeNum = false;
-                console.log(`Negative number inputted.`);
             }
         }
         update.lastChar();
@@ -175,7 +174,6 @@ const input = {
         isNegativeNum = true;
         
         equationStr += '-';
-        console.log(`Input negative: ${inputNegativeNum}`);
     
         update.display();
         return;
@@ -210,7 +208,6 @@ const toggle = {
         if (inputNegativeNum === true) {
             inputNegativeNum = false
             toggleNegativeBrackets = true;
-            console.log(`Negative brackets enabled.`);
         }
     
         if (isEquationSolved === true) {
@@ -268,50 +265,51 @@ const convert = {
     }
 }
 
-function solveEquation() {
-    const operatableChars = [')', '!']
-    if (isNaN(Number(lastChar)) === true && operatableChars.includes(lastChar) === false) return
+const resolve = {
+    equation: function() {
+        const operatableChars = [')', '!']
+        if (isNaN(Number(lastChar)) === true && operatableChars.includes(lastChar) === false) return
+        
+        areBracketsEnabled === true ? input.closedBracket() : {};
+        equationArr.includes('(') ? resolve.brackets() : {};
+        equationArr = convert.arrToEquation(equationArr);    
+        calculateOperations(equationArr);
     
-    areBracketsEnabled === true ? input.closedBracket() : {};
-    equationArr.includes('(') ? solveBrackets() : {};
-    equationArr = convert.arrToEquation(equationArr);    
-    applyOperations(equationArr);
-
-    isEquationSolved = true;
-
-    equationStr = convert.arrToStr(equationArr);
-    equationStr = (round(equationStr, decimalPlaces)).toString();
-    equationArr = convert.strToArr(equationStr);
-
-    update.display();
-    update.history();
-}
-
-function solveBrackets() {
-    let slicePosition = 0;
-    let bracketEquation = [];
-    let deleteCount = 0
-
-    for (let i = 0; i < equationArr.length; i++) {
-        if (equationArr[i] === '(') {
-            slicePosition = i;
-        }
-        if (equationArr[i] === ')') {
-            bracketEquation = equationArr.slice(slicePosition+1, i);
-            deleteCount = bracketEquation.length+2;
-
-            bracketEquation = convert.arrToEquation(bracketEquation);
-
-            applyOperations(bracketEquation);
-            
-            if (toggleNegativeBrackets === true) {
-                bracketEquation[0] *= -1;
-                toggleNegativeBrackets = false;
+        isEquationSolved = true;
+    
+        equationStr = convert.arrToStr(equationArr);
+        equationStr = (round(equationStr, decimalPlaces)).toString();
+        equationArr = convert.strToArr(equationStr);
+    
+        update.display();
+        update.history();
+    },
+    brackets: function() {
+        let slicePosition = 0;
+        let bracketEquation = [];
+        let deleteCount = 0
+    
+        for (let i = 0; i < equationArr.length; i++) {
+            if (equationArr[i] === '(') {
+                slicePosition = i;
             }
-            
-            equationArr.splice(slicePosition, deleteCount, bracketEquation[0]);
-
-            i = slicePosition+1;
+            if (equationArr[i] === ')') {
+                bracketEquation = equationArr.slice(slicePosition+1, i);
+                deleteCount = bracketEquation.length+2;
+    
+                bracketEquation = convert.arrToEquation(bracketEquation);
+    
+                calculateOperations(bracketEquation);
+                
+                if (toggleNegativeBrackets === true) {
+                    bracketEquation[0] *= -1;
+                    toggleNegativeBrackets = false;
+                }
+                
+                equationArr.splice(slicePosition, deleteCount, bracketEquation[0]);
+    
+                i = slicePosition+1;
+            }
         }
     }
 }
@@ -319,14 +317,11 @@ function solveBrackets() {
 function calculateFactorial(num) {
     for (let i = num-1; i >= 1; i--) {
         num *= i;
-        console.log(num);
     }
     return num
 }
 
-function applyOperations(arr) {
-    console.log(`Performing operations... ${arr}`);
-
+function calculateOperations(arr) {
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] === '!') {
             arr.splice(i - 1, 3, calculateFactorial(arr[i-1]));
@@ -355,7 +350,6 @@ function applyOperations(arr) {
             i--;
         }
     }
-    console.log(arr)
     return arr[0];
 }
 
@@ -437,6 +431,6 @@ functionButtons.brackets.addEventListener('mousedown', toggle.brackets);
 functionButtons.pi.addEventListener('mousedown', input.pi);
 functionButtons.factorial.addEventListener('mousedown', input.factorial);
 
-functionButtons.equals.addEventListener('mousedown', solveEquation);
+functionButtons.equals.addEventListener('mousedown', resolve.equation);
 functionButtons.clear.addEventListener('mousedown', clear.character);
 functionButtons.allClear.addEventListener('mousedown', clear.all);
