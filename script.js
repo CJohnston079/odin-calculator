@@ -48,7 +48,7 @@ const operationButtons = {
 let equationStr = '';
 let equationArr = [];
 let history = [];
-let prevCharacter;
+let lastCharacter;
 
 let isEquationSolved = false;
 let floatingPointInputted = false;
@@ -104,8 +104,8 @@ function updateEquationArr() {
 }
 
 function updatePrevCharacter() {
-    prevCharacter = equationArr[equationArr.length-1];
-    return prevCharacter
+    lastCharacter = equationArr[equationArr.length-1];
+    return lastCharacter
 }
 
 function updateDisplay() {
@@ -120,7 +120,7 @@ function round(num, decimalPlaces) {
 }
 
 function inputOperation(key) {
-    if (isNaN(Number(prevCharacter)) === true && prevCharacter !== '!' && prevCharacter !== ')') {
+    if (isNaN(Number(lastCharacter)) === true && lastCharacter !== '!' && lastCharacter !== ')') {
         if (operationButtons[key].value === '-') {
             inputNegativeSign()
         }
@@ -136,7 +136,7 @@ function inputNumber(key) {
     if (isEquationSolved === true) {
         clear.equation();
     }
-    if (prevCharacter === ')') {
+    if (lastCharacter === ')') {
         equationArr.push('*'); // adds multipliers between brackets if no operation is specified
     }
     udpdateEquation(numberButtons, key)
@@ -152,7 +152,7 @@ function inputPi() {
 
 function inputFactorial() {
     if (isNegativeNum === true || floatingPointInputted === true) return;
-    if (isNaN(Number(prevCharacter)) && isFactorialInputted === false) return;
+    if (isNaN(Number(lastCharacter)) && isFactorialInputted === false) return;
     // udpdateEquation(functionButtons, functionButtons.factorial)
     equationStr += '!';
     equationArr.push('!');
@@ -182,7 +182,7 @@ function inputFloatingPoint() {
     if (floatingPointInputted === true) return;
     floatingPointInputted = true;
 
-    if (isEquationSolved === true || equationStr === '' || isNaN(Number(prevCharacter))) {
+    if (isEquationSolved === true || equationStr === '' || isNaN(Number(lastCharacter))) {
         inputNumber(['0'])
     }
 
@@ -238,7 +238,7 @@ function toggleBrackets() {
     if (areBracketsEnabled === false) {
         equationStr += '(';
         areBracketsEnabled = true;
-        if (isNaN(prevCharacter) === false) {
+        if (isNaN(lastCharacter) === false) {
             equationArr.push('*'); // multiply brackets with adjacent numbers if no operation is specified
         }
     } else {
@@ -277,10 +277,10 @@ function convertItemsToNumbers(arr) {
 }
 
 function calculate() {
-    if (isNaN(Number(prevCharacter)) === true && prevCharacter !== ')' && prevCharacter !== '!') return
+    if (isNaN(Number(lastCharacter)) === true && lastCharacter !== ')' && lastCharacter !== '!') return
     
     if (areBracketsEnabled === true) {
-        if (isNaN(Number(prevCharacter)) === false) {
+        if (isNaN(Number(lastCharacter)) === false) {
             equationArr.push(')');
             areBracketsEnabled = false;
         } else {
@@ -421,8 +421,8 @@ const clear = {
         areBracketsEnabled = false;
     },
     character: function() {
-        if (equationStr[equationStr.length-1] === '.') floatingPointInputted = false;
-        if (equationStr[equationStr.length-1] === '!') isFactorialInputted = false;
+        if (lastCharacter === '.') floatingPointInputted = false;
+        if (lastCharacter === '!') isFactorialInputted = false;
     
         if (inputNegativeNum === true) {
             inputNegativeNum = false;
@@ -435,9 +435,12 @@ const clear = {
             inputNegativeNum = true;
         }
     
-        if (equationStr[equationStr.length-1] === '(') {
+        if (lastCharacter === '(') {
             areBracketsEnabled = false;
-        } else if (equationStr[equationStr.length-1] === ')') {
+            if (equationStr[equationStr.length-2] !== equationArr[equationArr.length-2] ) {
+                equationArr.pop()
+            }
+        } else if (lastCharacter === ')') {
             areBracketsEnabled = true;
         }
     
