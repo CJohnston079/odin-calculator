@@ -48,6 +48,7 @@ const operationButtons = {
 let equationStr = '';
 let equationArr = [];
 let history = [];
+
 let isEquationSolved = false;
 let floatingPointInputted = false;
 let isFactorialInputted = false;
@@ -55,6 +56,7 @@ let insertNegativeNum = false;
 let isNegativeNum = false;
 let toggleNegativeBrackets = false;
 let areBracketsEnabled = false;
+
 let decimalPlaces = 1000000000;
 
 for (const key in operationButtons) {
@@ -202,10 +204,10 @@ function inputFloatingPoint() {
     floatingPointInputted = true;
 
     if (isEquationSolved === true || equationStr === '' || isNaN(Number(equationStr[equationStr.length-1]))) {
-        updateEquationOld(numberButtons, ['0'])
+        inputNumber(['0'])
     }
 
-    updateEquationOld(numberButtons, ['.']),
+    inputNumber(['.']),
     updateDisplay();
 }
 
