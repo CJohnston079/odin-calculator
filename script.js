@@ -49,6 +49,7 @@ let equationStr = '';
 let equationArr = [];
 let history = [];
 let lastCharacter;
+let decimalPlaces = 1000000000;
 
 let isEquationSolved = false;
 let floatingPointInputted = false;
@@ -58,29 +59,10 @@ let isNegativeNum = false;
 let toggleNegativeBrackets = false;
 let areBracketsEnabled = false;
 
-let decimalPlaces = 1000000000;
-
-for (const key in operationButtons) {
-    operationButtons[key].element.addEventListener('mousedown', () => {
-        inputOperation(key)
-    });
+function round(num, decimalPlaces) {
+    num = Math.round(num*decimalPlaces)/decimalPlaces;
+    return num;
 }
-
-for (const key in numberButtons) {
-    if (numberButtons[key].value === '.' || numberButtons[key].value === '±') continue;
-    numberButtons[key].element.addEventListener('mousedown', () => {
-        inputNumber(key)
-    });
-}
-
-numberButtons['.'].element.addEventListener('mousedown', inputFloatingPoint);
-numberButtons['±'].element.addEventListener('mousedown', toggleNegativeNum);
-
-functionButtons.brackets.addEventListener('mousedown', toggleBrackets);
-functionButtons.pi.addEventListener('mousedown', inputPi);
-functionButtons.factorial.addEventListener('mousedown', inputFactorial);
-
-functionButtons.equals.addEventListener('mousedown', calculate);
 
 const update = {
     lastCharacter: function() {
@@ -113,93 +95,84 @@ const update = {
     }
 }
 
-function round(num, decimalPlaces) {
-    num = Math.round(num*decimalPlaces)/decimalPlaces;
-    return num;
-}
-
-function inputOperation(key) {
-    if (isNaN(Number(lastCharacter)) === true && lastCharacter !== '!' && lastCharacter !== ')') {
-        if (operationButtons[key].value === '-') {
-            inputNegativeSign()
+const input = {
+    operation: function(key) {
+        if (isNaN(Number(lastCharacter)) === true && lastCharacter !== '!' && lastCharacter !== ')') {
+            if (operationButtons[key].value === '-') {
+                input.negativeSign()
+            }
+            return;
         }
-        return;
-    }
-    floatingPointInputted = false;
-    isFactorialInputted = false;
-    isNegativeNum = false;
-    update.equation(operationButtons, key);
-}
-
-function inputNumber(key) {
-    if (isEquationSolved === true) {
-        clear.equation();
-    }
-    if (lastCharacter === ')') {
-        equationArr.push('*'); // adds multipliers between brackets if no operation is specified
-    }
-    update.equation(numberButtons, key)
-}
-
-function inputPi() {
-    if (floatingPointInputted === true) return;
-    equationStr += round(Math.PI, 100);
-    equationArr.push(Math.PI);
-    floatingPointInputted = true;
-    update.display()
-}
-
-function inputFactorial() {
-    if (isNegativeNum === true || floatingPointInputted === true) return;
-    if (isNaN(Number(lastCharacter)) && isFactorialInputted === false) return;
-    // update.equation(functionButtons, functionButtons.factorial)
-    equationStr += '!';
-    equationArr.push('!');
-    update.display()
-    isFactorialInputted = true;
-}
-
-function inputPercentage() {
-    /*
-    Determine what a specific percentage is of another number.
-    For example, enter 600 x 15 and hit the percent key.
-    You see the answer is 90, which means that 90 is 15 percent of 600.
-
-    Calculate a percentage of a number and add it to the number.
-    For example, enter 34 + 7 and hit the percent key.
-    You immediately see the answer is 36.38.
-    This is useful for figuring sales tax on purchase items.
-
-    Figure a percentage of a number and subtract it from the number.
-    For example, enter 79 – 30 and hit the percent key.
-    You see the answer is 55.3.
-    This is useful for figuring sale prices on purchase items.
-    */
-}
-
-function inputFloatingPoint() {
-    if (floatingPointInputted === true) return;
-    floatingPointInputted = true;
-
-    if (isEquationSolved === true || equationStr === '' || isNaN(Number(lastCharacter))) {
-        inputNumber(['0'])
-    }
-
-    inputNumber(['.']),
-    update.display();
-}
-
-function inputNegativeSign() {
-    if (inputNegativeNum === true) return;
-
-    inputNegativeNum = true;
-    isNegativeNum = true;
+        floatingPointInputted = false;
+        isFactorialInputted = false;
+        isNegativeNum = false;
+        update.equation(operationButtons, key);
+    },
+    number: function(key) {
+        if (isEquationSolved === true) {
+            clear.equation();
+        }
+        if (lastCharacter === ')') {
+            equationArr.push('*'); // adds multipliers between brackets if no operation is specified
+        }
+        update.equation(numberButtons, key)
+    },
+    pi: function() {
+        if (floatingPointInputted === true) return;
+        equationStr += round(Math.PI, 100);
+        equationArr.push(Math.PI);
+        floatingPointInputted = true;
+        update.display()
+    },
+    factorial: function() {
+        if (isNegativeNum === true || floatingPointInputted === true) return;
+        if (isNaN(Number(lastCharacter)) && isFactorialInputted === false) return;
+        // update.equation(functionButtons, functionButtons.factorial)
+        equationStr += '!';
+        equationArr.push('!');
+        update.display()
+        isFactorialInputted = true;
+    },
+    percentage: function() {
+        /*
+        Determine what a specific percentage is of another number.
+        For example, enter 600 x 15 and hit the percent key.
+        You see the answer is 90, which means that 90 is 15 percent of 600.
     
-    equationStr += '-';
-    console.log(`Input negative: ${inputNegativeNum}`);
-
-    update.display();
-    return;
+        Calculate a percentage of a number and add it to the number.
+        For example, enter 34 + 7 and hit the percent key.
+        You immediately see the answer is 36.38.
+        This is useful for figuring sales tax on purchase items.
+    
+        Figure a percentage of a number and subtract it from the number.
+        For example, enter 79 – 30 and hit the percent key.
+        You see the answer is 55.3.
+        This is useful for figuring sale prices on purchase items.
+        */
+    },
+    floatingPoint: function() {
+        if (floatingPointInputted === true) return;
+        floatingPointInputted = true;
+    
+        if (isEquationSolved === true || equationStr === '' || isNaN(Number(lastCharacter))) {
+            input.number(['0']);
+        }
+    
+        input.number(['.']),
+        update.display();
+    },
+    negativeSign: function() {
+        if (inputNegativeNum === true) return;
+    
+        inputNegativeNum = true;
+        isNegativeNum = true;
+        
+        equationStr += '-';
+        console.log(`Input negative: ${inputNegativeNum}`);
+    
+        update.display();
+        return;
+    },
 }
 
 function toggleNegativeNum() {
@@ -458,5 +431,27 @@ const clear = {
     }
 }
 
+
+for (const key in operationButtons) {
+    operationButtons[key].element.addEventListener('mousedown', () => {
+        input.operation(key)
+    });
+}
+
+for (const key in numberButtons) {
+    if (numberButtons[key].value === '.' || numberButtons[key].value === '±') continue;
+    numberButtons[key].element.addEventListener('mousedown', () => {
+        input.number(key)
+    });
+}
+
+numberButtons['.'].element.addEventListener('mousedown', input.floatingPoint);
+numberButtons['±'].element.addEventListener('mousedown', toggleNegativeNum);
+
+functionButtons.brackets.addEventListener('mousedown', toggleBrackets);
+functionButtons.pi.addEventListener('mousedown', input.pi);
+functionButtons.factorial.addEventListener('mousedown', input.factorial);
+
+functionButtons.equals.addEventListener('mousedown', calculate);
 functionButtons.clear.addEventListener('mousedown', clear.character);
 functionButtons.allClear.addEventListener('mousedown', clear.all);
