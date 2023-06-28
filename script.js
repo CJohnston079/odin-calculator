@@ -92,6 +92,13 @@ const update = {
             }
         }
         update.lastChar();
+    },
+    history: function() {
+        history.push(equationStr)
+        if (history.length > 3) {
+            history.pop();
+        }
+        return history;
     }
 }
 
@@ -285,7 +292,7 @@ function solveEquation() {
     equationStr = (round(equationStr, decimalPlaces)).toString();
     equationArr = convert.strToArr(equationStr);
     update.display();
-    updateHistory();
+    update.history();
 }
 
 function solveBrackets() {
@@ -366,14 +373,6 @@ function applyOperations(arr) {
     }
     console.log(arr)
     return arr[0];
-}
-
-function updateHistory() {
-    history.push(equationStr)
-    if (history.length > 3) {
-        history.pop();
-    }
-    return history;
 }
 
 const clear = {
