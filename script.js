@@ -180,6 +180,10 @@ const input = {
         update.display();
         return;
     },
+    closedBracket: function() {
+        equationArr.push(')');
+        areBracketsEnabled = false;
+    },
 }
 
 const toggle = {
@@ -266,31 +270,19 @@ const convert = {
 
 function solveEquation() {
     const operatableChars = [')', '!']
-
     if (isNaN(Number(lastChar)) === true && operatableChars.includes(lastChar) === false) return
     
-    if (areBracketsEnabled === true) {
-        if (isNaN(Number(lastChar)) === false) {
-            equationArr.push(')');
-            areBracketsEnabled = false;
-        } else {
-            return;
-        }
-    }
-    
-    if (equationArr.includes('(') === true) {
-        solveBrackets();
-    }
-    equationArr = convert.arrToEquation(equationArr);
-
-    console.log(`Equation to be passed into applyOperations:\n${equationArr}`)
-    
+    areBracketsEnabled === true ? input.closedBracket() : {};
+    equationArr.includes('(') ? solveBrackets() : {};
+    equationArr = convert.arrToEquation(equationArr);    
     applyOperations(equationArr);
 
     isEquationSolved = true;
+
     equationStr = convert.arrToStr(equationArr);
     equationStr = (round(equationStr, decimalPlaces)).toString();
     equationArr = convert.strToArr(equationStr);
+
     update.display();
     update.history();
 }
@@ -305,23 +297,16 @@ function solveBrackets() {
             slicePosition = i;
         }
         if (equationArr[i] === ')') {
-            console.log('Calculating brackets...');
-
             bracketEquation = equationArr.slice(slicePosition+1, i);
             deleteCount = bracketEquation.length+2;
-            console.log(`Bracket equation:[${bracketEquation}]`);
 
             bracketEquation = convert.arrToEquation(bracketEquation);
-            console.log(`Bracket equation after calculation: [${bracketEquation[0]}]`);
 
             applyOperations(bracketEquation);
             
             if (toggleNegativeBrackets === true) {
                 bracketEquation[0] *= -1;
-                console.log(`Brackets multiplied by -1 = [${bracketEquation[0]}]`);
-
                 toggleNegativeBrackets = false;
-                console.log(`Add negative brackets: ${toggleNegativeBrackets}`);
             }
             
             equationArr.splice(slicePosition, deleteCount, bracketEquation[0]);
@@ -330,7 +315,6 @@ function solveBrackets() {
         }
     }
 }
-
 
 function calculateFactorial(num) {
     for (let i = num-1; i >= 1; i--) {
