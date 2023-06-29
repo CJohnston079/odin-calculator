@@ -125,7 +125,6 @@ const input = {
     },
     pi: function() {
         if (floatingPointInputted === true) return;
-        update.equation(round(Math.PI, 100))
         equationStr += round(Math.PI, 100);
         equationArr.push(Math.PI);
         floatingPointInputted = true;
@@ -252,8 +251,8 @@ const convert = {
 
 const resolve = {
     equation: function() {
-        const operatableChars = [')', '!']
-        if (isNaN(Number(lastChar)) === true && operatableChars.includes(lastChar) === false) return
+        const operableChars = [')', '!', '%']
+        if (isNaN(Number(lastChar)) === true && operableChars.includes(lastChar) === false) return
         
         areBracketsEnabled === true ? input.closedBracket() : {};
         equationArr.includes('(') ? resolve.brackets() : {};
