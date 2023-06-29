@@ -11,7 +11,7 @@ const functionButtons = {
     brackets: functionButtonElements[4],
     pi: functionButtonElements[5],
     factorial: functionButtonElements[6],
-    percent: functionButtonElements[7],
+    percentage: functionButtonElements[7],
     power: functionButtonElements[8],
     root: functionButtonElements[9]
 }
@@ -140,21 +140,10 @@ const input = {
         isFactorialInputted = true;
     },
     percentage: function() {
-        /*
-        Determine what a specific percentage is of another number.
-        For example, enter 600 x 15 and hit the percent key.
-        You see the answer is 90, which means that 90 is 15 percent of 600.
-    
-        Calculate a percentage of a number and add it to the number.
-        For example, enter 34 + 7 and hit the percent key.
-        You immediately see the answer is 36.38.
-        This is useful for figuring sales tax on purchase items.
-    
-        Figure a percentage of a number and subtract it from the number.
-        For example, enter 79 – 30 and hit the percent key.
-        You see the answer is 55.3.
-        This is useful for figuring sale prices on purchase items.
-        */
+        if (isNaN(lastChar)) return;
+        equationStr += '%';
+        equationArr.push('%');
+        update.display();
     },
     floatingPoint: function() {
         if (floatingPointInputted === true) return;
@@ -317,8 +306,8 @@ const resolve = {
 
 const calculate = {
     expressions: function(arr) {
-        calculate.factorial(arr, '!')
-
+        calculate.factorial(arr)
+        calculate.percentage(arr)
         calculate.basicOperations(arr, '*');
         calculate.basicOperations(arr, '/');
         calculate.basicOperations(arr, '+');
@@ -331,6 +320,29 @@ const calculate = {
                 i--;
             }
         }
+    },
+    percentage: function(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === '%') {
+                arr.splice(i - 1, 3, operate['%'](arr[i-1]));
+                i--;
+            }
+        }
+        /*
+        Determine what a specific percentage is of another number.
+        For example, enter 600 x 15 and hit the percentage key.
+        You see the answer is 90, which means that 90 is 15 percentage of 600.
+    
+        Calculate a percentage of a number and add it to the number.
+        For example, enter 34 + 7 and hit the percentage key.
+        You immediately see the answer is 36.38.
+        This is useful for figuring sales tax on purchase items.
+    
+        Figure a percentage of a number and subtract it from the number.
+        For example, enter 79 – 30 and hit the percentage key.
+        You see the answer is 55.3.
+        This is useful for figuring sale prices on purchase items.
+        */
     },
     basicOperations: function(arr, operation) {
         for (let i = 0; i < arr.length; i++) {
@@ -353,7 +365,8 @@ const operate = {
             a *= i;
         }
         return a;
-    }
+    },
+    '%': function(a,b) { }
 }
 
 const clear = {
@@ -433,6 +446,7 @@ numberButtons['±'].element.addEventListener('mousedown', toggle.negativeNum);
 functionButtons.brackets.addEventListener('mousedown', toggle.brackets);
 functionButtons.pi.addEventListener('mousedown', input.pi);
 functionButtons.factorial.addEventListener('mousedown', input.factorial);
+functionButtons.percentage.addEventListener('mousedown', input.percentage);
 
 functionButtons.equals.addEventListener('mousedown', resolve.equation);
 functionButtons.clear.addEventListener('mousedown', clear.character);
