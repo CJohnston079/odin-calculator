@@ -322,7 +322,15 @@ const calculate = {
         for (let i = 0; i < arr.length; i++) {
             if (arr[i] !== '%') continue;
 
-            arr.splice(i - 1, 3, operate['%'](arr[i-1]));
+            let a = arr[i-1];
+            let b = arr[i-3];
+            let operation = arr[i-2]
+
+            console.log(a)
+            console.log(b)
+            console.log(operation)
+
+            arr.splice(i - 1, 3, operate['%'](a, b, operation));
             i--;
         }
         /*
@@ -363,7 +371,17 @@ const operate = {
         }
         return a;
     },
-    '%': function(a) { return a *= 0.01; }
+    '%': function(a, b, operation) {
+        if (operation === '*') {
+            a *= 0.01;
+        } else if (operation === '+') {
+            a = a * b * 0.01;
+        } else if (operation === '-') {
+            a = a * b * 0.01;
+        }
+
+        return a;
+    }
 }
 
 const clear = {
