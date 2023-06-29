@@ -145,6 +145,9 @@ const input = {
     exponent: function() {
         update.equation('^');
     },
+    root: function() {
+        update.equation('√')
+    },
     floatingPoint: function() {
         if (floatingPointInputted === true) return;
         floatingPointInputted = true;
@@ -308,6 +311,7 @@ const calculate = {
     expressions: function(arr) {
         calculate.factorial(arr)
         calculate.percentage(arr)
+        calculate.root(arr);
         calculate.operations(arr, '^');
         calculate.operations(arr, '*');
         calculate.operations(arr, '/');
@@ -319,6 +323,14 @@ const calculate = {
             if (arr[i] !== '!') continue;
 
             arr.splice(i - 1, 3, operate['!'](arr[i-1]));
+            i--;
+        }
+    },
+    root: function(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] !== '√') continue;
+
+            arr.splice(i - 1, 3, operate['√'](arr[i]));
             i--;
         }
     },
@@ -354,6 +366,7 @@ const operate = {
     '*': function(a, b) { return a * b },
     '/': function(a, b) { return a / b },
     '^': function(a, b) { return a ** b },
+    '√': function(a) { return Math.sqrt(a) },
     '!': function(a) {
         for (let i = a-1; i >= 1; i--) {
             a *= i;
@@ -445,7 +458,8 @@ functionButtons.brackets.addEventListener('mousedown', toggle.brackets);
 functionButtons.pi.addEventListener('mousedown', input.pi);
 functionButtons.factorial.addEventListener('mousedown', input.factorial);
 functionButtons.percentage.addEventListener('mousedown', input.percentage);
-functionButtons.exponent.addEventListener('mousedown', input.exponent)
+functionButtons.exponent.addEventListener('mousedown', input.exponent);
+functionButtons.root.addEventListener('mousedown', input.root);
 
 functionButtons.equals.addEventListener('mousedown', resolve.equation);
 functionButtons.clear.addEventListener('mousedown', clear.character);
