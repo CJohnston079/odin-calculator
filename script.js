@@ -129,7 +129,8 @@ const input = {
         equationStr += round(Math.PI, 100);
         equationArr.push(Math.PI);
         floatingPointInputted = true;
-        update.display()
+        update.lastChar();
+        update.display();
     },
     factorial: function() {
         if (isNegativeNum === true || floatingPointInputted === true) return;
@@ -252,8 +253,8 @@ const convert = {
 
 const resolve = {
     equation: function() {
-        const operableChars = [')', '!', '%']
-        if (isNaN(Number(lastChar)) === true && operableChars.includes(lastChar) === false) return
+        const inoperableChars = ['+', '-', '*', '/']
+        if (isNaN(Number(lastChar)) === true && inoperableChars.includes(lastChar)) return
         
         areBracketsEnabled === true ? input.closedBracket() : {};
         equationArr.includes('(') ? resolve.brackets() : {};
