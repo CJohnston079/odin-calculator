@@ -75,10 +75,7 @@ const update = {
         console.log(equationArr);
     },
     equation: function(character) {
-        if (isEquationSolved === true) {
-            isEquationSolved = false;
-            floatingPointInputted = false
-        };
+        isEquationSolved === true ? isEquationSolved = false : {};
         equationStr += character;
         update.equationArr();
         update.display();
@@ -128,6 +125,7 @@ const input = {
     },
     pi: function() {
         if (floatingPointInputted === true) return;
+        if (isEquationSolved === true) clear.equation();
         equationStr += round(Math.PI, 100);
         equationArr.push(Math.PI);
         floatingPointInputted = true;
@@ -269,8 +267,6 @@ const resolve = {
         equationStr = (round(equationStr, decimalPlaces)).toString();
         equationArr = convert.strToArr(equationStr);
 
-        equationArr.includes('.') ? floatingPointInputted = true : {};
-    
         update.display();
         update.history();
     },
