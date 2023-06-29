@@ -272,8 +272,9 @@ const resolve = {
         
         areBracketsEnabled === true ? input.closedBracket() : {};
         equationArr.includes('(') ? resolve.brackets() : {};
-        equationArr = convert.arrToEquation(equationArr);    
-        calculateOperations(equationArr);
+        equationArr = convert.arrToEquation(equationArr);
+
+        calculate.expressions(equationArr);
     
         isEquationSolved = true;
     
@@ -299,7 +300,7 @@ const resolve = {
     
                 bracketEquation = convert.arrToEquation(bracketEquation);
     
-                calculateOperations(bracketEquation);
+                calculate.expressions(bracketEquation);
                 
                 if (toggleNegativeBrackets === true) {
                     bracketEquation[0] *= -1;
@@ -314,43 +315,45 @@ const resolve = {
     }
 }
 
-function calculateFactorial(num) {
-    for (let i = num-1; i >= 1; i--) {
-        num *= i;
+const calculate = {
+    expressions: function(arr) {
+        calculate.factorial(arr, '!')
+
+        calculate.basicOperations(arr, '*');
+        calculate.basicOperations(arr, '/');
+        calculate.basicOperations(arr, '+');
+        calculate.basicOperations(arr, '-');
+    },
+    factorial: function(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === '!') {
+                arr.splice(i - 1, 3, operate['!'](arr[i-1]));
+                i--;
+            }
+        }
+    },
+    basicOperations: function(arr, operation) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] !== operation) continue;
+    
+            arr.splice(i - 1, 3, operate[operation](arr[i - 1], arr[i + 1]));
+            i--;
+        }
+        return arr[0];
     }
-    return num
 }
 
-function calculateOperations(arr) {
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === '!') {
-            arr.splice(i - 1, 3, calculateFactorial(arr[i-1]));
-            i--;
+const operate = {
+    '+': function(a, b) { return a + b },
+    '-': function(a, b) { return a - b },
+    '*': function(a, b) { return a * b },
+    '/': function(a, b) { return a / b },
+    '!': function(a) {
+        for (let i = a-1; i >= 1; i--) {
+            a *= i;
         }
+        return a;
     }
-  
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === '*') {
-            arr.splice(i - 1, 3, arr[i - 1] * arr[i + 1]);
-            i--;
-        }
-        if (arr[i] === '/') {
-            arr.splice(i - 1, 3, arr[i - 1] / arr[i + 1]);
-            i--;
-        }
-    }
-
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === '+') {
-            arr.splice(i - 1, 3, arr[i - 1] + arr[i + 1]);
-            i--;
-        }
-        if (arr[i] === '-') {
-            arr.splice(i - 1, 3, arr[i - 1] - arr[i + 1]);
-            i--;
-        }
-    }
-    return arr[0];
 }
 
 const clear = {
