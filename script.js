@@ -12,7 +12,7 @@ const functionButtons = {
     pi: functionButtonElements[5],
     factorial: functionButtonElements[6],
     percentage: functionButtonElements[7],
-    power: functionButtonElements[8],
+    exponent: functionButtonElements[8],
     root: functionButtonElements[9]
 }
 
@@ -141,6 +141,9 @@ const input = {
     percentage: function() {
         if (isNaN(lastChar)) return;
         update.equation('%')
+    },
+    exponent: function() {
+        update.equation('^');
     },
     floatingPoint: function() {
         if (floatingPointInputted === true) return;
@@ -305,10 +308,11 @@ const calculate = {
     expressions: function(arr) {
         calculate.factorial(arr)
         calculate.percentage(arr)
-        calculate.basicOperations(arr, '*');
-        calculate.basicOperations(arr, '/');
-        calculate.basicOperations(arr, '+');
-        calculate.basicOperations(arr, '-');
+        calculate.operations(arr, '^');
+        calculate.operations(arr, '*');
+        calculate.operations(arr, '/');
+        calculate.operations(arr, '+');
+        calculate.operations(arr, '-');
     },
     factorial: function(arr) {
         for (let i = 0; i < arr.length; i++) {
@@ -334,14 +338,13 @@ const calculate = {
             i--;
         }
     },
-    basicOperations: function(arr, operation) {
+    operations: function(arr, operation) {
         for (let i = 0; i < arr.length; i++) {
             if (arr[i] !== operation) continue;
 
             arr.splice(i - 1, 3, operate[operation](arr[i - 1], arr[i + 1]));
             i--;
         }
-        return arr[0];
     }
 }
 
@@ -350,6 +353,7 @@ const operate = {
     '-': function(a, b) { return a - b },
     '*': function(a, b) { return a * b },
     '/': function(a, b) { return a / b },
+    '^': function(a, b) { return a ** b },
     '!': function(a) {
         for (let i = a-1; i >= 1; i--) {
             a *= i;
@@ -441,6 +445,7 @@ functionButtons.brackets.addEventListener('mousedown', toggle.brackets);
 functionButtons.pi.addEventListener('mousedown', input.pi);
 functionButtons.factorial.addEventListener('mousedown', input.factorial);
 functionButtons.percentage.addEventListener('mousedown', input.percentage);
+functionButtons.exponent.addEventListener('mousedown', input.exponent)
 
 functionButtons.equals.addEventListener('mousedown', resolve.equation);
 functionButtons.clear.addEventListener('mousedown', clear.character);
