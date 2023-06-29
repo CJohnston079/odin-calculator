@@ -372,14 +372,8 @@ const operate = {
         return a;
     },
     '%': function(a, b, operation) {
-        if (operation === '*') {
-            a *= 0.01;
-        } else if (operation === '+') {
-            a = a * b * 0.01;
-        } else if (operation === '-') {
-            a = a * b * 0.01;
-        }
-
+        a *= 0.01;
+        operation === '+' || operation === '-' ? a *= b : {};
         return a;
     }
 }
