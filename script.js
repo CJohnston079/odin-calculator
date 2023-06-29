@@ -75,7 +75,10 @@ const update = {
         console.log(equationArr);
     },
     equation: function(character) {
-        isEquationSolved === true ? isEquationSolved = false : {};
+        if (isEquationSolved === true) {
+            isEquationSolved = false;
+            floatingPointInputted = false
+        };
         equationStr += character;
         update.equationArr();
         update.display();
@@ -265,6 +268,8 @@ const resolve = {
         equationStr = convert.arrToStr(equationArr);
         equationStr = (round(equationStr, decimalPlaces)).toString();
         equationArr = convert.strToArr(equationStr);
+
+        equationArr.includes('.') ? floatingPointInputted = true : {};
     
         update.display();
         update.history();
