@@ -312,18 +312,18 @@ const calculate = {
     },
     factorial: function(arr) {
         for (let i = 0; i < arr.length; i++) {
-            if (arr[i] === '!') {
-                arr.splice(i - 1, 3, operate['!'](arr[i-1]));
-                i--;
-            }
+            if (arr[i] !== '!') continue;
+
+            arr.splice(i - 1, 3, operate['!'](arr[i-1]));
+            i--;
         }
     },
     percentage: function(arr) {
         for (let i = 0; i < arr.length; i++) {
-            if (arr[i] === '%') {
-                arr.splice(i - 1, 3, operate['%'](arr[i-1]));
-                i--;
-            }
+            if (arr[i] !== '%') continue;
+
+            arr.splice(i - 1, 3, operate['%'](arr[i-1]));
+            i--;
         }
         /*
         Determine what a specific percentage is of another number.
@@ -344,7 +344,7 @@ const calculate = {
     basicOperations: function(arr, operation) {
         for (let i = 0; i < arr.length; i++) {
             if (arr[i] !== operation) continue;
-    
+
             arr.splice(i - 1, 3, operate[operation](arr[i - 1], arr[i + 1]));
             i--;
         }
@@ -363,7 +363,7 @@ const operate = {
         }
         return a;
     },
-    '%': function(a,b) { }
+    '%': function(a) { return a *= 0.01; }
 }
 
 const clear = {
