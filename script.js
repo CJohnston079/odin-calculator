@@ -74,9 +74,9 @@ const update = {
         calculationDisplay.textContent = 0;
         console.log(equationArr);
     },
-    equation: function(object, key) {
+    equation: function(character) {
         isEquationSolved === true ? isEquationSolved = false : {};
-        equationStr += object[key].value;
+        equationStr += character;
         update.equationArr();
         update.display();
     },
@@ -112,7 +112,7 @@ const input = {
         floatingPointInputted = false;
         isFactorialInputted = false;
         isNegativeNum = false;
-        update.equation(operationButtons, key);
+        update.equation(operationButtons[key].value);
     },
     number: function(key) {
         if (isEquationSolved === true) {
@@ -121,10 +121,11 @@ const input = {
         if (lastChar === ')') {
             equationArr.push('*'); // adds multipliers between brackets if no operation is specified
         }
-        update.equation(numberButtons, key)
+        update.equation(numberButtons[key].value)
     },
     pi: function() {
         if (floatingPointInputted === true) return;
+        update.equation(round(Math.PI, 100))
         equationStr += round(Math.PI, 100);
         equationArr.push(Math.PI);
         floatingPointInputted = true;
@@ -133,17 +134,12 @@ const input = {
     factorial: function() {
         if (isNegativeNum === true || floatingPointInputted === true) return;
         if (isNaN(Number(lastChar)) && isFactorialInputted === false) return;
-        // update.equation(functionButtons, functionButtons.factorial)
-        equationStr += '!';
-        equationArr.push('!');
-        update.display()
         isFactorialInputted = true;
+        update.equation('!')
     },
     percentage: function() {
         if (isNaN(lastChar)) return;
-        equationStr += '%';
-        equationArr.push('%');
-        update.display();
+        update.equation('%')
     },
     floatingPoint: function() {
         if (floatingPointInputted === true) return;
