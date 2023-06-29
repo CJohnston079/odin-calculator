@@ -333,21 +333,6 @@ const calculate = {
             arr.splice(i - 1, 3, operate['%'](a, b, operation));
             i--;
         }
-        /*
-        Determine what a specific percentage is of another number.
-        For example, enter 600 x 15 and hit the percentage key.
-        You see the answer is 90, which means that 90 is 15 percentage of 600.
-    
-        Calculate a percentage of a number and add it to the number.
-        For example, enter 34 + 7 and hit the percentage key.
-        You immediately see the answer is 36.38.
-        This is useful for figuring sales tax on purchase items.
-    
-        Figure a percentage of a number and subtract it from the number.
-        For example, enter 79 – 30 and hit the percentage key.
-        You see the answer is 55.3.
-        This is useful for figuring sale prices on purchase items.
-        */
     },
     basicOperations: function(arr, operation) {
         for (let i = 0; i < arr.length; i++) {
