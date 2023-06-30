@@ -145,6 +145,9 @@ const input = {
     },
     root: function() {
         if (lastChar === '√') return;
+        if (isNaN(Number(lastChar)) === false) {
+            equationArr.push('*');
+        }
         update.equation('√')
     },
     floatingPoint: function() {
