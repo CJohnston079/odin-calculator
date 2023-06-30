@@ -492,3 +492,9 @@ functionButtons.clear.addEventListener('mousedown', clear.character);
 functionButtons.allClear.addEventListener('mousedown', clear.all);
 
 memoryButtons.memoryClear.addEventListener('mousedown', memory.clear);
+memoryButtons.memoryAdd.addEventListener('mousedown', () => {
+    memory.update(equationArr, '+');
+});
+memoryButtons.memorySubtract.addEventListener('mousedown', () => {
+    memory.update(equationArr, '-');
+});
