@@ -314,7 +314,6 @@ const calculate = {
         calculate.factorial(arr)
         calculate.percentage(arr)
         calculate.root(arr);
-        console.log(`Root calculated: ${equationArr}`)
         calculate.operations(arr, '^');
         calculate.operations(arr, '*');
         calculate.operations(arr, '/');
@@ -333,8 +332,6 @@ const calculate = {
         for (let i = 0; i < arr.length; i++) {
             if (arr[i] !== '√') continue;
 
-            console.log(`Find root of: ${arr[i+1]}`);
-
             arr.splice(i - 1, 3, operate['√'](arr[i+1]));
             i--;
         }
@@ -346,10 +343,6 @@ const calculate = {
             let a = arr[i-1];
             let b = arr[i-3];
             let operation = arr[i-2]
-
-            console.log(a)
-            console.log(b)
-            console.log(operation)
 
             arr.splice(i - 1, 3, operate['%'](a, b, operation));
             i--;
@@ -390,6 +383,12 @@ const memory = {
     clear: function() {
         return memory.value = 0;
     },
+    plus: function(num) {
+        return memory += num;
+    },
+    minus: function(num) {
+        return memory -= num;
+    }
 }
 
 const clear = {
