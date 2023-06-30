@@ -143,10 +143,8 @@ const input = {
         if (isNaN(lastChar)) return;
         update.equation('%')
     },
-    exponent: function() {
-        update.equation('^');
-    },
     root: function() {
+        if (lastChar === '√') return;
         update.equation('√')
     },
     floatingPoint: function() {
@@ -313,6 +311,7 @@ const calculate = {
         calculate.factorial(arr)
         calculate.percentage(arr)
         calculate.root(arr);
+        console.log(`Root calculated: ${equationArr}`)
         calculate.operations(arr, '^');
         calculate.operations(arr, '*');
         calculate.operations(arr, '/');
@@ -331,7 +330,9 @@ const calculate = {
         for (let i = 0; i < arr.length; i++) {
             if (arr[i] !== '√') continue;
 
-            arr.splice(i - 1, 3, operate['√'](arr[i]));
+            console.log(`Find root of: ${arr[i+1]}`);
+
+            arr.splice(i - 1, 3, operate['√'](arr[i+1]));
             i--;
         }
     },
