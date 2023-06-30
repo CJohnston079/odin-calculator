@@ -378,17 +378,32 @@ const operate = {
     }
 }
 
-const memory = {
+    const memory = {
     value: 0,
     clear: function() {
         return memory.value = 0;
     },
-    plus: function(num) {
-        return memory += num;
+    update: function(arr, operation) {
+        let test = []
+
+        for (let i = arr.length-1; i >= 0; i--) {
+            if (isNaN(Number(arr[i]))) break;
+            test.unshift(arr[i]);
+        }
+
+        if (operation === '+') {
+            return memory.value += Number(test.join(''));
+        } else {
+            return memory.value -= Number(test.join(''));
+        }
+
     },
-    minus: function(num) {
-        return memory -= num;
-    }
+    // recall: function(arr) {
+    //     console.log(arr)
+    //     arr.concat(memory.arr);
+    //     console.log(arr)
+    //     update.display();
+    // }
 }
 
 const clear = {
