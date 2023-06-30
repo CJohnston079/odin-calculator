@@ -385,6 +385,13 @@ const operate = {
     }
 }
 
+const memory = {
+    value: 0,
+    clear: function() {
+        return memory.value = 0;
+    },
+}
+
 const clear = {
     equation: function() {
         equationStr = '';
@@ -469,3 +476,5 @@ functionButtons.root.addEventListener('mousedown', input.root);
 functionButtons.equals.addEventListener('mousedown', resolve.equation);
 functionButtons.clear.addEventListener('mousedown', clear.character);
 functionButtons.allClear.addEventListener('mousedown', clear.all);
+
+memoryButtons.memoryClear.addEventListener('mousedown', memory.clear);
