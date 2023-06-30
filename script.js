@@ -462,6 +462,7 @@ const clear = {
     
         equationStr = equationStr.slice(0,-1);
         equationArr.pop();
+        update.lastChar();
         update.display();
         return equationArr;
     },
