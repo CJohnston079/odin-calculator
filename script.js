@@ -387,7 +387,7 @@ const operate = {
         let test = []
 
         for (let i = arr.length-1; i >= 0; i--) {
-            if (isNaN(Number(arr[i]))) break;
+            if (isNaN(Number(arr[i])) && arr[i] !== '.') break;
             test.unshift(arr[i]);
         }
 
@@ -396,17 +396,24 @@ const operate = {
         } else {
             return memory.value -= Number(test.join(''));
         }
-
     },
     recall: function(arr) {
+        if (isNaN(Number(lastChar)) === false) return;
         if (memory.value === 0) return;
 
         let mem = memory.value.toString()
-
+        
         for (let i=0; i < mem.length; i++) {
-            equationArr.push(Number(mem[i]));
+            if (isNaN(Number(mem[i]))) {
+                if (floatingPointInputted === true) return;
+                arr.push(mem[i]);
+                floatingPointInputted = true;
+                continue;
+            }
+            arr.push(Number(mem[i]));
         }
-        equationStr = convert.arrToStr(equationArr);
+        equationStr = convert.arrToStr(arr);
+        update.lastChar();
         update.display();
     }
 }
@@ -497,10 +504,12 @@ functionButtons.clear.addEventListener('mousedown', clear.character);
 functionButtons.allClear.addEventListener('mousedown', clear.all);
 
 memoryButtons.memoryClear.addEventListener('mousedown', memory.clear);
-memoryButtons.memoryRecall.addEventListener('mousedown', memory.recall);
 memoryButtons.memoryAdd.addEventListener('mousedown', () => {
     memory.update(equationArr, '+');
 });
 memoryButtons.memorySubtract.addEventListener('mousedown', () => {
     memory.update(equationArr, '-');
+});
+memoryButtons.memoryRecall.addEventListener('mousedown', () => {
+    memory.recall(equationArr);
 });
