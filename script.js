@@ -398,12 +398,17 @@ const operate = {
         }
 
     },
-    // recall: function(arr) {
-    //     console.log(arr)
-    //     arr.concat(memory.arr);
-    //     console.log(arr)
-    //     update.display();
-    // }
+    recall: function(arr) {
+        if (memory.value === 0) return;
+
+        let mem = memory.value.toString()
+
+        for (let i=0; i < mem.length; i++) {
+            equationArr.push(Number(mem[i]));
+        }
+        equationStr = convert.arrToStr(equationArr);
+        update.display();
+    }
 }
 
 const clear = {
@@ -492,6 +497,7 @@ functionButtons.clear.addEventListener('mousedown', clear.character);
 functionButtons.allClear.addEventListener('mousedown', clear.all);
 
 memoryButtons.memoryClear.addEventListener('mousedown', memory.clear);
+memoryButtons.memoryRecall.addEventListener('mousedown', memory.recall);
 memoryButtons.memoryAdd.addEventListener('mousedown', () => {
     memory.update(equationArr, '+');
 });
