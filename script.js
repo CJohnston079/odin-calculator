@@ -162,7 +162,7 @@ const input = {
         update.display();
     },
     negativeSign: function() {
-        if (inputNegativeNum === true) return;
+        if (inputNegativeNum === true || lastChar === '√') return;
     
         inputNegativeNum = true;
         isNegativeNum = true;
@@ -183,7 +183,7 @@ const toggle = {
         if (isFactorialInputted === true) return;
         for (let i = equationArr.length-1; i >= 0; i--) {
             if (i === 0 || isNaN(Number(equationArr[i-1])) === true && equationArr[i-1] !== '.') {
-                if (equationArr[i] === '(' || equationArr[i] === ')' || equationArr[i] === '√') return;
+                if (equationArr[i] === '(' || equationArr[i] === ')' || equationArr[i] === '√' || equationArr[i-1] === '√') return;
                 equationArr[i] *= -1;
                 equationStr = convert.arrToStr(equationArr);
                 if (Object.is(equationArr[i], -0) === true) { // add minus sign to floating point numbers beginning with 0
@@ -364,7 +364,10 @@ const operate = {
     '*': function(a, b) { return a * b },
     '/': function(a, b) { return a / b },
     '^': function(a, b) { return a ** b },
-    '√': function(a) { return Math.sqrt(a) },
+    '√': function(a) {
+        if (isNegativeNum === true) console.log('neg')
+        return Math.sqrt(a)
+    },
     '!': function(a) {
         for (let i = a-1; i >= 1; i--) {
             a *= i;
@@ -378,7 +381,7 @@ const operate = {
     }
 }
 
-    const memory = {
+const memory = {
     value: 0,
     clear: function() {
         return memory.value = 0;
