@@ -183,7 +183,7 @@ const toggle = {
         if (isFactorialInputted === true) return;
         for (let i = equationArr.length-1; i >= 0; i--) {
             if (i === 0 || isNaN(Number(equationArr[i-1])) === true && equationArr[i-1] !== '.') {
-                if (equationArr[i] === '(' || equationArr[i] === ')') return;
+                if (equationArr[i] === '(' || equationArr[i] === ')' || equationArr[i] === '√') return;
                 equationArr[i] *= -1;
                 equationStr = convert.arrToStr(equationArr);
                 if (Object.is(equationArr[i], -0) === true) { // add minus sign to floating point numbers beginning with 0
