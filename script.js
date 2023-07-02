@@ -116,9 +116,7 @@ const input = {
         update.equation(operationButtons[key].value);
     },
     number: function(key) {
-        if (isEquationSolved === true) {
-            clear.equation();
-        }
+        isEquationSolved === true ? clear.equation() : {};
         if (lastChar === ')') {
             equationArr.push('*'); // adds multipliers between brackets if no operation is specified
         }
@@ -148,6 +146,7 @@ const input = {
         if (isNaN(Number(lastChar)) === false) {
             equationArr.push('*');
         }
+        isEquationSolved === true ? clear.equation() : {};
         update.equation('√')
     },
     floatingPoint: function() {
