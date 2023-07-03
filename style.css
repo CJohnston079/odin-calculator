@@ -113,13 +113,14 @@ ul {
 
 #function-panel {
     max-height: 100%;
-    opacity: 75%;
-    transition: 600ms;
+    opacity: 60%;
+    transition: 600ms linear;
+    transition-delay: 0ms;
 }
 
-/* #function-panel:active {
-    max-height: 0%;
-} */
+.hidden {
+    max-height: 0% !important;
+}
 
 #numpad {
     display: grid;
@@ -148,7 +149,7 @@ ul {
 
 .functions {
     grid-template-columns: repeat(5, auto);
-    border-top: solid 0.1rem var(--cl-medium);
+    border-top: solid 0.1rem var(--midground);
 }
 
 .button {

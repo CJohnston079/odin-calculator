@@ -220,6 +220,9 @@ const toggle = {
         }
         update.equationArr();
         update.display();
+    },
+    functionPanel: function() {
+        document.querySelector('#function-panel').classList.toggle('hidden')
     }
 }
 
@@ -477,7 +480,6 @@ const clear = {
         return equationArr;
     }
 }
-
 
 for (const key in operationButtons) {
     operationButtons[key].element.addEventListener('mousedown', () => {
