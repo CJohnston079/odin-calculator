@@ -32,12 +32,15 @@ html {
         hsla(0, 0%, 95%, 1.0);
     
     --cl-light: var(--cl-white);
+    --cl-mid-light: var(--cl-light-grey);
+    --cl-mid-dark: var(--cl-dark-grey);
     --cl-dark: var(--cl-black);
     --cl-medium: var(--cl-grey);
     --cl-accent: orangered;
 
     --foreground: var(--cl-black);
-    --background: var(--cl-black);
+    --midground: var(--cl-dark-grey);
+    --background: var(--cl-white);
     --background-grad: var(--cl-grad-light);
     --cl-screen: var(--cl-white-trans);
     --cl-device: var(--cl-white);
@@ -47,6 +50,7 @@ html {
 @media (prefers-color-scheme: dark) {
     :root {
     --background: var(--cl-black);
+    --midground: var(--cl-light-grey);
     --foreground: var(--cl-white);
     --background-grad: var(--cl-grad-dark);
     --cl-screen: var(--cl-black-trans);
@@ -182,6 +186,7 @@ ul {
     height: 3rem;
     border-radius: 0.5rem;
     font-weight: 400;
+    color: var(--midground);
 }
 
 .number {
@@ -198,7 +203,7 @@ ul {
 .number:active,
 .operation:active {
     background-color: var(--foreground);
-    color: black;
+    color: var(--background);
 }
 
 #plus-minus {
