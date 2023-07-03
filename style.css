@@ -1,9 +1,9 @@
 :root {
-    --dark-bg-grad: linear-gradient(135deg, hsla(0, 0%, 0%, 0.2), hsla(0, 0%, 0%, 0.6));
-    --light-bg-grad: linear-gradient(135deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
-    --light-trans-50: hsla(0, 0%, 100%, 0.5);
-    --dark-trans-50: hsla(0, 0%, 0%, 0.5);
-    --light-gradient-fade: linear-gradient(hsla(0, 0%, 100%, 0.0), hsla(0, 0%, 100%, 1.0));
+    --cl-grad-dark: linear-gradient(135deg, hsla(0, 0%, 0%, 0.2), hsla(0, 0%, 0%, 0.6));
+    --cl-grad-light: linear-gradient(135deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
+    --cl-white-op-50: hsla(0, 0%, 100%, 0.5);
+    --cl-black-op-50: hsla(0, 0%, 0%, 0.5);
+    --cl-grad-light-fade: linear-gradient(hsla(0, 0%, 100%, 0.0), hsla(0, 0%, 100%, 1.0));
 }
 
 * {
@@ -23,17 +23,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: var(--cl-grad-light);
     font-family: 'Roboto Mono', monospace;
+    color: black;
+    box-shadow: 0 0 1rem var(--cl-black-op-50) inset;
+}
+
+.dark-mode {
+    background: var(--cl-grad-dark);
     color: white;
-    box-shadow: 0 0 1rem var(--dark-trans-50) inset;
-}
-
-.dark-background {  
-    background: var(--dark-bg-grad);
-}
-
-.light-background {  
-    background: var(--light-bg-grad);
 }
 
 ul {
@@ -46,8 +44,8 @@ ul {
 #device-housing {
     border-radius: 1rem;
     border: solid 0.1rem white;
-    background-color: var(--dark-trans-50);
-    box-shadow: 0.25rem 0.25rem 0rem white, 0 0 1rem var(--dark-trans-50);
+    background-color: var(--cl-black-op-50);
+    box-shadow: 0.25rem 0.25rem 0rem white, 0 0 1rem var(--cl-black-op-50);
 }
 
 #screen {
