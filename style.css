@@ -24,7 +24,7 @@ html {
 
     --cl-glare-dark:
         linear-gradient(0deg, hsla(0, 0%, 0%, 0.0) 10%, hsla(0, 0%, 0%, 1.0) 100%),
-        linear-gradient(112.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 38%, hsla(0, 0%, 100%, 0.12) 40%, hsla(0, 0%, 100%, 0.06) 100%),
+        linear-gradient(112.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 38%, hsla(0, 0%, 50%, 0.12) 40%, hsla(0, 0%, 50%, 0.06) 100%),
         hsla(0, 0%, 0%, 0.7);
     --cl-glare-light:
         linear-gradient(0deg, hsla(0, 0%, 95%, 0.0) 10%, hsla(0, 0%, 95%, 1.0) 100%),
@@ -77,8 +77,9 @@ footer {
     width: 100%;
     padding: 0.5rem;
     background-color: var(--cl-screen);
-    border: solid 0.2rem white;
+    border: solid 0.1rem var(--background);
     border-bottom: none;
+    box-shadow: 1rem 0 1rem var(--cl-black-trans);
 }
 
 footer ul {
@@ -93,7 +94,8 @@ footer ul li {
     height: 4rem;
     width: 4rem;
     margin: 0.5rem;
-    background-color: red;
+    background-color: var(--background);
+    border: solid 0.1rem var(--background);
     border-radius: 100%;
 }
 
@@ -109,6 +111,8 @@ ul {
     border-radius: 1rem;
     border: solid 0.1rem var(--foreground);
     box-shadow: 0.25rem 0.25rem 0rem var(--foreground), 0 0 1rem var(--cl-black-trans);
+    user-select: none;
+    transform: translate(0, -4vh);
 }
 
 #screen {
@@ -164,7 +168,6 @@ ul {
     padding: 0.5rem 0;
 }
 
-
 .numbers {
     grid-template-columns: repeat(3, auto);
 }
@@ -188,7 +191,6 @@ ul {
     font-size: 1.5rem;
     font-weight: 200;
     cursor: pointer;
-    user-select: none;
 }
 
 .operation {
