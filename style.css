@@ -4,7 +4,7 @@
 }
 
 html {
-    background: var(--cl-accent);
+    background: var(--theme-lagoon);
     font-size: 0.8rem;
     font-size: 1.5vh;
 }
@@ -17,10 +17,8 @@ html {
     --cl-black: hsl(0, 0%, 0%);
     --cl-white-trans: hsla(0, 0%, 100%, 0.75);
     --cl-black-trans: hsla(0, 0%, 0%, 0.5);
-    --cl-grad-dark:
-        linear-gradient(135deg, hsla(0, 0%, 0%, 0.2), hsla(0, 0%, 0%, 0.6));
-    --cl-grad-light:
-        linear-gradient(135deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
+    --cl-grad-dark: linear-gradient(180deg, hsla(0, 0%, 0%, 0.4), hsla(0, 0%, 0%, 0.6));
+    --cl-grad-light: linear-gradient(0deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
 
     --cl-glare-dark:
         linear-gradient(0deg, hsla(0, 0%, 0%, 0.0) 10%, hsla(0, 0%, 0%, 1.0) 100%),
@@ -30,7 +28,16 @@ html {
         linear-gradient(0deg, hsla(0, 0%, 95%, 0.0) 10%, hsla(0, 0%, 95%, 1.0) 100%),
         linear-gradient(112.5deg, hsla(0, 0%, 100%, 1.0) 0%, hsla(0, 0%, 100%, 0.0) 38%, hsla(0, 0%, 100%, 1.0) 40%, hsla(0, 0%, 100%, 1.0) 100%),
         hsla(0, 0%, 95%, 1.0);
-    
+
+    --theme-graphite: linear-gradient(135deg, hsl(0, 0%, 70%) 0%, hsl(0, 0%, 31%) 100%);
+    --theme-strawberry: linear-gradient(135deg, hsl(357, 98%, 58%) 0%, hsl(357, 98%, 35%) 100%);
+    --theme-sunkissed: linear-gradient(135deg, hsl(40, 92%, 58%) 0%, hsl(340, 97%, 55%) 100%);
+    --theme-papaya: linear-gradient(135deg, hsl(90, 98%, 32%) 0%, hsl(137, 100%, 20%) 100%);
+    --theme-lagoon: linear-gradient(135deg, hsl(175, 80%, 33%) 0%, hsl(143, 85%, 58%) 100%);
+    --theme-atmosphere: linear-gradient(135deg, hsl(196, 93%, 67%) 0%, hsl(239, 64%, 59%) 100%);
+    --theme-lavender: linear-gradient(135deg, hsl(302, 97%, 75%) 0%, hsl(267, 89%, 55%) 100%);    
+    --theme-velvet: linear-gradient(135deg, hsl(307, 82%, 62%) 0%, hsl(0, 100%, 50%) 100%);
+
     --cl-light: var(--cl-white);
     --cl-mid-light: var(--cl-light-grey);
     --cl-mid-dark: var(--cl-dark-grey);
