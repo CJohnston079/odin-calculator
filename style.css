@@ -11,35 +11,38 @@ html {
 
 :root {
     --cl-white: hsl(0, 0%, 100%);
-    --cl-black: hsl(0, 0%, 0%);
+    --cl-light-grey: hsl(0, 0%, 80%);
     --cl-grey: hsl(0, 0%, 50%);
-    --cl-white-trans: hsla(0, 0%, 100%, 0.7);
+    --cl-dark-grey: hsl(0, 0%, 20%);
+    --cl-black: hsl(0, 0%, 0%);
+    --cl-white-trans: hsla(0, 0%, 100%, 0.75);
     --cl-black-trans: hsla(0, 0%, 0%, 0.5);
     --cl-grad-dark:
         linear-gradient(135deg, hsla(0, 0%, 0%, 0.2), hsla(0, 0%, 0%, 0.6));
     --cl-grad-light:
         linear-gradient(135deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
 
-    --cl-screen-glare-dark:
-        linear-gradient(180deg, hsla(0, 0%, 0%, 0.0) 10%, hsla(0, 0%, 0%, 0.7) 100%),
-        linear-gradient(67.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 58%, hsla(0, 0%, 100%, 0.12) 60%, hsla(0, 0%, 100%, 0.06) 100%),
+    --cl-glare-dark:
+        linear-gradient(0deg, hsla(0, 0%, 0%, 0.0) 10%, hsla(0, 0%, 0%, 1.0) 100%),
+        linear-gradient(112.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 38%, hsla(0, 0%, 100%, 0.12) 40%, hsla(0, 0%, 100%, 0.06) 100%),
         hsla(0, 0%, 0%, 0.7);
-    --cl-screen-glare-light:
-        linear-gradient(180deg, hsla(0, 0%, 95%, 0.0) -100%, hsla(0, 0%, 95%, 0.2) 100%),
-        /* linear-gradient(67.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 58%, hsla(0, 0%, 100%, 0.6) 60%, hsla(0, 0%, 100%, 0.3) 100%), */
-        hsla(0, 0%, 95%, 0.7);
+    --cl-glare-light:
+        linear-gradient(0deg, hsla(0, 0%, 95%, 0.0) 10%, hsla(0, 0%, 95%, 1.0) 100%),
+        linear-gradient(112.5deg, hsla(0, 0%, 100%, 1.0) 0%, hsla(0, 0%, 100%, 0.0) 38%, hsla(0, 0%, 100%, 1.0) 40%, hsla(0, 0%, 100%, 1.0) 100%),
+        hsla(0, 0%, 95%, 1.0);
     
     --cl-light: var(--cl-white);
     --cl-dark: var(--cl-black);
+    --cl-mid-light: 
     --cl-medium: var(--cl-grey);
-    --cl-accent: linear-gradient(90deg, #FDBB2D 0%, #3A1C71 100%);
+    --cl-accent: orangered;
 
     --foreground: var(--cl-black);
     --background: var(--cl-black);
     --background-grad: var(--cl-grad-light);
-    --cl-device: var(--cl-white);
     --cl-screen: var(--cl-white-trans);
-    --screen-glare: var(--cl-screen-glare-light);
+    --cl-device: var(--cl-white);
+    --cl-glare: var(--cl-glare-light);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -47,9 +50,9 @@ html {
     --background: var(--cl-black);
     --foreground: var(--cl-white);
     --background-grad: var(--cl-grad-dark);
-    --cl-device: var(--cl-black);
     --cl-screen: var(--cl-black-trans);
-    --screen-glare: var(--cl-screen-glare-dark);
+    --cl-device: var(--cl-black);
+    --cl-glare: var(--cl-glare-dark);
     }
 }
 
@@ -87,7 +90,7 @@ ul {
     align-items: center;
     height: 28rem;
     border-radius: 1rem 1rem 0 0;
-    background: var(--screen-glare);
+    background: var(--cl-screen);
     overflow: hidden;
 }
 
@@ -117,7 +120,7 @@ ul {
 #numpad {
     display: grid;
     grid-template-columns: auto auto;
-    background-color: var(--cl-device);
+    background: var(--cl-glare);
     border-top: solid 0.1rem var(--foreground);
     border-radius: 0 0 1rem 1rem;
 }
@@ -188,7 +191,7 @@ ul {
 }
 
 .number:hover{
-    border: solid 0.1rem var(--background);
+    border: solid 0.1rem var(--foreground);
     transition: border 200ms;
 }
 
