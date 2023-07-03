@@ -33,7 +33,6 @@ html {
     
     --cl-light: var(--cl-white);
     --cl-dark: var(--cl-black);
-    --cl-mid-light: 
     --cl-medium: var(--cl-grey);
     --cl-accent: orangered;
 
@@ -76,6 +75,7 @@ ul {
 }
 
 #device-housing {
+    width: 28rem;
     border-radius: 1rem;
     border: solid 0.1rem var(--foreground);
     box-shadow: 0.25rem 0.25rem 0rem var(--foreground), 0 0 1rem var(--cl-black-trans);
