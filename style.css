@@ -1,20 +1,48 @@
-:root {
-    --cl-grad-dark: linear-gradient(135deg, hsla(0, 0%, 0%, 0.2), hsla(0, 0%, 0%, 0.6));
-    --cl-grad-light: linear-gradient(135deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
-    --cl-white-op-50: hsla(0, 0%, 100%, 0.5);
-    --cl-black-op-50: hsla(0, 0%, 0%, 0.5);
-    --cl-grad-light-fade: linear-gradient(hsla(0, 0%, 100%, 0.0), hsla(0, 0%, 100%, 1.0));
-}
-
 * {
     margin: 0;
     padding: 0;
 }
 
 html {
-    background-color: orangered;
+    background-color: var(--cl-accent);
     font-size: 0.8rem;
     font-size: 1.5vh;
+}
+
+:root {
+    --cl-white: hsl(0, 0%, 100%);
+    --cl-black: hsl(0, 0%, 0%);
+    --cl-grey: hsl(0, 0%, 50%);
+    --cl-grad-dark: linear-gradient(135deg, hsla(0, 0%, 0%, 0.2), hsla(0, 0%, 0%, 0.6));
+    --cl-grad-light: linear-gradient(135deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
+    --cl-white-trans: hsla(0, 0%, 100%, 0.7);
+    --cl-black-trans: hsla(0, 0%, 0%, 0.5);
+
+    --cl-screen-glare-dark: linear-gradient(180deg, hsla(0, 0%, 0%, 0.0) 10%, hsla(0, 0%, 0%, 1.0) 100%),
+        linear-gradient(67.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 58%, hsla(0, 0%, 100%, 0.12) 60%, hsla(0, 0%, 100%, 0.06) 100%),
+        hsla(0, 0%, 0%, 1.0);
+    --cl-screen-glare-light: linear-gradient(180deg, hsla(0, 0%, 95%, 0.0) 10%, hsla(0, 0%, 95%, 1.0) 100%),
+        linear-gradient(67.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 58%, hsla(0, 0%, 100%, 0.8) 60%, hsla(0, 0%, 100%, 0.2) 100%),
+        hsla(0, 0%, 95%, 1.0);
+    
+    --cl-light: var(--cl-white);
+    --cl-dark: var(--cl-black);
+    --cl-medium: var(--cl-grey);
+    --cl-accent: orangered;
+
+    --foreground: var(--cl-black);
+    --background: var(--cl-black);
+    --background-grad: var(--cl-grad-light);
+    --cl-device: var(--cl-white-trans);
+    --screen-glare: var(--cl-screen-glare-light);
+}
+
+.dark-mode {
+    --background: var(--cl-black);
+    --foreground: var(--cl-white);
+    --background-grad: var(--cl-grad-dark);
+    --cl-device: var(--cl-black-trans);
+    --screen-glare: var(--cl-screen-glare-dark);
 }
 
 body {
@@ -23,15 +51,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--cl-grad-light);
+    background: var(--background-grad);
     font-family: 'Roboto Mono', monospace;
-    color: black;
-    box-shadow: 0 0 1rem var(--cl-black-op-50) inset;
-}
-
-.dark-mode {
-    background: var(--cl-grad-dark);
-    color: white;
+    color: var(--foreground);
+    box-shadow: 0 0 1rem var(--cl-black-trans) inset;
 }
 
 ul {
@@ -43,9 +66,9 @@ ul {
 
 #device-housing {
     border-radius: 1rem;
-    border: solid 0.1rem white;
-    background-color: var(--cl-black-op-50);
-    box-shadow: 0.25rem 0.25rem 0rem white, 0 0 1rem var(--cl-black-op-50);
+    border: solid 0.1rem var(--foreground);
+    background-color: var(--cl-device);
+    box-shadow: 0.25rem 0.25rem 0rem var(--foreground), 0 0 1rem var(--cl-black-trans);
 }
 
 #screen {
@@ -56,10 +79,8 @@ ul {
     align-items: center;
     height: 28rem;
     border-radius: 1rem 1rem 0 0;
-    background-color: black;
-    background: linear-gradient(180deg, hsla(0, 0%, 0%, 0.0) 10%, hsla(0, 0%, 0%, 1.0) 100%),
-                linear-gradient(67.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 58%, hsla(0, 0%, 100%, 0.12) 60%, hsla(0, 0%, 100%, 0.06) 100%),
-                hsla(0, 0%, 0%, 1.0);
+    background-color: var(--background);
+    background: var(--screen-glare);
     overflow: hidden;
 }
 
@@ -87,7 +108,7 @@ ul {
 } */
 
 #numpad {
-    border-top: solid 0.1rem hsl(0, 0%, 100%);
+    border-top: solid 0.1rem var(--foreground);
     display: grid;
     grid-template-columns: auto auto;
 }
@@ -111,7 +132,7 @@ ul {
 
 .functions {
     grid-template-columns: repeat(5, auto);
-    border-top: solid 0.1rem hsl(0, 0%, 50%);
+    border-top: solid 0.1rem var(--cl-medium);
 }
 
 .button {
@@ -128,7 +149,7 @@ ul {
 }
 
 .operation {
-    border: solid 0.1rem hsla(0, 0%, 100%, 1.0);
+    border: solid 0.1rem var(--foreground);
     border-radius: 0.5rem;
     font-weight: 400;
     transition: box-shadow 800ms, transform 800ms;
@@ -136,13 +157,13 @@ ul {
 
 .operation:hover {
     transform: translate(-0.1rem, -0.1rem);
-    box-shadow: 0.1rem 0.1rem 0 white;
+    box-shadow: 0.1rem 0.1rem 0 var(--foreground);
     transition: box-shadow 100ms, transform 100ms;
 }
 
 .operation:active {
     transform: translate(0.0rem, 0.0rem);
-    box-shadow: 0.0rem 0.0rem 0 white;
+    box-shadow: 0.0rem 0.0rem 0 var(--foreground);
 }
 
 .functions li {
@@ -158,13 +179,13 @@ ul {
 }
 
 .number:hover{
-    border: solid 0.1rem white;
+    border: solid 0.1rem var(--background);
     transition: border 200ms;
 }
 
 .number:active,
 .operation:active {
-    background-color: white;
+    background-color: var(--foreground);
     color: black;
 }
 
