@@ -71,6 +71,32 @@ body {
     box-shadow: 0 0 1rem var(--cl-black-trans) inset;
 }
 
+footer {
+    position: fixed;
+    align-self: flex-end;
+    width: 100%;
+    padding: 0.5rem;
+    background-color: var(--cl-screen);
+    border: solid 0.2rem white;
+    border-bottom: none;
+}
+
+footer ul {
+    display: flex;
+    justify-content: center;
+}
+
+footer ul li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4rem;
+    width: 4rem;
+    margin: 0.5rem;
+    background-color: red;
+    border-radius: 100%;
+}
+
 ul {
     list-style: none;
     padding-inline-start: 0;
