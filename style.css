@@ -45,6 +45,16 @@ html {
     --screen-glare: var(--cl-screen-glare-dark);
 }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+    --background: var(--cl-black);
+    --foreground: var(--cl-white);
+    --background-grad: var(--cl-grad-dark);
+    --cl-device: var(--cl-black-trans);
+    --screen-glare: var(--cl-screen-glare-dark);
+    }
+}
+
 body {
     margin: 0;
     height: 100vh;
