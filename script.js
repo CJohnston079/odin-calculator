@@ -74,24 +74,15 @@ const update = {
         return lastChar
     },
     display: function() {
-        if (equationStr === '') {
-            calculationDisplay.textContent = 0;
-        } else if (calculationDisplay.textContent === '0') {
-            calculationDisplay.textContent = lastChar;
-        } else {
-            calculationDisplay.textContent += lastChar;
-        }
-
+        equationStr !== '' ? calculationDisplay.textContent = equationStr : 
+        calculationDisplay.textContent = 0;
         console.log(equationArr);
     },
     equation: function(character) {
         isEquationSolved === true ? isEquationSolved = false : {};
-        update.equationStr(character);
+        equationStr += character;
         update.equationArr();
         update.display();
-    },
-    equationStr: function(character) {
-        equationStr += character;
     },
     equationArr: function() {
         if (isNaN(Number(equationStr[equationStr.length-1])) === true) {
@@ -184,7 +175,7 @@ const input = {
         update.display();
     },
     factorial: function() {
-        if (isNegativeNum === true) return;
+        if (isNegativeNum === true || floatingPointInputted === true) return;
         if (isNaN(Number(lastChar)) && isFactorialInputted === false) return;
         isFactorialInputted = true;
         update.equation('!')
@@ -441,17 +432,17 @@ const memory = {
         return memory.value = 0;
     },
     update: function(arr, operation) {
-        let mem = []
+        let test = []
 
         for (let i = arr.length-1; i >= 0; i--) {
             if (isNaN(Number(arr[i])) && arr[i] !== '.') break;
-            mem.unshift(arr[i]);
+            test.unshift(arr[i]);
         }
 
         if (operation === '+') {
-            return memory.value += Number(mem.join(''));
+            return memory.value += Number(test.join(''));
         } else {
-            return memory.value -= Number(mem.join(''));
+            return memory.value -= Number(test.join(''));
         }
     },
     recall: function(arr) {
