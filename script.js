@@ -138,7 +138,9 @@ const update = {
             default:
                 break;
         }
-        document.documentElement.style.transition = '2000ms';
+        setTimeout(() => {
+            document.documentElement.style.transition = '2000ms';
+        }, 100)
         return;
     }
 }
