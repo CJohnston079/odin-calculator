@@ -74,15 +74,31 @@ const update = {
         return lastChar
     },
     display: function() {
-        equationStr !== '' ? calculationDisplay.textContent = equationStr : 
-        calculationDisplay.textContent = 0;
+        if (equationStr === '') {
+            calculationDisplay.textContent = 0;
+        } else if (calculationDisplay.textContent === '0') {
+            calculationDisplay.textContent = lastChar;
+        } else {
+            calculationDisplay.textContent += lastChar;
+        }
+
         console.log(equationArr);
     },
     equation: function(character) {
         isEquationSolved === true ? isEquationSolved = false : {};
-        equationStr += character;
+        update.equationStr(character);
         update.equationArr();
         update.display();
+    },
+    equationStr: function(character) {
+        switch(character) {
+            case '+':
+                equationStr += character;
+                break;
+            default:
+                equationStr += character;
+        }
+        return;
     },
     equationArr: function() {
         if (isNaN(Number(equationStr[equationStr.length-1])) === true) {
