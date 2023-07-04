@@ -4,7 +4,10 @@
 }
 
 html {
-    background: var(--theme-lagoon);
+    --theme-grad: var(--theme-aphrodite);
+    --theme-accent: orangered;
+
+    background: var(--theme-grad);
     font-size: 0.8rem;
     font-size: 1.5vh;
 }
@@ -30,20 +33,20 @@ html {
         hsla(0, 0%, 95%, 1.0);
 
     --theme-graphite: linear-gradient(135deg, hsl(0, 0%, 70%) 0%, hsl(0, 0%, 31%) 100%);
-    --theme-strawberry: linear-gradient(135deg, hsl(357, 98%, 58%) 0%, hsl(357, 98%, 35%) 100%);
-    --theme-sunkissed: linear-gradient(135deg, hsl(40, 92%, 58%) 0%, hsl(340, 97%, 55%) 100%);
+    --theme-strawberry: linear-gradient(135deg, hsl(351, 98%, 58%) 0%, hsl(14, 100%, 62%) 100%);
+    --theme-sunkissed: linear-gradient(135deg, hsl(40, 92%, 58%) 0%, hsl(0, 100%, 51%) 100%);
     --theme-papaya: linear-gradient(135deg, hsl(90, 98%, 32%) 0%, hsl(137, 100%, 20%) 100%);
     --theme-lagoon: linear-gradient(135deg, hsl(175, 80%, 33%) 0%, hsl(143, 85%, 58%) 100%);
-    --theme-atmosphere: linear-gradient(135deg, hsl(196, 93%, 67%) 0%, hsl(239, 64%, 59%) 100%);
-    --theme-lavender: linear-gradient(135deg, hsl(302, 97%, 75%) 0%, hsl(267, 89%, 55%) 100%);    
-    --theme-velvet: linear-gradient(135deg, hsl(307, 82%, 62%) 0%, hsl(0, 100%, 50%) 100%);
+    --theme-atmosphere: linear-gradient(135deg, hsl(183, 93%, 67%) 0%, hsl(216, 100%, 55%) 100%);
+    --theme-ultraviolet: linear-gradient(135deg, hsl(202, 100%, 50%) 0%, hsl(326, 100%, 47%) 100%);
+    --theme-aphrodite: linear-gradient(135deg, hsl(307, 82%, 62%) 0%, hsl(0, 100%, 50%) 100%);
 
     --cl-light: var(--cl-white);
     --cl-mid-light: var(--cl-light-grey);
     --cl-mid-dark: var(--cl-dark-grey);
     --cl-dark: var(--cl-black);
     --cl-medium: var(--cl-grey);
-    --cl-accent: orangered;
+    --cl-accent: var(--theme-accent);
 
     --foreground: var(--cl-black);
     --midground: var(--cl-dark-grey);
@@ -93,8 +96,7 @@ footer ul {
     display: flex;
     justify-content: center;
 }
-
-footer ul li {
+.theme {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -104,6 +106,14 @@ footer ul li {
     background-color: var(--background);
     border: solid 0.1rem var(--background);
     border-radius: 100%;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 500ms, transform 500ms;
+}
+
+.theme:hover {
+    opacity: 1;
+    transform: scale(1.1)
 }
 
 ul {
