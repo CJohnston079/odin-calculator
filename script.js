@@ -112,23 +112,29 @@ const update = {
                 root.style.setProperty('--theme-grad', 'var(--theme-strawberry)');
                 break;
             case themeSwatches[2]:
-                root.style.setProperty('--theme-grad', 'var(--theme-sunkissed)');
+                root.style.setProperty('--theme-grad', 'var(--theme-inferno)');
                 break;
             case themeSwatches[3]:
-                root.style.setProperty('--theme-grad', 'var(--theme-papaya)');
+                root.style.setProperty('--theme-grad', 'var(--theme-sunkissed)');
                 break;
             case themeSwatches[4]:
-                root.style.setProperty('--theme-grad', 'var(--theme-lagoon)');
+                root.style.setProperty('--theme-grad', 'var(--theme-conifer)');
                 break;
             case themeSwatches[5]:
-                root.style.setProperty('--theme-grad', 'var(--theme-atmosphere)');
+                root.style.setProperty('--theme-grad', 'var(--theme-lagoon)');
                 break;
             case themeSwatches[6]:
-                root.style.setProperty('--theme-grad', 'var(--theme-ultraviolet)');
+                root.style.setProperty('--theme-grad', 'var(--theme-atmosphere)');
                 break;
             case themeSwatches[7]:
+                root.style.setProperty('--theme-grad', 'var(--theme-ultraviolet)');
+                break;
+            case themeSwatches[8]:
+                root.style.setProperty('--theme-grad', 'var(--theme-byzantium)');
+                break;
+            case themeSwatches[9]:
                 root.style.setProperty('--theme-grad', 'var(--theme-aphrodite)');
-                break; 
+                break;
             default:
                 return;
         }

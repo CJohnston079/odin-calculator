@@ -4,9 +4,6 @@
 }
 
 html {
-    --theme-grad: var(--theme-aphrodite);
-    --theme-accent: orangered;
-
     background: var(--theme-grad);
     font-size: 0.8rem;
     font-size: 1.5vh;
@@ -20,26 +17,28 @@ html {
     --cl-black: hsl(0, 0%, 0%);
     --cl-white-trans: hsla(0, 0%, 100%, 0.75);
     --cl-black-trans: hsla(0, 0%, 0%, 0.5);
-    --cl-grad-dark: linear-gradient(180deg, hsla(0, 0%, 0%, 0.4), hsla(0, 0%, 0%, 0.6));
-    --cl-grad-light: linear-gradient(0deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.0));
+    --cl-grad-dark: linear-gradient(135deg, hsla(0, 0%, 25%, 0.6) 0%, hsla(0, 0%, 0%, 0.4) 50%, hsla(0, 0%, 0%, 0.6) 100%);
+    --cl-grad-light: linear-gradient(135deg, hsla(0, 0%, 100%, 0.6) 15%, hsla(0, 0%, 100%, 0.2) 65%, hsla(0, 0%, 50%, 0.4) 100%);
 
     --cl-glare-dark:
         linear-gradient(0deg, hsla(0, 0%, 0%, 0.0) 10%, hsla(0, 0%, 0%, 1.0) 100%),
-        linear-gradient(112.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 38%, hsla(0, 0%, 50%, 0.12) 40%, hsla(0, 0%, 50%, 0.06) 100%),
+        linear-gradient(112.5deg, hsla(0, 0%, 100%, 0.0) 0%, hsla(0, 0%, 100%, 0.0) 38%, hsla(0, 0%, 50%, 0.12) 40%, hsla(0, 0%, 00%, 0.06) 100%),
         hsla(0, 0%, 0%, 0.7);
     --cl-glare-light:
         linear-gradient(0deg, hsla(0, 0%, 95%, 0.0) 10%, hsla(0, 0%, 95%, 1.0) 100%),
         linear-gradient(112.5deg, hsla(0, 0%, 100%, 1.0) 0%, hsla(0, 0%, 100%, 0.0) 38%, hsla(0, 0%, 100%, 1.0) 40%, hsla(0, 0%, 100%, 1.0) 100%),
         hsla(0, 0%, 95%, 1.0);
 
-    --theme-graphite: linear-gradient(135deg, hsl(0, 0%, 70%) 0%, hsl(0, 0%, 31%) 100%);
-    --theme-strawberry: linear-gradient(135deg, hsl(351, 98%, 58%) 0%, hsl(14, 100%, 62%) 100%);
-    --theme-sunkissed: linear-gradient(135deg, hsl(40, 92%, 58%) 0%, hsl(0, 100%, 51%) 100%);
-    --theme-papaya: linear-gradient(135deg, hsl(90, 98%, 32%) 0%, hsl(137, 100%, 20%) 100%);
-    --theme-lagoon: linear-gradient(135deg, hsl(175, 80%, 33%) 0%, hsl(143, 85%, 58%) 100%);
-    --theme-atmosphere: linear-gradient(135deg, hsl(183, 93%, 67%) 0%, hsl(216, 100%, 55%) 100%);
-    --theme-ultraviolet: linear-gradient(135deg, hsl(202, 100%, 50%) 0%, hsl(326, 100%, 47%) 100%);
-    --theme-aphrodite: linear-gradient(135deg, hsl(307, 82%, 62%) 0%, hsl(0, 100%, 50%) 100%);
+    --theme-graphite: hsl(0, 0%, 50%);
+    --theme-strawberry: hsl(0, 75%, 50%);
+    --theme-inferno: hsl(16, 100%, 50%);
+    --theme-sunkissed: hsl(40, 100%, 50%);
+    --theme-conifer: hsl(129, 100%, 31%);
+    --theme-lagoon: hsl(174, 75%, 45%);
+    --theme-atmosphere: hsl(217, 93%, 67%);
+    --theme-ultraviolet: hsl(269, 90%, 57%);
+    --theme-byzantium: hsl(304, 100%, 34%);
+    --theme-aphrodite: hsl(342, 100%, 50%);
 
     --cl-light: var(--cl-white);
     --cl-mid-light: var(--cl-light-grey);
@@ -55,6 +54,9 @@ html {
     --cl-screen: var(--cl-white-trans);
     --cl-device: var(--cl-white);
     --cl-glare: var(--cl-glare-light);
+
+    --theme-grad: var(--theme-aphrodite);
+    --theme-accent: orangered;
 }
 
 @media (prefers-color-scheme: dark) {
