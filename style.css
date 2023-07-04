@@ -4,9 +4,10 @@
 }
 
 html {
-    background: var(--theme-grad);
+    background-color: var(--theme-grad);
     font-size: 0.8rem;
     font-size: 1.5vh;
+    transition: background-color 1000ms;
 }
 
 :root {
@@ -37,7 +38,7 @@ html {
     --theme-lagoon: hsl(174, 75%, 45%);
     --theme-atmosphere: hsl(217, 93%, 67%);
     --theme-ultraviolet: hsl(269, 90%, 57%);
-    --theme-byzantium: hsl(304, 100%, 34%);
+    --theme-byzantium: hsl(324, 100%, 34%);
     --theme-aphrodite: hsl(342, 100%, 50%);
 
     --cl-light: var(--cl-white);
@@ -114,7 +115,7 @@ footer ul {
     width: 3rem;
     margin: 0.5rem 0.75rem;
     background-color: var(--background);
-    border-radius: 10%;
+    border-radius: 15%;
     opacity: 0.5;
     cursor: pointer;
     transition: opacity 500ms, transform 500ms, height 500ms, width 500ms, margin 500ms;
