@@ -4,6 +4,9 @@ const functionButtonElements = document.querySelector('#function-panel').querySe
 const numberButtonElements = document.querySelector('#numpad').querySelectorAll('.button');
 const operationButtonElements = document.querySelectorAll('.operation');
 
+const themeSwatches = document.querySelectorAll('.theme');
+const root = document.querySelector(':root');
+
 const functionButtons = {
     equals: operationButtonElements[6],
     clear: operationButtonElements[1],
@@ -99,6 +102,36 @@ const update = {
             history.pop();
         }
         return history;
+    },
+    theme: function(swatch) {
+        switch(swatch) {
+            case themeSwatches[0]:
+                root.style.setProperty('--theme-grad', 'var(--theme-graphite)');
+                break;
+            case themeSwatches[1]:
+                root.style.setProperty('--theme-grad', 'var(--theme-strawberry)');
+                break;
+            case themeSwatches[2]:
+                root.style.setProperty('--theme-grad', 'var(--theme-sunkissed)');
+                break;
+            case themeSwatches[3]:
+                root.style.setProperty('--theme-grad', 'var(--theme-papaya)');
+                break;
+            case themeSwatches[4]:
+                root.style.setProperty('--theme-grad', 'var(--theme-lagoon)');
+                break;
+            case themeSwatches[5]:
+                root.style.setProperty('--theme-grad', 'var(--theme-atmosphere)');
+                break;
+            case themeSwatches[6]:
+                root.style.setProperty('--theme-grad', 'var(--theme-ultraviolet)');
+                break;
+            case themeSwatches[7]:
+                root.style.setProperty('--theme-grad', 'var(--theme-aphrodite)');
+                break; 
+            default:
+                return;
+        }
     }
 }
 
@@ -480,6 +513,18 @@ const clear = {
         return equationArr;
     }
 }
+
+const select = {
+    theme: function() {
+
+    }
+}
+
+themeSwatches.forEach(swatch => {
+    swatch.addEventListener('mousedown', () => {
+        update.theme(swatch);
+    });
+});
 
 for (const key in operationButtons) {
     operationButtons[key].element.addEventListener('mousedown', () => {
