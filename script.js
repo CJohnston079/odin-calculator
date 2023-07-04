@@ -92,19 +92,23 @@ const update = {
             case '+':
                 character.textContent = '+';
                 character.classList.add('accented');
+                character.classList.add('wide-margin');
                 break;
             case '-':
                 character.textContent = '-';
                 character.classList.add('accented');
+                character.classList.add('wide-margin');
                 break;
             case '*':
                 character.textContent = '+';
                 character.classList.add('accented');
+                character.classList.add('wide-margin');
                 character.classList.add('multiply');
                 break;
             case '/':
                 character.textContent = '÷';
                 character.classList.add('accented');
+                character.classList.add('wide-margin');
                 break;
             case '!':
                 character.textContent = '!';

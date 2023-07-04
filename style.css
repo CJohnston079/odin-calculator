@@ -202,7 +202,7 @@ footer ul {
 
 .functions {
     grid-template-columns: repeat(5, auto);
-    border-top: solid 0.1rem var(--midground);
+    border-top: solid 0.1rem var(--foreground);
 }
 
 .button {
@@ -273,7 +273,11 @@ footer ul {
 }
 
 .accented {
-    margin: 0 0.5rem;
+    display: inline-block;
     color: var(--cl-accent);
     transition: color 2000ms;
+}
+
+.wide-margin {
+    margin: 0 0.6rem;
 }
