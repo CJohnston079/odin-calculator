@@ -56,7 +56,7 @@ html {
     --cl-device: var(--cl-white);
     --cl-glare: var(--cl-glare-light);
 
-    --theme-grad: var(--theme-aphrodite);
+    --theme-grad: var(--theme-graphite);
     --theme-accent: orangered;
 }
 
