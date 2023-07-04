@@ -263,7 +263,7 @@ footer ul {
     letter-spacing: -0.2rem;
 }
 
-#multiply {
+.multiply {
     rotate: 45deg;
 }
 
@@ -272,11 +272,8 @@ footer ul {
     width: auto;
 }
 
-.accent-colour {
+.accented {
     margin: 0 0.5rem;
     color: var(--cl-accent);
-}
-
-.accent-colour {
     transition: color 2000ms;
 }
