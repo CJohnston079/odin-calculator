@@ -276,3 +276,7 @@ footer ul {
     margin: 0 0.5rem;
     color: var(--cl-accent);
 }
+
+.accent-colour {
+    transition: color 2000ms;
+}
