@@ -32,7 +32,7 @@ html {
     --theme-graphite: hsl(0, 0%, 50%);
     --theme-strawberry: hsl(0, 75%, 50%);
     --theme-inferno: hsl(16, 100%, 50%);
-    --theme-sunkissed: hsl(40, 100%, 50%);
+    --theme-sunkissed: hsl(40, 100%, 40%);
     --theme-conifer: hsl(144, 100%, 30%);
     --theme-lagoon: hsl(177, 99%, 40%);
     --theme-atmosphere: hsl(217, 93%, 65%);
@@ -270,4 +270,9 @@ footer ul {
 #equals {
     grid-column: 1 / span 2;
     width: auto;
+}
+
+.accent-colour {
+    margin: 0 0.5rem;
+    color: var(--cl-accent);
 }
