@@ -136,8 +136,10 @@ const update = {
                 root.style.setProperty('--cl-theme', 'var(--theme-aphrodite)');
                 break;
             default:
-                return;
+                break;
         }
+        document.documentElement.style.transition = '2000ms';
+        return;
     }
 }
 
@@ -522,7 +524,8 @@ const clear = {
 
 const select = {
     theme: function() {
-
+        let x = Math.floor(Math.random()*10);
+        update.theme(themeSwatches[x]);
     }
 }
 
@@ -531,6 +534,8 @@ themeSwatches.forEach(swatch => {
         update.theme(swatch);
     });
 });
+
+select.theme();
 
 for (const key in operationButtons) {
     operationButtons[key].element.addEventListener('mousedown', () => {

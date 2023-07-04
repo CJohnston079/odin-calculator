@@ -4,10 +4,9 @@
 }
 
 html {
-    background-color: var(--theme-grad);
+    background-color: var(--cl-theme);
     font-size: 0.8rem;
     font-size: 1.5vh;
-    transition: background-color 1000ms;
 }
 
 :root {
@@ -46,7 +45,7 @@ html {
     --cl-mid-dark: var(--cl-dark-grey);
     --cl-dark: var(--cl-black);
     --cl-medium: var(--cl-grey);
-    --cl-accent: var(--theme-accent);
+    --cl-accent: var(--cl-theme);
 
     --foreground: var(--cl-black);
     --midground: var(--cl-dark-grey);
@@ -56,8 +55,7 @@ html {
     --cl-device: var(--cl-white);
     --cl-glare: var(--cl-glare-light);
 
-    --theme-grad: var(--theme-graphite);
-    --theme-accent: orangered;
+    --cl-theme: var(--theme-graphite);
 }
 
 @media (prefers-color-scheme: dark) {
