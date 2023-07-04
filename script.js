@@ -91,14 +91,7 @@ const update = {
         update.display();
     },
     equationStr: function(character) {
-        switch(character) {
-            case '+':
-                equationStr += character;
-                break;
-            default:
-                equationStr += character;
-        }
-        return;
+        equationStr += character;
     },
     equationArr: function() {
         if (isNaN(Number(equationStr[equationStr.length-1])) === true) {
@@ -448,17 +441,17 @@ const memory = {
         return memory.value = 0;
     },
     update: function(arr, operation) {
-        let test = []
+        let mem = []
 
         for (let i = arr.length-1; i >= 0; i--) {
             if (isNaN(Number(arr[i])) && arr[i] !== '.') break;
-            test.unshift(arr[i]);
+            mem.unshift(arr[i]);
         }
 
         if (operation === '+') {
-            return memory.value += Number(test.join(''));
+            return memory.value += Number(mem.join(''));
         } else {
-            return memory.value -= Number(test.join(''));
+            return memory.value -= Number(mem.join(''));
         }
     },
     recall: function(arr) {
