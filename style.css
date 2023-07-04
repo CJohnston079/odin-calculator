@@ -33,10 +33,10 @@ html {
     --theme-strawberry: hsl(0, 75%, 50%);
     --theme-inferno: hsl(16, 100%, 50%);
     --theme-sunkissed: hsl(40, 100%, 50%);
-    --theme-conifer: hsl(129, 100%, 31%);
-    --theme-lagoon: hsl(174, 75%, 45%);
-    --theme-atmosphere: hsl(217, 93%, 67%);
-    --theme-ultraviolet: hsl(269, 90%, 57%);
+    --theme-conifer: hsl(144, 100%, 30%);
+    --theme-lagoon: hsl(177, 100%, 50%);
+    --theme-atmosphere: hsl(217, 93%, 65%);
+    --theme-ultraviolet: hsl(269, 90%, 55%);
     --theme-byzantium: hsl(324, 100%, 34%);
     --theme-aphrodite: hsl(342, 100%, 50%);
 
