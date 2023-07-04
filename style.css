@@ -104,7 +104,6 @@ footer ul {
     width: 4rem;
     margin: 0.5rem;
     background-color: var(--background);
-    border: solid 0.1rem var(--background);
     border-radius: 100%;
     opacity: 0.5;
     cursor: pointer;
@@ -113,7 +112,7 @@ footer ul {
 
 .theme:hover {
     opacity: 1;
-    transform: scale(1.1)
+    transform: scale(1.05)
 }
 
 ul {
