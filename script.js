@@ -68,14 +68,60 @@ function round(num, decimalPlaces) {
     return num;
 }
 
+let op = document.createElement('span');
+op.textContent = '+';
+op.classList.add('accented');
+
 const update = {
     lastChar: function() {
         lastChar = equationArr[equationArr.length-1];
         return lastChar
     },
     display: function() {
-        equationStr !== '' ? calculationDisplay.textContent = equationStr : 
-        calculationDisplay.textContent = 0;
+        if (equationStr === '') {
+            calculationDisplay.textContent = 0;
+            return;
+        }
+
+        let character = document.createElement('span');
+
+        if (calculationDisplay.textContent === '0') {
+            calculationDisplay.textContent = '';
+        }
+        switch(lastChar) {
+            case '+':
+                character.textContent = '+';
+                character.classList.add('accented');
+                break;
+            case '-':
+                character.textContent = '-';
+                character.classList.add('accented');
+                break;
+            case '*':
+                character.textContent = '+';
+                character.classList.add('accented');
+                character.classList.add('multiply');
+                break;
+            case '/':
+                character.textContent = '÷';
+                character.classList.add('accented');
+                break;
+            case '!':
+                character.textContent = '!';
+                character.classList.add('accented');
+                break;
+            case '%':
+                character.textContent = '%';
+                character.classList.add('accented');
+                break;
+            case '√':
+                character.textContent = '√';
+                character.classList.add('accented');
+                break;
+            default:
+                character.textContent = lastChar;
+        }
+        calculationDisplay.append(character);
         console.log(equationArr);
     },
     equation: function(character) {
