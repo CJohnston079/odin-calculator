@@ -175,7 +175,7 @@ const input = {
         update.display();
     },
     factorial: function() {
-        if (isNegativeNum === true || floatingPointInputted === true) return;
+        if (isNegativeNum === true) return;
         if (isNaN(Number(lastChar)) && isFactorialInputted === false) return;
         isFactorialInputted = true;
         update.equation('!')
