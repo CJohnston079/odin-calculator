@@ -82,6 +82,13 @@ body {
     box-shadow: 0 0 1rem var(--cl-black-trans) inset;
 }
 
+ul {
+    list-style: none;
+    padding-inline-start: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
 footer {
     position: fixed;
     align-self: flex-end;
@@ -121,13 +128,6 @@ footer ul {
 .theme:hover {
     opacity: 1;
     transform: scale(1.05);
-}
-
-ul {
-    list-style: none;
-    padding-inline-start: 0;
-    margin-block-start: 0;
-    margin-block-end: 0;
 }
 
 #device-housing {
