@@ -15,7 +15,7 @@ html {
     --cl-grey: hsl(0, 0%, 50%);
     --cl-dark-grey: hsl(0, 0%, 20%);
     --cl-black: hsl(0, 0%, 0%);
-    --cl-white-trans: hsla(0, 0%, 100%, 0.75);
+    --cl-white-trans: hsla(0, 0%, 100%, 0.6);
     --cl-black-trans: hsla(0, 0%, 0%, 0.5);
     --cl-grad-dark: linear-gradient(135deg, hsla(0, 0%, 25%, 0.4) 0%, hsla(0, 0%, 0%, 0.2) 50%, hsla(0, 0%, 0%, 0.4) 100%);
     --cl-grad-light: linear-gradient(135deg, hsla(0, 0%, 100%, 0.6) 15%, hsla(0, 0%, 100%, 0.2) 65%, hsla(0, 0%, 50%, 0.4) 100%);
@@ -34,7 +34,7 @@ html {
     --theme-inferno: hsl(16, 100%, 50%);
     --theme-sunkissed: hsl(40, 100%, 50%);
     --theme-conifer: hsl(144, 100%, 30%);
-    --theme-lagoon: hsl(177, 100%, 50%);
+    --theme-lagoon: hsl(177, 99%, 40%);
     --theme-atmosphere: hsl(217, 93%, 65%);
     --theme-ultraviolet: hsl(269, 90%, 55%);
     --theme-byzantium: hsl(324, 100%, 34%);
