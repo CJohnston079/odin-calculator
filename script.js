@@ -81,7 +81,7 @@ const animate = {
 const update = {
     lastChar: function() {
         lastChar = equationArr[equationArr.length-1];
-        return lastChar
+        return lastChar;
     },
     display: function() {
         if (equationStr === '') {
@@ -134,7 +134,7 @@ const update = {
                 break;
             case '√':
                 character.textContent = '√';
-                character.classList.add('accented-colour');
+                character.classList.add('mid-colour');
                 break;
             case Math.PI:
                 console.log('pi')

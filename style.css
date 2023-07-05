@@ -287,6 +287,10 @@ footer ul {
     transition: color 2000ms;
 }
 
+.mid-colour {
+    color: var(--midground);
+}
+
 .extra-padding {
     padding: 0 0.6rem;
 }
