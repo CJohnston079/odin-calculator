@@ -83,6 +83,11 @@ const update = {
             return;
         }
 
+        if (isEquationSolved === true) {
+            calculationDisplay.textContent = equationStr
+            return;
+        }
+
         let character = document.createElement('span');
 
         if (calculationDisplay.textContent === '0') {
