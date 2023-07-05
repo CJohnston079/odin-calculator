@@ -70,14 +70,23 @@ function round(num, decimalPlaces) {
 
 const animate = {
     slideLeft: function(element, duration) {
-        root.style.setProperty('--offset-width', `translateX(${element.lastChild.offsetWidth}px)`); // dynamically adjust translate value
+        let offsetWidth = 15;
+
+        if (element.lastChild.offsetWidth !== undefined) offsetWidth = element.lastChild.offsetWidth;
+
+        root.style.setProperty('--offset-width', `translateX(${offsetWidth}px)`); // dynamically adjust translate value
         element.style.animation = `slide-from-right ${duration}ms linear`;
+
         setTimeout(() => {
             element.style.animation = '';
         }, duration);
     },
     slideRight: function(element, duration) {
-        root.style.setProperty('--offset-width', `translateX(-${element.lastChild.offsetWidth}px)`);
+        let offsetWidth = 15;
+
+        if (element.lastChild.offsetWidth !== undefined) offsetWidth = element.lastChild.offsetWidth;
+
+        root.style.setProperty('--offset-width', `translateX(-${offsetWidth}px)`);
         element.style.animation = `slide-from-right ${duration}ms linear`;
         setTimeout(() => {
             element.style.animation = '';
@@ -97,11 +106,6 @@ const update = {
         return lastChar;
     },
     display: function() {
-        // if (equationStr === '') {
-        //     calculationDisplay.textContent = '';
-        //     return;
-        // }
-
         if (isEquationSolved === true) {
             calculationDisplay.textContent = equationStr;
             animate.colorChange(calculationDisplay, 2000);
@@ -110,11 +114,6 @@ const update = {
 
         let character = document.createElement('span');
         character.classList.add('character');
-
-        if (calculationDisplay.textContent === '0') {
-            calculationDisplay.textContent = lastChar;
-            return;
-        }
 
         switch(lastChar) {
             case '+':
@@ -598,12 +597,14 @@ const clear = {
             areBracketsEnabled = true;
         }
 
-        animate.slideRight(calculationDisplay, 100);
-        calculationDisplay.lastChild.remove();
-
         equationStr = equationStr.slice(0,-1);
         equationArr.pop();
         update.lastChar();
+
+        animate.slideRight(calculationDisplay, 100);
+        isEquationSolved === true ? calculationDisplay.textContent = equationStr :
+        calculationDisplay.lastChild.remove();
+
         console.log(equationArr);
     },
     all: function() {
