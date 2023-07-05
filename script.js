@@ -71,7 +71,13 @@ function round(num, decimalPlaces) {
 const animate = {
     slide: function(element, duration) {
         root.style.setProperty('--offset-width', `translateX(${element.lastChild.offsetWidth}))`); // dynamically adust translate value
-        element.style.animation = `slide-from-right ${duration}ms linear`
+        element.style.animation = `slide-from-right ${duration}ms linear`;
+        setTimeout(() => {
+            element.style.animation = '';
+        }, duration);
+    },
+    colorChange: function(element, duration) {
+        element.style.animation = `colour-change ${duration}ms linear`;
         setTimeout(() => {
             element.style.animation = '';
         }, duration);
@@ -91,6 +97,7 @@ const update = {
 
         if (isEquationSolved === true) {
             calculationDisplay.textContent = equationStr
+            animate.colorChange(calculationDisplay, 2000);
             return;
         }
 

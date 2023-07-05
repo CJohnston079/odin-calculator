@@ -304,3 +304,10 @@ footer ul {
     0% { opacity: 0; }
     100% { opacity: 1; }
 }
+
+@keyframes colour-change {
+    0% { color: var(--cl-theme); }
+    /* 2% { transform: scale(1.2); }
+    8% { transform: scale(1.0); } */
+    100% { color: var(--foreground); }
+}
