@@ -123,6 +123,17 @@ const update = {
         let character = document.createElement('span');
         character.classList.add('character');
 
+        if (isNegativeNum === true) {
+            if (typeof lastChar !== 'number') {
+                character.textContent = '-';
+                calculationDisplay.append(character);
+                animate.slideLeft(calculationDisplay, 100);
+                return;
+            } else {
+                calculationDisplay.lastChild.remove();
+            }
+        }
+
         switch(lastChar) {
             case '+':
                 character.textContent = '+';
@@ -617,7 +628,8 @@ const clear = {
         clear.variables();
         clear.equation();
         clear.equationHistory();
-        clear.display();
+        calculationDisplay.style.animation = 'fade 200ms reverse';
+        setTimeout(clear.display, 200)
         console.clear();
     }
 }
