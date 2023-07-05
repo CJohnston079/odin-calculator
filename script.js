@@ -259,7 +259,7 @@ const input = {
         update.equation(numberButtons[key].value)
     },
     pi: function() {
-        if (floatingPointInputted === true) return;
+        if (floatingPointInputted === true || typeof lastChar === 'number') return;
         if (isEquationSolved === true) clear.equation();
         equationStr += round(Math.PI, 100);
         equationArr.push(Math.PI);
@@ -293,8 +293,8 @@ const input = {
             input.number(['0']);
         }
     
-        input.number(['.']),
-        update.display();
+        input.number(['.']);
+        // update.display();
     },
     negativeSign: function() {
         if (inputNegativeNum === true || lastChar === '√') return;
