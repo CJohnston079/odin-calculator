@@ -57,7 +57,7 @@ html {
 
     --cl-theme: var(--theme-graphite);
 
-    --offset-width: translateX(1.5rem);
+    --offset-width: translateX(15px);
 }
 
 @media (prefers-color-scheme: dark) {

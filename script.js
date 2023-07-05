@@ -69,8 +69,19 @@ function round(num, decimalPlaces) {
 }
 
 const animate = {
-    slide: function(element, duration) {
-        root.style.setProperty('--offset-width', `translateX(${element.lastChild.offsetWidth}))`); // dynamically adust translate value
+    slideLeft: function(element, duration) {
+        root.style.setProperty('--offset-width', `translateX(${element.lastChild.offsetWidth}px)`); // dynamically adjust translate value
+        console.log(window.getComputedStyle(root).getPropertyValue('--offset-width'));
+
+        element.style.animation = `slide-from-right ${duration}ms linear`;
+        setTimeout(() => {
+            element.style.animation = '';
+        }, duration);
+    },
+    slideRight: function(element, duration) {
+        root.style.setProperty('--offset-width', `translateX(-${element.lastChild.offsetWidth}px)`);
+        console.log(window.getComputedStyle(root).getPropertyValue('--offset-width'));
+
         element.style.animation = `slide-from-right ${duration}ms linear`;
         setTimeout(() => {
             element.style.animation = '';
@@ -151,7 +162,7 @@ const update = {
                 character.textContent = lastChar;
         }
         calculationDisplay.append(character);
-        animate.slide(calculationDisplay, 100);
+        animate.slideLeft(calculationDisplay, 100);
         console.log(equationArr);
     },
     equation: function(character) {
@@ -567,7 +578,7 @@ const clear = {
         if (inputNegativeNum === true) {
             inputNegativeNum = false;
             equationStr = equationStr.slice(0,-1);
-            update.display();
+            calculationDisplay.lastChild.remove();
             return;
         }
     
@@ -583,12 +594,19 @@ const clear = {
         } else if (lastChar === ')') {
             areBracketsEnabled = true;
         }
-    
+
+        if (equationArr.length === 1) {
+            calculationDisplay.textContent = 0;
+            return;
+        }
+
+        animate.slideRight(calculationDisplay, 100);
+        calculationDisplay.lastChild.remove();
+
         equationStr = equationStr.slice(0,-1);
         equationArr.pop();
         update.lastChar();
-        update.display();
-        return equationArr;
+        console.log(equationArr);
     },
     all: function() {
         clear.variables();
@@ -596,7 +614,6 @@ const clear = {
         clear.equationHistory();
         update.display();
         console.clear();
-        return equationArr;
     }
 }
 
