@@ -279,7 +279,7 @@ footer ul {
 .character {
     display: inline-block;
     /* background-color: yellow; */
-    animation: fade 400ms linear;
+    animation: fade 600ms linear;
 }
 
 .accented-colour {
