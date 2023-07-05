@@ -157,6 +157,7 @@ footer ul {
     margin: 0.5rem;
     padding: 0 2rem;
     text-align: right;
+    letter-spacing: -0.1rem;
 }
 
 #calculation {
@@ -272,12 +273,15 @@ footer ul {
     width: auto;
 }
 
-.accented {
+.character {
     display: inline-block;
+}
+
+.accented-colour {
     color: var(--cl-accent);
     transition: color 2000ms;
 }
 
-.wide-margin {
-    margin: 0 0.6rem;
+.extra-padding {
+    padding: 0 0.6rem;
 }

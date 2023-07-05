@@ -89,6 +89,7 @@ const update = {
         }
 
         let character = document.createElement('span');
+        character.classList.add('character');
 
         if (calculationDisplay.textContent === '0') {
             calculationDisplay.textContent = '';
@@ -96,36 +97,36 @@ const update = {
         switch(lastChar) {
             case '+':
                 character.textContent = '+';
-                character.classList.add('accented');
-                character.classList.add('wide-margin');
+                character.classList.add('accented-colour');
+                character.classList.add('extra-padding');
                 break;
             case '-':
                 character.textContent = '-';
-                character.classList.add('accented');
-                character.classList.add('wide-margin');
+                character.classList.add('accented-colour');
+                character.classList.add('extra-padding');
                 break;
             case '*':
                 character.textContent = '+';
-                character.classList.add('accented');
-                character.classList.add('wide-margin');
+                character.classList.add('accented-colour');
+                character.classList.add('extra-padding');
                 character.classList.add('multiply');
                 break;
             case '/':
                 character.textContent = '÷';
-                character.classList.add('accented');
-                character.classList.add('wide-margin');
+                character.classList.add('accented-colour');
+                character.classList.add('extra-padding');
                 break;
             case '!':
                 character.textContent = '!';
-                character.classList.add('accented');
+                character.classList.add('accented-colour');
                 break;
             case '%':
                 character.textContent = '%';
-                character.classList.add('accented');
+                character.classList.add('accented-colour');
                 break;
             case '√':
                 character.textContent = '√';
-                character.classList.add('accented');
+                character.classList.add('accented-colour');
                 break;
             case Math.PI:
                 console.log('pi')
