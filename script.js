@@ -127,6 +127,10 @@ const update = {
                 character.textContent = '√';
                 character.classList.add('accented');
                 break;
+            case Math.PI:
+                console.log('pi')
+                character.textContent = 3.14;
+                break;
             default:
                 character.textContent = lastChar;
         }
