@@ -98,7 +98,7 @@ const update = {
     },
     display: function() {
         if (equationStr === '') {
-            calculationDisplay.textContent = 0;
+            calculationDisplay.textContent = '';
             return;
         }
 
@@ -568,6 +568,7 @@ const clear = {
         areBracketsEnabled = false;
     },
     character: function() {
+        if (equationArr.length < 1) return;
         if (lastChar === '.') floatingPointInputted = false;
         if (lastChar === '!') isFactorialInputted = false;
     
@@ -589,11 +590,6 @@ const clear = {
             }
         } else if (lastChar === ')') {
             areBracketsEnabled = true;
-        }
-
-        if (equationArr.length === 1) {
-            calculationDisplay.textContent = 0;
-            return;
         }
 
         animate.slideRight(calculationDisplay, 100);
