@@ -74,7 +74,7 @@ const animate = {
         element.style.animation = `slide-from-right ${duration}ms linear`
         setTimeout(() => {
             element.style.animation = '';
-        }, duration)
+        }, duration);
     }
 }
 
@@ -90,7 +90,7 @@ const update = {
         }
 
         if (isEquationSolved === true) {
-            calculationDisplay.textContent = equationStr
+            calculationDisplay.textContent = equationStr;
             return;
         }
 
@@ -98,8 +98,10 @@ const update = {
         character.classList.add('character');
 
         if (calculationDisplay.textContent === '0') {
-            calculationDisplay.textContent = '';
+            calculationDisplay.textContent = lastChar;
+            return;
         }
+
         switch(lastChar) {
             case '+':
                 character.textContent = '+';
