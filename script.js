@@ -68,9 +68,14 @@ function round(num, decimalPlaces) {
     return num;
 }
 
-let op = document.createElement('span');
-op.textContent = '+';
-op.classList.add('accented');
+const animate = {
+    slide: function(element, duration) {
+        element.style.animation = `slide-from-right ${duration}ms linear`
+        setTimeout(() => {
+            element.style.animation = '';
+        }, duration)
+    }
+}
 
 const update = {
     lastChar: function() {
@@ -135,6 +140,7 @@ const update = {
             default:
                 character.textContent = lastChar;
         }
+        animate.slide(calculationDisplay, 200);
         calculationDisplay.append(character);
         console.log(equationArr);
     },
