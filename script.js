@@ -71,8 +71,6 @@ function round(num, decimalPlaces) {
 const animate = {
     slideLeft: function(element, duration) {
         root.style.setProperty('--offset-width', `translateX(${element.lastChild.offsetWidth}px)`); // dynamically adjust translate value
-        console.log(window.getComputedStyle(root).getPropertyValue('--offset-width'));
-
         element.style.animation = `slide-from-right ${duration}ms linear`;
         setTimeout(() => {
             element.style.animation = '';
@@ -80,8 +78,6 @@ const animate = {
     },
     slideRight: function(element, duration) {
         root.style.setProperty('--offset-width', `translateX(-${element.lastChild.offsetWidth}px)`);
-        console.log(window.getComputedStyle(root).getPropertyValue('--offset-width'));
-
         element.style.animation = `slide-from-right ${duration}ms linear`;
         setTimeout(() => {
             element.style.animation = '';
