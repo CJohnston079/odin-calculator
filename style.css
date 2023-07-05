@@ -275,6 +275,9 @@ footer ul {
 
 .character {
     display: inline-block;
+    /* background-color: yellow; */
+    /* overflow: hidden; */
+    animation: slide-from-right 400ms linear;
 }
 
 .accented-colour {
@@ -284,4 +287,17 @@ footer ul {
 
 .extra-padding {
     padding: 0 0.6rem;
+}
+
+@keyframes slide-from-right {
+    0% {
+        max-width: 0%;
+        opacity: 0;
+    }
+    50% {
+        max-width: 100%;
+    }
+    100% {
+        opacity: 1;
+    }
 }
