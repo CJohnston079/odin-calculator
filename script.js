@@ -107,8 +107,16 @@ const update = {
     },
     display: function() {
         if (isEquationSolved === true) {
-            calculationDisplay.textContent = equationStr;
+
+            clear.display();
+
+            for (let i = 0; i < equationArr.length; i++) {
+                calculationDisplay.append(equationArr[i]);
+            }
+
             animate.colorChange(calculationDisplay, 2000);
+            console.log(equationArr);
+
             return;
         }
 
@@ -602,7 +610,6 @@ const clear = {
         update.lastChar();
 
         animate.slideRight(calculationDisplay, 100);
-        isEquationSolved === true ? calculationDisplay.textContent = equationStr :
         calculationDisplay.lastChild.remove();
 
         console.log(equationArr);
