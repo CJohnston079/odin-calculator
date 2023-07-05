@@ -57,7 +57,7 @@ html {
 
     --cl-theme: var(--theme-graphite);
 
-    --offset-width: 0;
+    --offset-width: translateX(1.5rem);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -292,8 +292,8 @@ footer ul {
 }
 
 @keyframes slide-from-right {
-    0% { transform: translateX(1.5rem); }
-    50% { transform: translateX(0); }
+    0% { transform: var(--offset-width); }
+    100% { transform: translateX(0); }
 }
 
 @keyframes fade {
