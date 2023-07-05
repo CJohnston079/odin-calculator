@@ -97,13 +97,13 @@ const update = {
         return lastChar;
     },
     display: function() {
-        if (equationStr === '') {
-            calculationDisplay.textContent = '';
-            return;
-        }
+        // if (equationStr === '') {
+        //     calculationDisplay.textContent = '';
+        //     return;
+        // }
 
         if (isEquationSolved === true) {
-            calculationDisplay.textContent = equationStr
+            calculationDisplay.textContent = equationStr;
             animate.colorChange(calculationDisplay, 2000);
             return;
         }
@@ -242,7 +242,10 @@ const input = {
         update.equation(operationButtons[key].value);
     },
     number: function(key) {
-        isEquationSolved === true ? clear.equation() : {};
+        if (isEquationSolved === true) {
+            clear.equation();
+            clear.display();
+        }
         if (lastChar === ')') {
             equationArr.push('*'); // adds multipliers between brackets if no operation is specified
         }
@@ -559,6 +562,9 @@ const clear = {
         history = [];
         return history;
     },
+    display: function() {
+        calculationDisplay.textContent = '';
+    },
     variables: function() {
         isEquationSolved = false;
         floatingPointInputted = false;
@@ -604,7 +610,7 @@ const clear = {
         clear.variables();
         clear.equation();
         clear.equationHistory();
-        update.display();
+        clear.display();
         console.clear();
     }
 }
