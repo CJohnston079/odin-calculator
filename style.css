@@ -101,28 +101,29 @@ footer {
 
 footer:hover .theme {
     margin: 0.5rem;
-    height: 4rem;
-    width: 4rem;
+    min-height: 4rem;
+    min-width: 4rem;
     /* opacity: 0.75; */
 }
 
 footer ul {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .theme {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 3rem;
-    width: 3rem;
+    min-height: 3rem;
+    min-width: 3rem;
     margin: 0.5rem 0.75rem;
     background-color: var(--background);
     border-radius: 15%;
     opacity: 0.5;
     cursor: pointer;
-    transition: opacity 500ms, transform 500ms, height 500ms, width 500ms, margin 500ms;
+    transition: opacity 500ms, transform 500ms, min-height 500ms, min-width 500ms, margin 500ms;
 }
 
 .theme:hover {
@@ -276,7 +277,6 @@ footer ul {
 .character {
     display: inline-block;
     /* background-color: yellow; */
-    /* overflow: hidden; */
     animation: slide-from-right 400ms linear;
 }
 
@@ -291,11 +291,11 @@ footer ul {
 
 @keyframes slide-from-right {
     0% {
-        max-width: 0%;
+        max-width: 0rem;
         opacity: 0;
     }
     50% {
-        max-width: 100%;
+        max-width: 1rem;
     }
     100% {
         opacity: 1;
