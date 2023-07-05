@@ -279,7 +279,7 @@ footer ul {
 .character {
     display: inline-block;
     /* background-color: yellow; */
-    animation: fade 600ms linear;
+    animation: fade 400ms linear;
 }
 
 .accented-colour {
@@ -293,7 +293,7 @@ footer ul {
 
 @keyframes slide-from-right {
     0% { transform: translateX(1.5rem); }
-    50% { ransform: translateX(0); }
+    50% { transform: translateX(0); }
 }
 
 @keyframes fade {
