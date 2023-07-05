@@ -294,7 +294,6 @@ const input = {
         }
     
         input.number(['.']);
-        // update.display();
     },
     negativeSign: function() {
         if (inputNegativeNum === true || lastChar === '√') return;
