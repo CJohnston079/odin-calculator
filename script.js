@@ -97,6 +97,12 @@ const animate = {
         setTimeout(() => {
             element.style.animation = '';
         }, duration);
+    },
+    fade: function(element, duration, direction) {
+        element.style.animation = `fade ${duration}ms linear ${direction}`;
+        setTimeout(() => {
+            element.style.animation = '';
+        }, duration);
     }
 }
 
@@ -320,14 +326,30 @@ const toggle = {
                 if (equationArr[i] === '(' || equationArr[i] === ')' || equationArr[i] === '√' || equationArr[i-1] === '√') return;
                 equationArr[i] *= -1;
                 equationStr = convert.arrToStr(equationArr);
+
+                let neg = document.createElement('span');
+                neg.textContent = '-';
+
+                if (equationArr[i] < 0) {
+                    calculationDisplay.insertBefore(neg, calculationDisplay.children[i]);
+                    animate.fade(calculationDisplay.children[i], 200, 'normal');
+                } else {
+                    animate.fade(calculationDisplay.children[i], 200, 'reverse');
+                    setTimeout(() => {
+                        calculationDisplay.children[i].remove();
+                    }, 200);
+                }
+
                 if (Object.is(equationArr[i], -0) === true) { // add minus sign to floating point numbers beginning with 0
-                    equationStr[i] *= equationStr = equationStr.substring(0,i) + '-0' + equationStr.substring(i+1, equationStr.length); 
+                    equationStr[i] *= equationStr = equationStr.substring(0,i) + '-0' + equationStr.substring(i+1, equationStr.length);
+                    calculationDisplay.children[i].classList.toggle('negative')
                 }
                 break;
             }
         }
         isNegativeNum = true;
-        update.display();
+        console.log(equationArr);
+        return
     },
     brackets() {
         if (areBracketsEnabled === true && equationStr[equationStr.length-1] === '(') return;
