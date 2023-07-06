@@ -28,6 +28,8 @@ html {
         linear-gradient(0deg, hsla(0, 0%, 95%, 0.0) 10%, hsla(0, 0%, 95%, 1.0) 100%),
         linear-gradient(112.5deg, hsla(0, 0%, 100%, 1.0) 0%, hsla(0, 0%, 100%, 0.0) 38%, hsla(0, 0%, 100%, 1.0) 40%, hsla(0, 0%, 100%, 1.0) 100%),
         hsla(0, 0%, 95%, 1.0);
+    --inner-shadow-light: -0.8rem -0.8rem 1rem -0.6rem hsla(0, 0%, 30%, 1.0) inset;
+    --inner-shadow-dark: -0.2rem -0.4rem 1rem -0.6rem hsla(0, 0%, 30%, 1.0) inset;
 
     --theme-graphite: hsl(0, 0%, 50%);
     --theme-strawberry: hsl(0, 75%, 50%);
@@ -45,8 +47,8 @@ html {
     --cl-mid-dark: var(--cl-dark-grey);
     --cl-dark: var(--cl-black);
     --cl-medium: var(--cl-grey);
+    
     --cl-accent: var(--cl-theme);
-
     --foreground: var(--cl-black);
     --midground: var(--cl-dark-grey);
     --background: var(--cl-white);
@@ -54,6 +56,7 @@ html {
     --cl-screen: var(--cl-white-trans);
     --cl-device: var(--cl-white);
     --cl-glare: var(--cl-glare-light);
+    --numpad-shadow: var(--inner-shadow-dark);
 
     --cl-theme: var(--theme-graphite);
 
@@ -69,6 +72,7 @@ html {
     --cl-screen: var(--cl-black-trans);
     --cl-device: var(--cl-black);
     --cl-glare: var(--cl-glare-dark);
+    --numpad-shadow: var(--inner-shadow-light);
     }
 }
 
@@ -185,6 +189,7 @@ footer ul {
     grid-template-columns: auto auto;
     background: var(--cl-glare);
     border-top: solid 0.1rem var(--foreground);
+    box-shadow: var(--numpad-shadow);
     border-radius: 0 0 1rem 1rem;
 }
 
