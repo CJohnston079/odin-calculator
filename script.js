@@ -123,17 +123,6 @@ const update = {
         let character = document.createElement('span');
         character.classList.add('character');
 
-        if (isNegativeNum === true) {
-            if (typeof lastChar !== 'number') {
-                character.textContent = '-';
-                calculationDisplay.append(character);
-                animate.slideLeft(calculationDisplay, 100);
-                return;
-            } else {
-                calculationDisplay.lastChild.remove();
-            }
-        }
-
         switch(lastChar) {
             case '+':
                 character.textContent = '+';
@@ -409,6 +398,8 @@ const convert = {
 
 const resolve = {
     equation: function() {
+        // if (equationArr.includes('+', '-', '*', '/', '!', '%', '^', '√') === false) return;
+
         const inoperableChars = ['+', '-', '*', '/']
         if (isNaN(Number(lastChar)) === true && inoperableChars.includes(lastChar)) return
         
