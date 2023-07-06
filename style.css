@@ -42,6 +42,8 @@ html {
     --theme-byzantium: hsl(324, 100%, 34%);
     --theme-aphrodite: hsl(342, 100%, 50%);
 
+    --cl-theme: var(--theme-graphite);
+
     --cl-light: var(--cl-white);
     --cl-mid-light: var(--cl-light-grey);
     --cl-mid-dark: var(--cl-dark-grey);
@@ -57,8 +59,6 @@ html {
     --cl-device: var(--cl-white);
     --cl-glare: var(--cl-glare-light);
     --numpad-shadow: var(--inner-shadow-dark);
-
-    --cl-theme: var(--theme-graphite);
 
     --offset-width: translateX(15px);
 }
@@ -293,6 +293,14 @@ footer ul {
 
 .mid-colour {
     color: var(--midground);
+}
+
+.extra-padding {
+    padding: 0 0.6rem;
+}
+
+.negative-num::before {
+    content: '-';
 }
 
 @keyframes slide-from-right {
