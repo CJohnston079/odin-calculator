@@ -172,6 +172,7 @@ const update = {
         }
         calculationDisplay.append(character);
         animate.slideLeft(calculationDisplay, 100);
+        animate.fade(calculationDisplay.lastChild, 400, 'normal');
         console.log(equationArr);
     },
     equation: function(character) {
@@ -329,6 +330,12 @@ const toggle = {
 
                 calculationDisplay.children[i].classList.toggle('negative-num');
 
+                if (equationArr[i] > 0) {
+                    calculationDisplay.children[i].classList.add('shrink-margin');
+                } else {
+                    calculationDisplay.children[i].classList.remove('shrink-margin');
+                }
+
                 if (Object.is(equationArr[i], -0) === true) { // add minus sign to floating point numbers beginning with 0
                     equationStr[i] *= equationStr = equationStr.substring(0,i) + '-0' + equationStr.substring(i+1, equationStr.length);
                     calculationDisplay.children[i].classList.toggle('negative')
@@ -336,6 +343,7 @@ const toggle = {
                 break;
             }
         }
+        update.lastChar()
         isNegativeNum = true;
         console.log(equationArr);
         return
@@ -614,9 +622,9 @@ const clear = {
             return;
         }
 
-        // if (lastChar < 0) {
-        //     calculationDisplay.lastChild.remove()
-        // }
+        if (isNegativeNum === true) {
+            isNegativeNum = false;
+        }
     
         if (equationStr[equationStr.length-2] === '-' && isNaN(Number(equationStr[equationStr.length-3])) === true) {
             inputNegativeNum = true;

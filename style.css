@@ -29,7 +29,7 @@ html {
         linear-gradient(0deg, hsla(0, 0%, 95%, 0.0) 10%, hsla(0, 0%, 95%, 1.0) 100%),
         linear-gradient(112.5deg, hsla(0, 0%, 100%, 1.0) 0%, hsla(0, 0%, 100%, 0.0) 38%, hsla(0, 0%, 100%, 1.0) 40%, hsla(0, 0%, 100%, 1.0) 100%),
         hsla(0, 0%, 95%, 1.0);
-    --inner-shadow-light: -0.8rem -0.8rem 1rem -0.6rem hsla(0, 0%, 60%, 1.0) inset;
+    --inner-shadow-light: -0.8rem -0.8rem 1rem -0.6rem hsla(0, 0%, 50%, 1.0) inset;
     --inner-shadow-dark: -0.2rem -0.4rem 1rem -0.6rem hsla(0, 0%, 30%, 1.0) inset;
 
     --theme-graphite: hsl(0, 0%, 50%);
@@ -286,7 +286,7 @@ footer ul {
 
 .character {
     display: inline-block;
-    animation: fade 400ms linear;
+    /* animation: fade 400ms linear; */
 }
 
 .accented-colour {
@@ -303,7 +303,15 @@ footer ul {
 }
 
 .negative-num::before {
+    display: inline-flex;
+    justify-content: center;
     content: '-';
+    animation: grow-margin 200ms linear, fade 400ms linear;
+    overflow: hidden;
+}
+
+.shrink-margin {
+    animation: shrink-margin 100ms linear;
 }
 
 @keyframes slide-from-right {
@@ -321,4 +329,14 @@ footer ul {
     /* 2% { transform: scale(1.2); }
     8% { transform: scale(1.0); } */
     100% { color: var(--foreground); }
+}
+
+@keyframes grow-margin {
+    0% { margin-left: -0.85rem; }
+    100% { margin-left: 0rem; }
+}
+
+@keyframes shrink-margin {
+    0% { margin-left: 0.85rem; }
+    100% { margin-left: 0rem; }
 }
