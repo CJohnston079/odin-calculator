@@ -283,7 +283,6 @@ footer ul {
 
 .character {
     display: inline-block;
-    /* background-color: yellow; */
     animation: fade 400ms linear;
 }
 
@@ -294,10 +293,6 @@ footer ul {
 
 .mid-colour {
     color: var(--midground);
-}
-
-.extra-padding {
-    padding: 0 0.6rem;
 }
 
 @keyframes slide-from-right {
