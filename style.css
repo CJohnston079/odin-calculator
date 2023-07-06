@@ -28,7 +28,7 @@ html {
         linear-gradient(0deg, hsla(0, 0%, 95%, 0.0) 10%, hsla(0, 0%, 95%, 1.0) 100%),
         linear-gradient(112.5deg, hsla(0, 0%, 100%, 1.0) 0%, hsla(0, 0%, 100%, 0.0) 38%, hsla(0, 0%, 100%, 1.0) 40%, hsla(0, 0%, 100%, 1.0) 100%),
         hsla(0, 0%, 95%, 1.0);
-    --inner-shadow-light: -0.8rem -0.8rem 1rem -0.6rem hsla(0, 0%, 30%, 1.0) inset;
+    --inner-shadow-light: -0.8rem -0.8rem 1rem -0.6rem hsla(0, 0%, 60%, 1.0) inset;
     --inner-shadow-dark: -0.2rem -0.4rem 1rem -0.6rem hsla(0, 0%, 30%, 1.0) inset;
 
     --theme-graphite: hsl(0, 0%, 50%);
