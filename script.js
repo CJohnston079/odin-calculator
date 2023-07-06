@@ -398,9 +398,10 @@ const convert = {
 
 const resolve = {
     equation: function() {
-        // if (equationArr.includes('+', '-', '*', '/', '!', '%', '^', '√') === false) return;
-
-        const inoperableChars = ['+', '-', '*', '/']
+        if (equationArr.includes('+', '-', '*', '/', '!', '%', '^', '√') === false) return;
+        if (isEquationSolved === true) return;
+        
+        const inoperableChars = ['+', '-', '*', '/', '^', '√'];
         if (isNaN(Number(lastChar)) === true && inoperableChars.includes(lastChar)) return
         
         areBracketsEnabled === true ? input.closedBracket() : {};
