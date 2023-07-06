@@ -17,7 +17,7 @@ html {
     --cl-black: hsl(0, 0%, 0%);
     --cl-white-trans: hsla(0, 0%, 100%, 0.6);
     --cl-black-trans: hsla(0, 0%, 0%, 0.6);
-    --cl-black-screen: linear-gradient(135deg, hsla(0, 0%, 0%, 0.2) 0%, hsla(0, 0%, 0%, 0.7) 100%);
+    --cl-black-screen: linear-gradient(135deg, hsla(0, 0%, 0%, 0.2) 0%, hsla(0, 0%, 0%, 0.7) 80%);
     --cl-grad-dark: linear-gradient(135deg, hsla(0, 0%, 25%, 0.6) 0%, hsla(0, 0%, 0%, 0.4) 50%, hsla(0, 0%, 0%, 0.6) 100%);
     --cl-grad-light: linear-gradient(135deg, hsla(0, 0%, 100%, 0.6) 15%, hsla(0, 0%, 100%, 0.2) 65%, hsla(0, 0%, 50%, 0.4) 100%);
 
