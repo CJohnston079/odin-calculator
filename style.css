@@ -16,7 +16,8 @@ html {
     --cl-dark-grey: hsl(0, 0%, 20%);
     --cl-black: hsl(0, 0%, 0%);
     --cl-white-trans: hsla(0, 0%, 100%, 0.6);
-    --cl-black-trans: hsla(0, 0%, 0%, 0.7);
+    --cl-black-trans: hsla(0, 0%, 0%, 0.6);
+    --cl-black-screen: linear-gradient(135deg, hsla(0, 0%, 0%, 0.2) 0%, hsla(0, 0%, 0%, 0.7) 100%);
     --cl-grad-dark: linear-gradient(135deg, hsla(0, 0%, 25%, 0.6) 0%, hsla(0, 0%, 0%, 0.4) 50%, hsla(0, 0%, 0%, 0.6) 100%);
     --cl-grad-light: linear-gradient(135deg, hsla(0, 0%, 100%, 0.6) 15%, hsla(0, 0%, 100%, 0.2) 65%, hsla(0, 0%, 50%, 0.4) 100%);
 
@@ -55,6 +56,7 @@ html {
     --midground: var(--cl-dark-grey);
     --background: var(--cl-white);
     --background-grad: var(--cl-grad-light);
+    --cl-trans: var(--cl-white-trans);
     --cl-screen: var(--cl-white-trans);
     --cl-device: var(--cl-white);
     --cl-glare: var(--cl-glare-light);
@@ -69,7 +71,8 @@ html {
     --midground: var(--cl-light-grey);
     --foreground: var(--cl-white);
     --background-grad: var(--cl-grad-dark);
-    --cl-screen: var(--cl-black-trans);
+    --cl-trans: var(--cl-black-trans);
+    --cl-screen: var(--cl-black-screen);
     --cl-device: var(--cl-black);
     --cl-glare: var(--cl-glare-dark);
     --numpad-shadow: var(--inner-shadow-light);
@@ -100,7 +103,7 @@ footer {
     align-self: flex-end;
     width: 100%;
     padding: 0.5rem;
-    background-color: var(--cl-screen);
+    background-color: var(--cl-trans);
     border-bottom: none;
     box-shadow: 1rem 0 1rem var(--cl-black-trans);
 }
