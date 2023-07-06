@@ -525,7 +525,9 @@ const operate = {
 const memory = {
     value: 0,
     clear: function() {
-        return memory.value = 0;
+        memory.value = 0;
+        console.log(`Stored memory: ${memory.value}`);
+        return;
     },
     update: function(arr, operation) {
         let test = []
@@ -535,30 +537,36 @@ const memory = {
             test.unshift(arr[i]);
         }
 
-        if (operation === '+') {
-            return memory.value += Number(test.join(''));
-        } else {
-            return memory.value -= Number(test.join(''));
-        }
+        operation === '+' ? memory.value += Number(test.join('')) :
+        memory.value -= Number(test.join(''));
+
+        console.log(`Stored memory: ${memory.value}`);
+        return;
     },
     recall: function(arr) {
         if (isNaN(Number(lastChar)) === false) return;
         if (memory.value === 0) return;
 
         let mem = memory.value.toString()
+
+        if (floatingPointInputted && mem.includes('.')) return;
         
-        for (let i=0; i < mem.length; i++) {
+        for (let i = 0; i < mem.length; i++) {
             if (isNaN(Number(mem[i]))) {
-                if (floatingPointInputted === true) return;
-                arr.push(mem[i]);
                 floatingPointInputted = true;
+                arr.push(mem[i]);
+                update.lastChar();
+                update.display();
                 continue;
             }
             arr.push(Number(mem[i]));
+            update.lastChar();
+            update.display();
         }
+
         equationStr = convert.arrToStr(arr);
-        update.lastChar();
-        update.display();
+        console.log(equationArr);
+        return;
     }
 }
 
