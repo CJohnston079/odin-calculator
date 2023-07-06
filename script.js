@@ -330,16 +330,16 @@ const toggle = {
 
                 calculationDisplay.children[i].classList.toggle('negative-num');
 
+                if (Object.is(equationArr[i], -0) === true) { // add minus sign to floating point numbers beginning with 0
+                    equationStr[i] *= equationStr = equationStr.substring(0,i) + '-0' + equationStr.substring(i+1, equationStr.length);
+                }
+
                 if (equationArr[i] > 0) {
                     calculationDisplay.children[i].classList.add('shrink-margin');
                 } else {
                     calculationDisplay.children[i].classList.remove('shrink-margin');
                 }
-
-                if (Object.is(equationArr[i], -0) === true) { // add minus sign to floating point numbers beginning with 0
-                    equationStr[i] *= equationStr = equationStr.substring(0,i) + '-0' + equationStr.substring(i+1, equationStr.length);
-                    calculationDisplay.children[i].classList.toggle('negative')
-                }
+                
                 break;
             }
         }
