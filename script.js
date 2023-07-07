@@ -119,7 +119,11 @@ const update = {
             clear.display();
 
             for (let i = 0; i < equationArr.length; i++) {
-                calculationDisplay.append(equationArr[i]);
+                let character = document.createElement('span');
+                character.classList.add('character');
+                character.textContent = (equationArr[i])
+
+                calculationDisplay.append(character);
             }
 
             animate.colorChange(calculationDisplay, 2000);
@@ -344,8 +348,6 @@ const toggle = {
                 if (equationArr[i] === '(' || equationArr[i] === ')' || equationArr[i] === '√' || equationArr[i-1] === '√') return;
                 equationArr[i] *= -1;
                 equationStr = convert.arrToStr(equationArr);
-
-                console.log(calculationDisplay.children[i])
 
                 calculationDisplay.children[i].classList.toggle('negative-num');
 
