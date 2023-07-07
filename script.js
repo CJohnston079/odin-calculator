@@ -138,17 +138,29 @@ const update = {
             animate.slideLeft(calculationDisplay, 100);
             // animate.fade(calculationDisplay.lastChild, 400, 'normal');
             inputNegativeNum = false;
-            return;
-        }
-
-        if (indicesToggled === true) {
-            calculationDisplay.lastChild.textContent = lastChar;
-            calculationDisplay.lastChild
+            console.log(equationArr);
             return;
         }
 
         let character = document.createElement('span');
         character.classList.add('character');
+
+        if (indicesToggled === true) {
+            if (equationArr[equationArr.length-2] === '^') {
+                calculationDisplay.lastChild.textContent = lastChar;
+                return;
+            }
+            character = document.createElement('sup');
+            character.textContent = lastChar;
+            character.classList.add('indices');
+            character.classList.add('mid-colour');
+            calculationDisplay.append(character);
+            animate.slideLeft(calculationDisplay, 100);
+            animate.fade(calculationDisplay.lastChild, 400, 'normal');
+            update.lastChar();
+            console.log(equationArr);
+            return;
+        }
 
         switch(lastChar) {
             case '+':
