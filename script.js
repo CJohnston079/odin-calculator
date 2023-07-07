@@ -74,6 +74,8 @@ const animate = {
 
         if (element.lastChild.offsetWidth !== undefined) offsetWidth = element.lastChild.offsetWidth;
 
+        if (inputNegativeNum === true && calculationDisplay.lastChild.textContent !== '') offsetWidth = 15;
+
         root.style.setProperty('--offset-width', `translateX(${offsetWidth}px)`); // dynamically adjust translate value
         element.style.animation = `slide-from-right ${duration}ms linear`;
 
@@ -126,6 +128,14 @@ const update = {
             return;
         }
 
+        if (inputNegativeNum === true) {
+            calculationDisplay.lastChild.textContent = lastChar*-1;
+            animate.slideLeft(calculationDisplay, 100);
+            // animate.fade(calculationDisplay.lastChild, 400, 'normal');
+            inputNegativeNum = false;
+            return;
+        }
+
         let character = document.createElement('span');
         character.classList.add('character');
 
@@ -170,6 +180,7 @@ const update = {
             default:
                 character.textContent = lastChar;
         }
+
         calculationDisplay.append(character);
         animate.slideLeft(calculationDisplay, 100);
         animate.fade(calculationDisplay.lastChild, 400, 'normal');
@@ -188,7 +199,6 @@ const update = {
             equationArr.push(Number(equationStr[equationStr.length-1]));
             if (inputNegativeNum === true) {
                 equationArr[equationArr.length-1] *= -1;
-                inputNegativeNum = false;
             }
         }
         update.lastChar();
@@ -309,8 +319,15 @@ const input = {
         isNegativeNum = true;
         
         equationStr += '-';
-    
-        update.display();
+
+        let character = document.createElement('span');
+        character.classList.add('character');
+        character.textContent = '';
+        character.classList.add('negative-num');
+        calculationDisplay.append(character);
+        animate.slideLeft(calculationDisplay, 100);
+        animate.fade(calculationDisplay.lastChild, 400, 'normal');
+
         return;
     },
     closedBracket: function() {
@@ -327,6 +344,8 @@ const toggle = {
                 if (equationArr[i] === '(' || equationArr[i] === ')' || equationArr[i] === '√' || equationArr[i-1] === '√') return;
                 equationArr[i] *= -1;
                 equationStr = convert.arrToStr(equationArr);
+
+                console.log(calculationDisplay.children[i])
 
                 calculationDisplay.children[i].classList.toggle('negative-num');
 
@@ -373,6 +392,7 @@ const toggle = {
             areBracketsEnabled = false;
         }
         update.equationArr();
+        update.lastChar();
         update.display();
     },
     functionPanel: function() {
