@@ -302,6 +302,10 @@ footer ul {
     padding: 0 0.6rem;
 }
 
+.indices {
+    font-size: 2rem;
+}
+
 .negative-num::before {
     display: inline-flex;
     justify-content: center;
