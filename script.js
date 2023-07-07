@@ -62,6 +62,7 @@ let inputNegativeNum = false;
 let isNegativeNum = false;
 let toggleNegativeBrackets = false;
 let areBracketsEnabled = false;
+let indicesToggled = false;
 
 function round(num, decimalPlaces) {
     num = Math.round(num*decimalPlaces)/decimalPlaces;
@@ -140,6 +141,12 @@ const update = {
             return;
         }
 
+        if (indicesToggled === true) {
+            calculationDisplay.lastChild.textContent = lastChar;
+            calculationDisplay.lastChild
+            return;
+        }
+
         let character = document.createElement('span');
         character.classList.add('character');
 
@@ -172,6 +179,13 @@ const update = {
             case '%':
                 character.textContent = '%';
                 character.classList.add('accented-colour');
+                break;
+            case '^':
+                character = document.createElement('sup');
+                character.textContent = 'x';
+                character.classList.add('mid-colour');
+                character.classList.add('indices');
+                indicesToggled = true;
                 break;
             case '√':
                 character.textContent = '√';
@@ -267,6 +281,7 @@ const input = {
         floatingPointInputted = false;
         isFactorialInputted = false;
         isNegativeNum = false;
+        indicesToggled = false;
         update.equation(operationButtons[key].value);
     },
     number: function(key) {
@@ -630,6 +645,7 @@ const clear = {
         isFactorialInputted = false;
         inputNegativeNum = false;
         isNegativeNum = false;
+        indicesToggled = false
         areBracketsEnabled = false;
     },
     character: function() {
