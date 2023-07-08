@@ -134,6 +134,7 @@ const update = {
         }
 
         if (inputNegativeNum === true) {
+            console.log('g')
             calculationDisplay.lastChild.textContent = lastChar*-1;
             animate.slideLeft(calculationDisplay, 100);
             // animate.fade(calculationDisplay.lastChild, 400, 'normal');
@@ -148,6 +149,7 @@ const update = {
         if (indicesToggled === true) {
             if (equationArr[equationArr.length-2] === '^') {
                 calculationDisplay.lastChild.textContent = lastChar;
+                console.log(equationArr);
                 return;
             }
             character = document.createElement('sup');
@@ -665,19 +667,17 @@ const clear = {
         if (lastChar === '.') floatingPointInputted = false;
         if (lastChar === '!') isFactorialInputted = false;
     
+        console.log(`inputNegativeNum = ${inputNegativeNum}`);
         if (inputNegativeNum === true) {
             inputNegativeNum = false;
             equationStr = equationStr.slice(0,-1);
             calculationDisplay.lastChild.remove();
+            console.log(`inputNegativeNum = ${inputNegativeNum}`);
             return;
         }
 
         if (isNegativeNum === true) {
             isNegativeNum = false;
-        }
-    
-        if (equationStr[equationStr.length-2] === '-' && isNaN(Number(equationStr[equationStr.length-3])) === true) {
-            inputNegativeNum = true;
         }
     
         if (lastChar === '(') {
