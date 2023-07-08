@@ -352,3 +352,8 @@ footer ul {
     0% { margin-left: 0.85rem; }
     100% { margin-left: 0rem; }
 }
+
+@keyframes cl-grey-to-accent {
+    0% { color: var(--cl-grey); }
+    100% { color: var(--cl-accent); }
+}
