@@ -101,12 +101,6 @@ const animate = {
             element.style.animation = '';
         }, duration);
     },
-    fade: function(element, duration, direction) {
-        element.style.animation = `fade ${duration}ms linear ${direction}`;
-        setTimeout(() => {
-            element.style.animation = '';
-        }, duration);
-    }
 }
 
 const update = {
@@ -147,18 +141,17 @@ const update = {
 
         if (indicesToggled === true) {
             if (equationArr[equationArr.length-2] === '^') {
-                calculationDisplay.lastChild.textContent = lastChar;
-                calculationDisplay.lastChild.classList.replace('mid-colour', 'accented-colour');
-                console.log(equationArr);
-                return;
+                calculationDisplay.lastChild.textContent = '';
             }
             character = document.createElement('sup');
             character.textContent = lastChar;
             character.classList.add('indices');
             character.classList.add('accented-colour');
+            if (equationArr[equationArr.length-2] !== '^') {
+                animate.slideLeft(calculationDisplay, 100);
+                animate.fade(calculationDisplay.lastChild, 400, 'normal');
+            }
             calculationDisplay.append(character);
-            animate.slideLeft(calculationDisplay, 100);
-            animate.fade(calculationDisplay.lastChild, 400, 'normal');
             update.lastChar();
             console.log(equationArr);
             return;
