@@ -303,7 +303,7 @@ footer ul {
 }
 
 .mid-colour {
-    color: var(--midground);
+    color: var(--cl-grey);
 }
 
 .extra-padding {

@@ -139,7 +139,7 @@ const update = {
             // animate.fade(calculationDisplay.lastChild, 400, 'normal');
             inputNegativeNum = false;
             console.log(equationArr);
-            return;
+            if (indicesToggled !== true) return;
         }
 
         let character = document.createElement('span');
@@ -148,13 +148,14 @@ const update = {
         if (indicesToggled === true) {
             if (equationArr[equationArr.length-2] === '^') {
                 calculationDisplay.lastChild.textContent = lastChar;
+                calculationDisplay.lastChild.classList.replace('mid-colour', 'accented-colour');
                 console.log(equationArr);
                 return;
             }
             character = document.createElement('sup');
             character.textContent = lastChar;
             character.classList.add('indices');
-            character.classList.add('mid-colour');
+            character.classList.add('accented-colour');
             calculationDisplay.append(character);
             animate.slideLeft(calculationDisplay, 100);
             animate.fade(calculationDisplay.lastChild, 400, 'normal');
