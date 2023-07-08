@@ -79,6 +79,14 @@ html {
     }
 }
 
+@media only screen and (max-width: 768px) {
+    html {
+        background-color: var(--cl-theme);
+        font-size: 0.8rem;
+        font-size: 2.0vmin;
+    }
+}
+
 body {
     margin: 0;
     height: 100vh;
