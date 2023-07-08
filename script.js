@@ -689,8 +689,9 @@ const clear = {
             areBracketsEnabled = true;
         }
 
-        if (equationArr[equationArr.length-2] === '^') {
+        if (lastChar === '^' || equationArr[equationArr.length-2] === '^') {
             equationArr.pop();
+            indicesToggled = false;
         }
 
         equationStr = equationStr.slice(0,-1);
