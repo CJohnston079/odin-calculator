@@ -101,6 +101,12 @@ const animate = {
             element.style.animation = '';
         }, duration);
     },
+    fade: function(element, duration, direction) {
+        element.style.animation = `fade ${duration}ms linear ${direction}`;
+        setTimeout(() => {
+            element.style.animation = '';
+        }, duration);
+    }
 }
 
 const update = {
@@ -142,16 +148,21 @@ const update = {
         if (indicesToggled === true) {
             if (equationArr[equationArr.length-2] === '^') {
                 calculationDisplay.lastChild.textContent = '';
+                // calculationDisplay.lastChild.classList.replace('mid-colour', 'accented-colour');
+                // console.log(equationArr);
+                // return;
             }
             character = document.createElement('sup');
             character.textContent = lastChar;
             character.classList.add('indices');
             character.classList.add('accented-colour');
+            calculationDisplay.append(character);
+
             if (equationArr[equationArr.length-2] !== '^') {
                 animate.slideLeft(calculationDisplay, 100);
                 animate.fade(calculationDisplay.lastChild, 400, 'normal');
             }
-            calculationDisplay.append(character);
+
             update.lastChar();
             console.log(equationArr);
             return;
