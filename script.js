@@ -134,7 +134,6 @@ const update = {
         }
 
         if (inputNegativeNum === true) {
-            console.log('g')
             calculationDisplay.lastChild.textContent = lastChar*-1;
             animate.slideLeft(calculationDisplay, 100);
             // animate.fade(calculationDisplay.lastChild, 400, 'normal');
@@ -663,6 +662,11 @@ const clear = {
         areBracketsEnabled = false;
     },
     character: function() {
+        if (equationArr.length < 1 && calculationDisplay.lastChild.classList.contains('negative-num')) {
+            calculationDisplay.style.animation = 'fade 200ms reverse';
+            setTimeout(clear.display, 200);
+        }
+
         if (equationArr.length < 1) return;
         if (lastChar === '.') floatingPointInputted = false;
         if (lastChar === '!') isFactorialInputted = false;
