@@ -106,6 +106,12 @@ const animate = {
         setTimeout(() => {
             element.style.animation = '';
         }, duration);
+    },
+    greyToColour: function(element, duration) {
+        element.style.animation = `cl-grey-to-accent ${duration}ms linear`;
+        setTimeout(() => {
+            element.style.animation = '';
+        }, duration);
     }
 }
 
@@ -148,9 +154,6 @@ const update = {
         if (indicesToggled === true) {
             if (equationArr[equationArr.length-2] === '^') {
                 calculationDisplay.lastChild.textContent = '';
-                // calculationDisplay.lastChild.classList.replace('mid-colour', 'accented-colour');
-                // console.log(equationArr);
-                // return;
             }
             character = document.createElement('sup');
             character.textContent = lastChar;
@@ -161,6 +164,9 @@ const update = {
             if (equationArr[equationArr.length-2] !== '^') {
                 animate.slideLeft(calculationDisplay, 100);
                 animate.fade(calculationDisplay.lastChild, 400, 'normal');
+            } else {
+                console.log('grey to colour')
+                animate.greyToColour(calculationDisplay.lastChild, 2000);
             }
 
             update.lastChar();
