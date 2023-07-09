@@ -317,7 +317,7 @@ const input = {
             clear.equation();
             clear.display();
         }
-        if (lastChar === ')') {
+        if (lastChar === ')' && equationArr.length > 0) {
             equationArr.push('*'); // adds multipliers between brackets if no operation is specified
         }
         update.equationArr(numberButtons[key].value)
