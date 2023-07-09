@@ -443,8 +443,16 @@ const toggle = {
 
 const convert = {
     numToDigits: function(arr) {
-        const extractedDigits = arr[0].toString().split('').map(Number);
-        return extractedDigits;          
+        const extractedDigits = [];
+
+        const str = arr[0].toString();
+      
+        for (let i = 0; i < str.length; i++) {
+            str[i] === '.' ? extractedDigits.push(str[i]) :
+          extractedDigits.push(Number(str[i]));
+        }
+      
+        return extractedDigits;  
     },
     arrToStr: function(arr) {
         return arr.join('');
