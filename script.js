@@ -442,6 +442,10 @@ const toggle = {
 }
 
 const convert = {
+    numToDigits: function(arr) {
+        const extractedDigits = arr[0].toString().split('').map(Number);
+        return extractedDigits;          
+    },
     arrToStr: function(arr) {
         return arr.join('');
     },
@@ -492,10 +496,12 @@ const resolve = {
         calculate.expressions(equationArr);
     
         isEquationSolved = true;
+
+        console.log(`Equation array after calculations: ${equationArr}.`)
     
-        equationStr = convert.arrToStr(equationArr);
-        equationStr = (round(equationStr, decimalPlaces)).toString();
-        equationArr = convert.strToArr(equationStr);
+        // equationStr = convert.arrToStr(equationArr);
+        // equationStr = (round(equationStr, decimalPlaces)).toString();
+        // equationArr = convert.strToArr(equationStr);
 
         update.display();
         update.history();
