@@ -64,9 +64,17 @@ let toggleNegativeBrackets = false;
 let areBracketsEnabled = false;
 let indicesToggled = false;
 
-function round(num, decimalPlaces) {
-    num = Math.round(num*decimalPlaces)/decimalPlaces;
-    return num;
+
+const round = {
+    str: function(str, decimalPlaces) {
+        str = Math.round(num*decimalPlaces)/decimalPlaces;
+        return str;
+    },
+    arr: function(arr, decimalPlaces) {
+        let num = Number(arr.toString());
+        num = Math.round(num*decimalPlaces)/decimalPlaces;
+        return convert.strToArr(num.toString());
+    }
 }
 
 const animate = {
@@ -510,6 +518,8 @@ const resolve = {
         // equationStr = convert.arrToStr(equationArr);
         // equationStr = (round(equationStr, decimalPlaces)).toString();
         // equationArr = convert.strToArr(equationStr);
+
+        equationArr = convert.numToDigits(equationArr);
 
         update.display();
         update.history();
