@@ -52,7 +52,7 @@ const operationButtons = {
 let equationStr = '';
 let equationArr = [];
 let history = [];
-let decimalPlaces = 1000000000;
+let decimalPlaces = 10 ** 9;
 let lastChar;
 
 let isEquationSolved = false;
@@ -66,12 +66,12 @@ let indicesToggled = false;
 
 
 const round = {
-    str: function(str, decimalPlaces) {
+    str: function(str) {
         str = Math.round(num*decimalPlaces)/decimalPlaces;
         return str;
     },
-    arr: function(arr, decimalPlaces) {
-        let num = Number(arr.toString());
+    arr: function(arr) {
+        let num = Number(convert.arrToStr(arr));
         num = Math.round(num*decimalPlaces)/decimalPlaces;
         return convert.strToArr(num.toString());
     }
@@ -512,14 +512,13 @@ const resolve = {
         calculate.expressions(equationArr);
     
         isEquationSolved = true;
-
-        console.log(`Equation array after calculations: ${equationArr}.`)
     
         // equationStr = convert.arrToStr(equationArr);
         // equationStr = (round(equationStr, decimalPlaces)).toString();
         // equationArr = convert.strToArr(equationStr);
 
         equationArr = convert.numToDigits(equationArr);
+        equationArr = round.arr(equationArr);
 
         update.display();
         update.history();
