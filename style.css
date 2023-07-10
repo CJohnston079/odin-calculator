@@ -18,7 +18,7 @@ html {
     --cl-white-trans: hsla(0, 0%, 100%, 0.6);
     --cl-black-trans: hsla(0, 0%, 0%, 0.6);
     --cl-black-screen: linear-gradient(135deg, hsla(0, 0%, 0%, 0.2) 0%, hsla(0, 0%, 0%, 0.7) 80%);
-    --cl-grad-dark: linear-gradient(135deg, hsla(0, 0%, 25%, 0.6) 0%, hsla(0, 0%, 0%, 0.4) 50%, hsla(0, 0%, 0%, 0.6) 100%);
+    --cl-grad-dark: linear-gradient(135deg, hsla(0, 0%, 49%, 0.4) 0%, hsla(0, 0%, 0%, 0.2) 50%, hsla(0, 0%, 0%, 0.6) 100%);
     --cl-grad-light: linear-gradient(135deg, hsla(0, 0%, 100%, 0.6) 15%, hsla(0, 0%, 100%, 0.2) 65%, hsla(0, 0%, 50%, 0.4) 100%);
 
     --cl-glare-dark:
@@ -78,6 +78,17 @@ html {
     --cl-device: var(--cl-black);
     --cl-glare: var(--cl-glare-dark);
     --numpad-shadow: var(--inner-shadow-light);
+
+    --theme-0: hsl(0, 0%, 30%);
+    --theme-1: hsl(0, 75%, 50%);
+    --theme-2: hsl(16, 100%, 40%);
+    --theme-3: hsl(30, 100%, 45%);
+    --theme-4: hsl(144, 100%, 20%);
+    --theme-5: hsl(177, 99%, 20%);
+    --theme-6: hsl(217, 93%, 25%);
+    --theme-7: hsl(300, 100%, 25%);
+    --theme-8: hsl(324, 100%, 30%);
+    --theme-9: hsl(342, 100%, 40%);
     }
 }
 
