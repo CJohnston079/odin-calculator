@@ -78,27 +78,17 @@ const round = {
 }
 
 const animate = {
-    slideLeft: function(element, duration) {
+    slideX: function(element, duration, direction) {
         let offsetWidth = 15;
 
         if (element.lastChild.offsetWidth !== undefined) offsetWidth = element.lastChild.offsetWidth;
-
         if (inputNegativeNum === true && equation.display.lastChild.textContent !== '') offsetWidth = 15;
+
+        direction === 'right' ? offsetWidth *= -1 : {};
 
         root.style.setProperty('--offset-width', `translateX(${offsetWidth}px)`); // dynamically adjust translate value
         element.style.animation = `slide-from-right ${duration}ms linear`;
 
-        setTimeout(() => {
-            element.style.animation = '';
-        }, duration);
-    },
-    slideRight: function(element, duration) {
-        let offsetWidth = 15;
-
-        if (element.lastChild.offsetWidth !== undefined) offsetWidth = element.lastChild.offsetWidth;
-
-        root.style.setProperty('--offset-width', `translateX(-${offsetWidth}px)`);
-        element.style.animation = `slide-from-right ${duration}ms linear`;
         setTimeout(() => {
             element.style.animation = '';
         }, duration);
@@ -178,7 +168,7 @@ const update = {
 
             if (inputNegativeNum === true) {
                 equation.display.lastChild.textContent = previousEntry*-1;
-                animate.slideLeft(equation.display, 100);
+                animate.slideX(equation.display, 100);
                 // animate.fade(equation.display.lastChild, 400, 'normal');
                 inputNegativeNum = false;
                 console.log(equation.arr);
@@ -199,7 +189,7 @@ const update = {
                 equation.display.append(character);
 
                 if (equation.arr[equation.arr.length-2] !== '^') {
-                    animate.slideLeft(equation.display, 100);
+                    animate.slideX(equation.display, 100);
                     animate.fade(equation.display.lastChild, 400, 'normal');
                 } else {
                     animate.greyToColour(equation.display.lastChild, 2000);
@@ -260,7 +250,7 @@ const update = {
             }
 
             equation.display.append(character);
-            animate.slideLeft(equation.display, 100);
+            animate.slideX(equation.display, 100);
             animate.fade(equation.display.lastChild, 400, 'normal');
             console.log(equation.arr);
         }
@@ -346,7 +336,7 @@ const input = {
         character.textContent = '';
         character.classList.add('negative-num');
         equation.display.append(character);
-        animate.slideLeft(equation.display, 100);
+        animate.slideX(equation.display, 100);
         animate.fade(equation.display.lastChild, 400, 'normal');
 
         return;
@@ -694,7 +684,7 @@ const clear = {
         equation.arr.pop();
         update.previousEntry();
 
-        animate.slideRight(equation.display, 100);
+        animate.slideX(equation.display, 100, 'right');
         equation.display.lastChild.remove();
 
         console.log(equation.arr);
