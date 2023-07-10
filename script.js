@@ -46,7 +46,6 @@ const operationButtons = {
     subtract: { element: operationButtonElements[3], value: '-' },
     multiply: { element: operationButtonElements[4], value: '*' },
     divide: { element: operationButtonElements[5], value: '/' },
-    exponent: { element: functionButtonElements[8], value: '^' }
 }
 
 let equationArr = [];
@@ -306,6 +305,14 @@ const input = {
     percentage: function() {
         if (isNaN(lastChar)) return;
         update.equationArr('%')
+    },
+    exponent: function() {
+        if (isNaN(Number(lastChar)) === true && lastChar !== '!' && lastChar !== ')') return;
+        floatingPointInputted = false;
+        isFactorialInputted = false;
+        isNegativeNum = false;
+        indicesToggled = false;
+        update.equationArr('^');
     },
     root: function() {
         if (lastChar === '√') return;
@@ -735,7 +742,7 @@ functionButtons.brackets.addEventListener('mousedown', toggle.brackets);
 functionButtons.pi.addEventListener('mousedown', input.pi);
 functionButtons.factorial.addEventListener('mousedown', input.factorial);
 functionButtons.percentage.addEventListener('mousedown', input.percentage);
-// functionButtons.exponent.addEventListener('mousedown', input.exponent);
+functionButtons.exponent.addEventListener('mousedown', input.exponent);
 functionButtons.root.addEventListener('mousedown', input.root);
 
 functionButtons.equals.addEventListener('mousedown', resolve.equation);
