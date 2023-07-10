@@ -67,8 +67,8 @@ let indicesToggled = false;
 
 const round = {
     str: function(str) {
-        str = Math.round(num*decimalPlaces)/decimalPlaces;
-        return str;
+        let num = Number(str);
+        return str = Math.round(num*decimalPlaces)/decimalPlaces;
     },
     arr: function(arr) {
         let num = Number(convert.arrToStr(arr));
@@ -110,16 +110,30 @@ const animate = {
     }
 }
 
+const show = {
+    solution: function(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            let character = document.createElement('span');
+            character.classList.add('character');
+            character.textContent = (arr[i])
+
+            equation.display.append(character);
+        }
+
+        animate.colourChange(equation.display, 2000, 'var(--cl-theme)', 'var(--foreground)');
+        console.log(arr);
+    }
+}
+
 const update = {
     previousEntry: function() {
-        previousEntry = equation.arr[equation.arr.length-1];
-        return previousEntry;
+        return previousEntry = equation.arr[equation.arr.length-1];
     },
     theme: function(themeIndex) {
         root.style.setProperty('--cl-theme', `var(--theme-${themeIndex})`);
         setTimeout(() => {
             document.documentElement.style.transition = '2000ms';
-        }, 100)
+        }, 100);
         return;
     },
     equation: {
@@ -130,36 +144,20 @@ const update = {
                 equation.arr.push(character);
             } else {
                 equation.arr.push(Number(character));
-                if (inputNegativeNum === true) {
-                    equation.arr[equation.arr.length-1] *= -1;
-                }
+                inputNegativeNum === true ?  equation.arr[equation.arr.length-1] *= -1 : {};
             }
             update.previousEntry();
             update.equation.display(character);
         },
         history: function() {
             equation.history.push(equation.display.textContent)
-            if (history.length > 3) {
-                history.pop();
-            }
+            history.length > 3 ? history.pop() : {};
             return history;
         },
-        display: function(char) {
+        display: function(character) {
             if (isEquationSolved === true) {
-
                 clear.display();
-
-                for (let i = 0; i < equation.arr.length; i++) {
-                    let character = document.createElement('span');
-                    character.classList.add('character');
-                    character.textContent = (equation.arr[i])
-
-                    equation.display.append(character);
-                }
-
-                animate.colourChange(equation.display, 2000, 'var(--cl-theme)', 'var(--foreground)');
-                console.log(equation.arr);
-
+                show.solution(equation.arr);
                 return;
             }
 
@@ -172,18 +170,18 @@ const update = {
                 if (indicesToggled !== true) return;
             }
 
-            let character = document.createElement('span');
-            character.classList.add('character');
+            let char = document.createElement('span');
+            char.classList.add('character');
 
             if (indicesToggled === true) {
                 if (equation.arr[equation.arr.length-2] === '^') {
                     equation.display.lastChild.textContent = '';
                 }
-                character = document.createElement('sup');
-                character.textContent = previousEntry;
-                character.classList.add('indices');
-                character.classList.add('accented-colour');
-                equation.display.append(character);
+                char = document.createElement('sup');
+                char.textContent = previousEntry;
+                char.classList.add('indices');
+                char.classList.add('accented-colour');
+                equation.display.append(char);
 
                 if (equation.arr[equation.arr.length-2] !== '^') {
                     animate.slideX(equation.display, 100);
@@ -199,54 +197,54 @@ const update = {
 
             switch(previousEntry) {
                 case '+':
-                    character.textContent = '+';
-                    character.classList.add('accented-colour');
-                    character.classList.add('extra-padding');
+                    char.textContent = '+';
+                    char.classList.add('accented-colour');
+                    char.classList.add('extra-padding');
                     break;
                 case '-':
-                    character.textContent = '-';
-                    character.classList.add('accented-colour');
-                    character.classList.add('extra-padding');
+                    char.textContent = '-';
+                    char.classList.add('accented-colour');
+                    char.classList.add('extra-padding');
                     break;
                 case '*':
-                    character.textContent = '+';
-                    character.classList.add('accented-colour');
-                    character.classList.add('extra-padding');
-                    character.classList.add('multiply');
+                    char.textContent = '+';
+                    char.classList.add('accented-colour');
+                    char.classList.add('extra-padding');
+                    char.classList.add('multiply');
                     break;
                 case '/':
-                    character.textContent = '÷';
-                    character.classList.add('accented-colour');
-                    character.classList.add('extra-padding');
+                    char.textContent = '÷';
+                    char.classList.add('accented-colour');
+                    char.classList.add('extra-padding');
                     break;
                 case '!':
-                    character.textContent = '!';
-                    character.classList.add('accented-colour');
+                    char.textContent = '!';
+                    char.classList.add('accented-colour');
                     break;
                 case '%':
-                    character.textContent = '%';
-                    character.classList.add('accented-colour');
+                    char.textContent = '%';
+                    char.classList.add('accented-colour');
                     break;
                 case '^':
-                    character = document.createElement('sup');
-                    character.textContent = 'x';
-                    character.classList.add('mid-colour');
-                    character.classList.add('indices');
+                    char = document.createElement('sup');
+                    char.textContent = 'x';
+                    char.classList.add('mid-colour');
+                    char.classList.add('indices');
                     indicesToggled = true;
                     break;
                 case '√':
-                    character.textContent = '√';
-                    character.classList.add('mid-colour');
+                    char.textContent = '√';
+                    char.classList.add('mid-colour');
                     break;
                 case Math.PI:
                     console.log('pi')
-                    character.textContent = 3.14;
+                    char.textContent = 3.14;
                     break;
                 default:
-                    character.textContent = previousEntry;
+                    char.textContent = previousEntry;
             }
 
-            equation.display.append(character);
+            equation.display.append(char);
             animate.slideX(equation.display, 100);
             animate.fade(equation.display.lastChild, 400, 'normal');
             console.log(equation.arr);
