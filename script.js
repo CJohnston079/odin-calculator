@@ -56,13 +56,13 @@ const operationButtons = {
 let previousEntry;
 let decimalPlaces = 10 ** 9;
 let isEquationSolved = false;
-let floatingPointInputted = false;
-let isFactorialInputted = false;
-let inputNegativeNum = false;
+let isFloatingPointNum = false;
+let isFactorialNum = false;
 let isNegativeNum = false;
+let inputNegativeNum = false;
 let toggleNegativeBrackets = false;
 let areBracketsEnabled = false;
-let indicesToggled = false;
+let areIndicesToggled = false;
 
 
 const round = {
@@ -127,6 +127,7 @@ const show = {
 
 const update = {
     previousEntry: function() {
+        console.log(equation.arr);
         return previousEntry = equation.arr[equation.arr.length-1];
     },
     theme: function(themeIndex) {
@@ -147,14 +148,14 @@ const update = {
                 inputNegativeNum === true ?  equation.arr[equation.arr.length-1] *= -1 : {};
             }
             update.previousEntry();
-            update.equation.display(character);
+            update.equation.display();
         },
         history: function() {
             equation.history.push(equation.display.textContent)
             history.length > 3 ? history.pop() : {};
             return history;
         },
-        display: function(character) {
+        display: function() {
             if (isEquationSolved === true) {
                 clear.display();
                 show.solution(equation.arr);
@@ -166,14 +167,13 @@ const update = {
                 animate.slideX(equation.display, 100);
                 // animate.fade(equation.display.lastChild, 400, 'normal');
                 inputNegativeNum = false;
-                console.log(equation.arr);
-                if (indicesToggled !== true) return;
+                if (areIndicesToggled === false) return;
             }
 
             let char = document.createElement('span');
             char.classList.add('character');
 
-            if (indicesToggled === true) {
+            if (areIndicesToggled === true) {
                 if (equation.arr[equation.arr.length-2] === '^') {
                     equation.display.lastChild.textContent = '';
                 }
@@ -191,7 +191,6 @@ const update = {
                 }
 
                 update.previousEntry();
-                console.log(equation.arr);
                 return;
             }
 
@@ -230,7 +229,7 @@ const update = {
                     char.textContent = 'x';
                     char.classList.add('mid-colour');
                     char.classList.add('indices');
-                    indicesToggled = true;
+                    areIndicesToggled = true;
                     break;
                 case '√':
                     char.textContent = '√';
@@ -247,7 +246,6 @@ const update = {
             equation.display.append(char);
             animate.slideX(equation.display, 100);
             animate.fade(equation.display.lastChild, 400, 'normal');
-            console.log(equation.arr);
         }
     }
 }
@@ -260,10 +258,10 @@ const input = {
             }
             return;
         }
-        floatingPointInputted = false;
-        isFactorialInputted = false;
+        isFloatingPointNum = false;
+        isFactorialNum = false;
         isNegativeNum = false;
-        indicesToggled = false;
+        areIndicesToggled = false;
         update.equation.arr(operationButtons[key].value);
     },
     number: function(key) {
@@ -277,17 +275,17 @@ const input = {
         update.equation.arr(numberButtons[key].value)
     },
     pi: function() {
-        if (floatingPointInputted === true || typeof previousEntry === 'number') return;
+        if (isFloatingPointNum === true || typeof previousEntry === 'number') return;
         if (isEquationSolved === true) clear.equation();
         equation.arr.push(Math.PI);
-        floatingPointInputted = true;
+        isFloatingPointNum = true;
         update.previousEntry();
         update.equation.display();
     },
     factorial: function() {
-        if (isNegativeNum === true || floatingPointInputted === true) return;
-        if (isNaN(Number(previousEntry)) && isFactorialInputted === false) return;
-        isFactorialInputted = true;
+        if (isNegativeNum === true || isFloatingPointNum === true) return;
+        if (isNaN(Number(previousEntry)) && isFactorialNum === false) return;
+        isFactorialNum = true;
         update.equation.arr('!')
     },
     percentage: function() {
@@ -296,10 +294,10 @@ const input = {
     },
     exponent: function() {
         if (isNaN(Number(previousEntry)) === true && previousEntry !== '!' && previousEntry !== ')') return;
-        floatingPointInputted = false;
-        isFactorialInputted = false;
+        isFloatingPointNum = false;
+        isFactorialNum = false;
         isNegativeNum = false;
-        indicesToggled = false;
+        areIndicesToggled = false;
         update.equation.arr('^');
     },
     root: function() {
@@ -311,8 +309,8 @@ const input = {
         update.equation.arr('√')
     },
     floatingPoint: function() {
-        if (floatingPointInputted === true) return;
-        floatingPointInputted = true;
+        if (isFloatingPointNum === true) return;
+        isFloatingPointNum = true;
     
         if (isEquationSolved === true || equation.arr.length < 1 || isNaN(Number(previousEntry))) {
             input.number(['0']);
@@ -344,12 +342,12 @@ const input = {
 
 const toggle = {
     negativeNum() {
-        if (isFactorialInputted === true) return;
+        if (isFactorialNum === true) return;
         for (let i = equation.arr.length-1; i >= 0; i--) {
             if (i === 0 || isNaN(Number(equation.arr[i-1])) === true && equation.arr[i-1] !== '.') {
                 if (equation.arr[i] === '(' || equation.arr[i] === ')' || equation.arr[i] === '√' || equation.arr[i-1] === '√') return;
+                
                 equation.arr[i] *= -1;
-
                 equation.display.children[i].classList.toggle('negative-num');
 
                 if (equation.arr[i] > 0) {
@@ -361,9 +359,8 @@ const toggle = {
                 break;
             }
         }
-        update.previousEntry()
+        update.previousEntry();
         isNegativeNum = true;
-        console.log(equation.arr);
         return
     },
     brackets() {
@@ -597,11 +594,11 @@ const memory = {
 
         let mem = memory.value.toString()
 
-        if (floatingPointInputted && mem.includes('.')) return;
+        if (isFloatingPointNum && mem.includes('.')) return;
         
         for (let i = 0; i < mem.length; i++) {
             if (isNaN(Number(mem[i]))) {
-                floatingPointInputted = true;
+                isFloatingPointNum = true;
                 arr.push(mem[i]);
                 update.previousEntry();
                 update.equation.display();
@@ -611,8 +608,6 @@ const memory = {
             update.previousEntry();
             update.equation.display();
         }
-
-        console.log(equation.arr);
         return;
     }
 }
@@ -631,22 +626,23 @@ const clear = {
     },
     variables: function() {
         isEquationSolved = false;
-        floatingPointInputted = false;
-        isFactorialInputted = false;
+        isFloatingPointNum = false;
+        isFactorialNum = false;
         inputNegativeNum = false;
         isNegativeNum = false;
-        indicesToggled = false
+        areIndicesToggled = false
         areBracketsEnabled = false;
     },
     character: function() {
         if (equation.arr.length < 1 && equation.display.lastChild.classList.contains('negative-num')) {
-            equation.display.style.animation = 'fade 200ms reverse';
+            inputNegativeNum = false;
+            animate.fade(equation.display, 200, 'reverse');
             setTimeout(clear.display, 200);
         }
 
         if (equation.arr.length < 1) return;
-        if (previousEntry === '.') floatingPointInputted = false;
-        if (previousEntry === '!') isFactorialInputted = false;
+        if (previousEntry === '.') isFloatingPointNum = false;
+        if (previousEntry === '!') isFactorialNum = false;
     
         if (inputNegativeNum === true) {
             inputNegativeNum = false;
@@ -669,11 +665,11 @@ const clear = {
 
         if (equation.arr[equation.arr.length-2] === '^') {
             equation.arr.pop();
-            indicesToggled = false;
+            areIndicesToggled = false;
         }
 
         if (previousEntry === '^') {
-            indicesToggled = false;
+            areIndicesToggled = false;
         }
 
         equation.arr.pop();
@@ -681,8 +677,6 @@ const clear = {
 
         animate.slideX(equation.display, 100, 'right');
         equation.display.lastChild.remove();
-
-        console.log(equation.arr);
     },
     all: function() {
         clear.variables();
