@@ -1,4 +1,8 @@
-const calculationDisplay = document.querySelector('#calculation');
+const equation = {
+    display: document.querySelector('#calculation'),
+    arr: [],
+    history: []
+}
 
 const functionButtonElements = document.querySelector('#function-panel').querySelectorAll('.button');
 const numberButtonElements = document.querySelector('#numpad').querySelectorAll('.button');
@@ -48,11 +52,9 @@ const operationButtons = {
     divide: { element: operationButtonElements[5], value: '/' },
 }
 
-let equationArr = [];
-let history = [];
-let decimalPlaces = 10 ** 9;
-let lastChar;
 
+let previousEntry;
+let decimalPlaces = 10 ** 9;
 let isEquationSolved = false;
 let floatingPointInputted = false;
 let isFactorialInputted = false;
@@ -81,7 +83,7 @@ const animate = {
 
         if (element.lastChild.offsetWidth !== undefined) offsetWidth = element.lastChild.offsetWidth;
 
-        if (inputNegativeNum === true && calculationDisplay.lastChild.textContent !== '') offsetWidth = 15;
+        if (inputNegativeNum === true && equation.display.lastChild.textContent !== '') offsetWidth = 15;
 
         root.style.setProperty('--offset-width', `translateX(${offsetWidth}px)`); // dynamically adjust translate value
         element.style.animation = `slide-from-right ${duration}ms linear`;
@@ -122,138 +124,9 @@ const animate = {
 }
 
 const update = {
-    lastChar: function() {
-        lastChar = equationArr[equationArr.length-1];
-        return lastChar;
-    },
-    display: function(char) {
-        if (isEquationSolved === true) {
-
-            clear.display();
-
-            for (let i = 0; i < equationArr.length; i++) {
-                let character = document.createElement('span');
-                character.classList.add('character');
-                character.textContent = (equationArr[i])
-
-                calculationDisplay.append(character);
-            }
-
-            animate.colorChange(calculationDisplay, 2000);
-            console.log(equationArr);
-
-            return;
-        }
-
-        if (inputNegativeNum === true) {
-            calculationDisplay.lastChild.textContent = lastChar*-1;
-            animate.slideLeft(calculationDisplay, 100);
-            // animate.fade(calculationDisplay.lastChild, 400, 'normal');
-            inputNegativeNum = false;
-            console.log(equationArr);
-            if (indicesToggled !== true) return;
-        }
-
-        let character = document.createElement('span');
-        character.classList.add('character');
-
-        if (indicesToggled === true) {
-            if (equationArr[equationArr.length-2] === '^') {
-                calculationDisplay.lastChild.textContent = '';
-            }
-            character = document.createElement('sup');
-            character.textContent = lastChar;
-            character.classList.add('indices');
-            character.classList.add('accented-colour');
-            calculationDisplay.append(character);
-
-            if (equationArr[equationArr.length-2] !== '^') {
-                animate.slideLeft(calculationDisplay, 100);
-                animate.fade(calculationDisplay.lastChild, 400, 'normal');
-            } else {
-                console.log('grey to colour')
-                animate.greyToColour(calculationDisplay.lastChild, 2000);
-            }
-
-            update.lastChar();
-            console.log(equationArr);
-            return;
-        }
-
-        switch(lastChar) {
-            case '+':
-                character.textContent = '+';
-                character.classList.add('accented-colour');
-                character.classList.add('extra-padding');
-                break;
-            case '-':
-                character.textContent = '-';
-                character.classList.add('accented-colour');
-                character.classList.add('extra-padding');
-                break;
-            case '*':
-                character.textContent = '+';
-                character.classList.add('accented-colour');
-                character.classList.add('extra-padding');
-                character.classList.add('multiply');
-                break;
-            case '/':
-                character.textContent = '÷';
-                character.classList.add('accented-colour');
-                character.classList.add('extra-padding');
-                break;
-            case '!':
-                character.textContent = '!';
-                character.classList.add('accented-colour');
-                break;
-            case '%':
-                character.textContent = '%';
-                character.classList.add('accented-colour');
-                break;
-            case '^':
-                character = document.createElement('sup');
-                character.textContent = 'x';
-                character.classList.add('mid-colour');
-                character.classList.add('indices');
-                indicesToggled = true;
-                break;
-            case '√':
-                character.textContent = '√';
-                character.classList.add('mid-colour');
-                break;
-            case Math.PI:
-                console.log('pi')
-                character.textContent = 3.14;
-                break;
-            default:
-                character.textContent = lastChar;
-        }
-
-        calculationDisplay.append(character);
-        animate.slideLeft(calculationDisplay, 100);
-        animate.fade(calculationDisplay.lastChild, 400, 'normal');
-        console.log(equationArr);
-    },
-    equationArr: function(character) {
-        isEquationSolved === true ? isEquationSolved = false : {};
-
-        if (isNaN(Number(character)) === true) {
-            equationArr.push(character);
-        } else {
-            equationArr.push(Number(character));
-            if (inputNegativeNum === true) {
-                equationArr[equationArr.length-1] *= -1;
-            }
-        }
-        update.lastChar();
-        update.display(character);
-    },
-    history: function() {
-        history.push(calculationDisplay.textContent)
-        if (history.length > 3) {
-            history.pop();
-        }
-        return history;
+    previousEntry: function() {
+        previousEntry = equation.arr[equation.arr.length-1];
+        return previousEntry;
     },
     theme: function(themeIndex) {
         root.style.setProperty('--cl-theme', `var(--theme-${themeIndex})`);
@@ -261,12 +134,142 @@ const update = {
             document.documentElement.style.transition = '2000ms';
         }, 100)
         return;
+    },
+    equation: {
+        arr: function(character) {
+            isEquationSolved === true ? isEquationSolved = false : {};
+    
+            if (isNaN(Number(character)) === true) {
+                equation.arr.push(character);
+            } else {
+                equation.arr.push(Number(character));
+                if (inputNegativeNum === true) {
+                    equation.arr[equation.arr.length-1] *= -1;
+                }
+            }
+            update.previousEntry();
+            update.equation.display(character);
+        },
+        history: function() {
+            history.push(equation.display.textContent)
+            if (history.length > 3) {
+                history.pop();
+            }
+            return history;
+        },
+        display: function(char) {
+            if (isEquationSolved === true) {
+
+                clear.display();
+
+                for (let i = 0; i < equation.arr.length; i++) {
+                    let character = document.createElement('span');
+                    character.classList.add('character');
+                    character.textContent = (equation.arr[i])
+
+                    equation.display.append(character);
+                }
+
+                animate.colorChange(equation.display, 2000);
+                console.log(equation.arr);
+
+                return;
+            }
+
+            if (inputNegativeNum === true) {
+                equation.display.lastChild.textContent = previousEntry*-1;
+                animate.slideLeft(equation.display, 100);
+                // animate.fade(equation.display.lastChild, 400, 'normal');
+                inputNegativeNum = false;
+                console.log(equation.arr);
+                if (indicesToggled !== true) return;
+            }
+
+            let character = document.createElement('span');
+            character.classList.add('character');
+
+            if (indicesToggled === true) {
+                if (equation.arr[equation.arr.length-2] === '^') {
+                    equation.display.lastChild.textContent = '';
+                }
+                character = document.createElement('sup');
+                character.textContent = previousEntry;
+                character.classList.add('indices');
+                character.classList.add('accented-colour');
+                equation.display.append(character);
+
+                if (equation.arr[equation.arr.length-2] !== '^') {
+                    animate.slideLeft(equation.display, 100);
+                    animate.fade(equation.display.lastChild, 400, 'normal');
+                } else {
+                    animate.greyToColour(equation.display.lastChild, 2000);
+                }
+
+                update.previousEntry();
+                console.log(equation.arr);
+                return;
+            }
+
+            switch(previousEntry) {
+                case '+':
+                    character.textContent = '+';
+                    character.classList.add('accented-colour');
+                    character.classList.add('extra-padding');
+                    break;
+                case '-':
+                    character.textContent = '-';
+                    character.classList.add('accented-colour');
+                    character.classList.add('extra-padding');
+                    break;
+                case '*':
+                    character.textContent = '+';
+                    character.classList.add('accented-colour');
+                    character.classList.add('extra-padding');
+                    character.classList.add('multiply');
+                    break;
+                case '/':
+                    character.textContent = '÷';
+                    character.classList.add('accented-colour');
+                    character.classList.add('extra-padding');
+                    break;
+                case '!':
+                    character.textContent = '!';
+                    character.classList.add('accented-colour');
+                    break;
+                case '%':
+                    character.textContent = '%';
+                    character.classList.add('accented-colour');
+                    break;
+                case '^':
+                    character = document.createElement('sup');
+                    character.textContent = 'x';
+                    character.classList.add('mid-colour');
+                    character.classList.add('indices');
+                    indicesToggled = true;
+                    break;
+                case '√':
+                    character.textContent = '√';
+                    character.classList.add('mid-colour');
+                    break;
+                case Math.PI:
+                    console.log('pi')
+                    character.textContent = 3.14;
+                    break;
+                default:
+                    character.textContent = previousEntry;
+            }
+
+            equation.display.append(character);
+            animate.slideLeft(equation.display, 100);
+            animate.fade(equation.display.lastChild, 400, 'normal');
+            console.log(equation.arr);
+        }
     }
 }
 
 const input = {
     operation: function(key) {
-        if (isNaN(Number(lastChar)) === true && lastChar !== '!' && lastChar !== ')') {
+        if (isNaN(Number(previousEntry)) === true && previousEntry !== '!' && previousEntry !== ')') {
             if (operationButtons[key].value === '-') {
                 input.negativeSign()
             }
@@ -276,64 +279,64 @@ const input = {
         isFactorialInputted = false;
         isNegativeNum = false;
         indicesToggled = false;
-        update.equationArr(operationButtons[key].value);
+        update.equation.arr(operationButtons[key].value);
     },
     number: function(key) {
         if (isEquationSolved === true) {
             clear.equation();
             clear.display();
         }
-        if (lastChar === ')' && equationArr.length > 0) {
-            equationArr.push('*'); // adds multipliers between brackets if no operation is specified
+        if (previousEntry === ')' && equation.arr.length > 0) {
+            equation.arr.push('*'); // adds multipliers between brackets if no operation is specified
         }
-        update.equationArr(numberButtons[key].value)
+        update.equation.arr(numberButtons[key].value)
     },
     pi: function() {
-        if (floatingPointInputted === true || typeof lastChar === 'number') return;
+        if (floatingPointInputted === true || typeof previousEntry === 'number') return;
         if (isEquationSolved === true) clear.equation();
-        equationArr.push(Math.PI);
+        equation.arr.push(Math.PI);
         floatingPointInputted = true;
-        update.lastChar();
-        update.display();
+        update.previousEntry();
+        update.equation.display();
     },
     factorial: function() {
         if (isNegativeNum === true || floatingPointInputted === true) return;
-        if (isNaN(Number(lastChar)) && isFactorialInputted === false) return;
+        if (isNaN(Number(previousEntry)) && isFactorialInputted === false) return;
         isFactorialInputted = true;
-        update.equationArr('!')
+        update.equation.arr('!')
     },
     percentage: function() {
-        if (isNaN(lastChar)) return;
-        update.equationArr('%')
+        if (isNaN(previousEntry)) return;
+        update.equation.arr('%')
     },
     exponent: function() {
-        if (isNaN(Number(lastChar)) === true && lastChar !== '!' && lastChar !== ')') return;
+        if (isNaN(Number(previousEntry)) === true && previousEntry !== '!' && previousEntry !== ')') return;
         floatingPointInputted = false;
         isFactorialInputted = false;
         isNegativeNum = false;
         indicesToggled = false;
-        update.equationArr('^');
+        update.equation.arr('^');
     },
     root: function() {
-        if (lastChar === '√') return;
-        if (isNaN(Number(lastChar)) === false) {
-            equationArr.push('*');
+        if (previousEntry === '√') return;
+        if (isNaN(Number(previousEntry)) === false) {
+            equation.arr.push('*');
         }
         isEquationSolved === true ? clear.equation() : {};
-        update.equationArr('√')
+        update.equation.arr('√')
     },
     floatingPoint: function() {
         if (floatingPointInputted === true) return;
         floatingPointInputted = true;
     
-        if (isEquationSolved === true || equationArr.length < 1 || isNaN(Number(lastChar))) {
+        if (isEquationSolved === true || equation.arr.length < 1 || isNaN(Number(previousEntry))) {
             input.number(['0']);
         }
     
         input.number(['.']);
     },
     negativeSign: function() {
-        if (inputNegativeNum === true || lastChar === '√') return;
+        if (inputNegativeNum === true || previousEntry === '√') return;
     
         inputNegativeNum = true;
         isNegativeNum = true;
@@ -342,14 +345,14 @@ const input = {
         character.classList.add('character');
         character.textContent = '';
         character.classList.add('negative-num');
-        calculationDisplay.append(character);
-        animate.slideLeft(calculationDisplay, 100);
-        animate.fade(calculationDisplay.lastChild, 400, 'normal');
+        equation.display.append(character);
+        animate.slideLeft(equation.display, 100);
+        animate.fade(equation.display.lastChild, 400, 'normal');
 
         return;
     },
     closedBracket: function() {
-        equationArr.push(')');
+        equation.arr.push(')');
         areBracketsEnabled = false;
     },
 }
@@ -357,30 +360,30 @@ const input = {
 const toggle = {
     negativeNum() {
         if (isFactorialInputted === true) return;
-        for (let i = equationArr.length-1; i >= 0; i--) {
-            if (i === 0 || isNaN(Number(equationArr[i-1])) === true && equationArr[i-1] !== '.') {
-                if (equationArr[i] === '(' || equationArr[i] === ')' || equationArr[i] === '√' || equationArr[i-1] === '√') return;
-                equationArr[i] *= -1;
+        for (let i = equation.arr.length-1; i >= 0; i--) {
+            if (i === 0 || isNaN(Number(equation.arr[i-1])) === true && equation.arr[i-1] !== '.') {
+                if (equation.arr[i] === '(' || equation.arr[i] === ')' || equation.arr[i] === '√' || equation.arr[i-1] === '√') return;
+                equation.arr[i] *= -1;
 
-                calculationDisplay.children[i].classList.toggle('negative-num');
+                equation.display.children[i].classList.toggle('negative-num');
 
-                if (equationArr[i] > 0) {
-                    calculationDisplay.children[i].classList.add('shrink-margin');
+                if (equation.arr[i] > 0) {
+                    equation.display.children[i].classList.add('shrink-margin');
                 } else {
-                    calculationDisplay.children[i].classList.remove('shrink-margin');
+                    equation.display.children[i].classList.remove('shrink-margin');
                 }
                 
                 break;
             }
         }
-        update.lastChar()
+        update.previousEntry()
         isNegativeNum = true;
-        console.log(equationArr);
+        console.log(equation.arr);
         return
     },
     brackets() {
-        if (areBracketsEnabled === true && lastChar === '(') return;
-        if (lastChar === '.') return;
+        if (areBracketsEnabled === true && previousEntry === '(') return;
+        if (previousEntry === '.') return;
     
         if (inputNegativeNum === true) {
             inputNegativeNum = false;
@@ -394,15 +397,15 @@ const toggle = {
     
         if (areBracketsEnabled === false) {
             areBracketsEnabled = true;
-            update.equationArr('(');
-            if (isNaN(lastChar) === false) {
-                equationArr.push('*'); // multiply brackets with adjacent numbers if no operation is specified
+            update.equation.arr('(');
+            if (isNaN(previousEntry) === false) {
+                equation.arr.push('*'); // multiply brackets with adjacent numbers if no operation is specified
             }
         } else {
             areBracketsEnabled = false;
-            update.equationArr(')');
+            update.equation.arr(')');
         }
-        update.lastChar();
+        update.previousEntry();
     },
     functionPanel: function() {
         document.querySelector('#function-panel').classList.toggle('hidden')
@@ -460,36 +463,36 @@ const resolve = {
     equation: function() {
         
         const operations = ['+', '-', '*', '/', '!', '%', '^', '√'];
-        if (equationArr.some(character => operations.includes(character)) === false) return;
+        if (equation.arr.some(character => operations.includes(character)) === false) return;
 
         const inoperableChars = ['+', '-', '*', '/', '^', '√'];
-        if (isNaN(Number(lastChar)) === true && inoperableChars.includes(lastChar)) return
+        if (isNaN(Number(previousEntry)) === true && inoperableChars.includes(previousEntry)) return
         
         areBracketsEnabled === true ? input.closedBracket() : {};
-        equationArr.includes('(') ? resolve.brackets() : {};
-        equationArr = convert.arrToEquation(equationArr);
+        equation.arr.includes('(') ? resolve.brackets() : {};
+        equation.arr = convert.arrToEquation(equation.arr);
 
-        calculate.expressions(equationArr);
+        calculate.expressions(equation.arr);
     
         isEquationSolved = true;
 
-        equationArr = convert.numToDigits(equationArr);
-        equationArr = round.arr(equationArr);
+        equation.arr = convert.numToDigits(equation.arr);
+        equation.arr = round.arr(equation.arr);
 
-        update.display();
-        update.history();
+        update.equation.display();
+        update.equation.history();
     },
     brackets: function() {
         let slicePosition = 0;
         let bracketEquation = [];
         let deleteCount = 0
     
-        for (let i = 0; i < equationArr.length; i++) {
-            if (equationArr[i] === '(') {
+        for (let i = 0; i < equation.arr.length; i++) {
+            if (equation.arr[i] === '(') {
                 slicePosition = i;
             }
-            if (equationArr[i] === ')') {
-                bracketEquation = equationArr.slice(slicePosition+1, i);
+            if (equation.arr[i] === ')') {
+                bracketEquation = equation.arr.slice(slicePosition+1, i);
                 deleteCount = bracketEquation.length+2;
     
                 bracketEquation = convert.arrToEquation(bracketEquation);
@@ -501,7 +504,7 @@ const resolve = {
                     toggleNegativeBrackets = false;
                 }
                 
-                equationArr.splice(slicePosition, deleteCount, bracketEquation[0]);
+                equation.arr.splice(slicePosition, deleteCount, bracketEquation[0]);
     
                 i = slicePosition+1;
             }
@@ -565,8 +568,9 @@ const operate = {
     '/': function(a, b) { return a / b },
     '^': function(a, b) { return a ** b },
     '√': function(a) {
-        if (isNegativeNum === true) console.log('neg')
-        return Math.sqrt(a)
+        if (isNegativeNum === true) {
+            return Math.sqrt(a)
+        }
     },
     '!': function(a) {
         for (let i = a-1; i >= 1; i--) {
@@ -603,7 +607,7 @@ const memory = {
         return;
     },
     recall: function(arr) {
-        if (isNaN(Number(lastChar)) === false) return;
+        if (isNaN(Number(previousEntry)) === false) return;
         if (memory.value === 0) return;
 
         let mem = memory.value.toString()
@@ -614,31 +618,31 @@ const memory = {
             if (isNaN(Number(mem[i]))) {
                 floatingPointInputted = true;
                 arr.push(mem[i]);
-                update.lastChar();
-                update.display();
+                update.previousEntry();
+                update.equation.display();
                 continue;
             }
             arr.push(Number(mem[i]));
-            update.lastChar();
-            update.display();
+            update.previousEntry();
+            update.equation.display();
         }
 
-        console.log(equationArr);
+        console.log(equation.arr);
         return;
     }
 }
 
 const clear = {
     equation: function() {
-        equationArr = [];
-        return equationArr;
+        equation.arr = [];
+        return equation.arr;
     },
     equationHistory: function() {
         history = [];
         return history;
     },
     display: function() {
-        calculationDisplay.textContent = '';
+        equation.display.textContent = '';
     },
     variables: function() {
         isEquationSolved = false;
@@ -650,20 +654,18 @@ const clear = {
         areBracketsEnabled = false;
     },
     character: function() {
-        if (equationArr.length < 1 && calculationDisplay.lastChild.classList.contains('negative-num')) {
-            calculationDisplay.style.animation = 'fade 200ms reverse';
+        if (equation.arr.length < 1 && equation.display.lastChild.classList.contains('negative-num')) {
+            equation.display.style.animation = 'fade 200ms reverse';
             setTimeout(clear.display, 200);
         }
 
-        if (equationArr.length < 1) return;
-        if (lastChar === '.') floatingPointInputted = false;
-        if (lastChar === '!') isFactorialInputted = false;
+        if (equation.arr.length < 1) return;
+        if (previousEntry === '.') floatingPointInputted = false;
+        if (previousEntry === '!') isFactorialInputted = false;
     
-        console.log(`inputNegativeNum = ${inputNegativeNum}`);
         if (inputNegativeNum === true) {
             inputNegativeNum = false;
-            calculationDisplay.lastChild.remove();
-            console.log(`inputNegativeNum = ${inputNegativeNum}`);
+            equation.display.lastChild.remove();
             return;
         }
 
@@ -671,37 +673,37 @@ const clear = {
             isNegativeNum = false;
         }
     
-        if (lastChar === '(') {
+        if (previousEntry === '(') {
             areBracketsEnabled = false;
-            // if (equationStr[equationStr.length-2] !== equationArr[equationArr.length-2] ) {
-            //     equationArr.pop()
+            // if (equationStr[equationStr.length-2] !== equation.arr[equation.arr.length-2] ) {
+            //     equation.arr.pop()
             // }
-        } else if (lastChar === ')') {
+        } else if (previousEntry === ')') {
             areBracketsEnabled = true;
         }
 
-        if (equationArr[equationArr.length-2] === '^') {
-            equationArr.pop();
+        if (equation.arr[equation.arr.length-2] === '^') {
+            equation.arr.pop();
             indicesToggled = false;
         }
 
-        if (lastChar === '^') {
+        if (previousEntry === '^') {
             indicesToggled = false;
         }
 
-        equationArr.pop();
-        update.lastChar();
+        equation.arr.pop();
+        update.previousEntry();
 
-        animate.slideRight(calculationDisplay, 100);
-        calculationDisplay.lastChild.remove();
+        animate.slideRight(equation.display, 100);
+        equation.display.lastChild.remove();
 
-        console.log(equationArr);
+        console.log(equation.arr);
     },
     all: function() {
         clear.variables();
         clear.equation();
         clear.equationHistory();
-        calculationDisplay.style.animation = 'fade 200ms reverse';
+        equation.display.style.animation = 'fade 200ms reverse';
         setTimeout(clear.display, 200)
         console.clear();
     }
@@ -751,11 +753,11 @@ functionButtons.allClear.addEventListener('mousedown', clear.all);
 
 memoryButtons.memoryClear.addEventListener('mousedown', memory.clear);
 memoryButtons.memoryAdd.addEventListener('mousedown', () => {
-    memory.update(equationArr, '+');
+    memory.update(equation.arr, '+');
 });
 memoryButtons.memorySubtract.addEventListener('mousedown', () => {
-    memory.update(equationArr, '-');
+    memory.update(equation.arr, '-');
 });
 memoryButtons.memoryRecall.addEventListener('mousedown', () => {
-    memory.recall(equationArr);
+    memory.recall(equation.arr);
 });
