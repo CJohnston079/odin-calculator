@@ -138,7 +138,7 @@ const update = {
             update.equation.display(character);
         },
         history: function() {
-            history.push(equation.display.textContent)
+            equation.history.push(equation.display.textContent)
             if (history.length > 3) {
                 history.pop();
             }
