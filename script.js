@@ -256,41 +256,8 @@ const update = {
         }
         return history;
     },
-    theme: function(swatch) {
-        switch(swatch) {
-            case themeSwatches[0]:
-                root.style.setProperty('--cl-theme', 'var(--theme-graphite)');
-                break;
-            case themeSwatches[1]:
-                root.style.setProperty('--cl-theme', 'var(--theme-strawberry)');
-                break;
-            case themeSwatches[2]:
-                root.style.setProperty('--cl-theme', 'var(--theme-inferno)');
-                break;
-            case themeSwatches[3]:
-                root.style.setProperty('--cl-theme', 'var(--theme-sunkissed)');
-                break;
-            case themeSwatches[4]:
-                root.style.setProperty('--cl-theme', 'var(--theme-conifer)');
-                break;
-            case themeSwatches[5]:
-                root.style.setProperty('--cl-theme', 'var(--theme-lagoon)');
-                break;
-            case themeSwatches[6]:
-                root.style.setProperty('--cl-theme', 'var(--theme-atmosphere)');
-                break;
-            case themeSwatches[7]:
-                root.style.setProperty('--cl-theme', 'var(--theme-ultraviolet)');
-                break;
-            case themeSwatches[8]:
-                root.style.setProperty('--cl-theme', 'var(--theme-byzantium)');
-                break;
-            case themeSwatches[9]:
-                root.style.setProperty('--cl-theme', 'var(--theme-aphrodite)');
-                break;
-            default:
-                break;
-        }
+    theme: function(themeIndex) {
+        root.style.setProperty('--cl-theme', `var(--theme-${themeIndex})`);
         setTimeout(() => {
             document.documentElement.style.transition = '2000ms';
         }, 100)
@@ -740,9 +707,9 @@ const select = {
     }
 }
 
-themeSwatches.forEach(swatch => {
+themeSwatches.forEach((swatch, index) => {
     swatch.addEventListener('mousedown', () => {
-        update.theme(swatch);
+        update.theme(index);
     });
 });
 
