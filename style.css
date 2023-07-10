@@ -32,18 +32,18 @@ html {
     --inner-shadow-light: -0.8rem -0.8rem 1rem -0.6rem hsla(0, 0%, 50%, 1.0) inset;
     --inner-shadow-dark: -0.2rem -0.4rem 1rem -0.6rem hsla(0, 0%, 30%, 1.0) inset;
 
-    --theme-graphite: hsl(0, 0%, 50%);
-    --theme-strawberry: hsl(0, 75%, 50%);
-    --theme-inferno: hsl(16, 100%, 50%);
-    --theme-sunkissed: hsl(40, 100%, 40%);
-    --theme-conifer: hsl(144, 100%, 30%);
-    --theme-lagoon: hsl(177, 99%, 40%);
-    --theme-atmosphere: hsl(217, 93%, 65%);
-    --theme-ultraviolet: hsl(269, 90%, 55%);
-    --theme-byzantium: hsl(324, 100%, 34%);
-    --theme-aphrodite: hsl(342, 100%, 50%);
+    --theme-0: hsl(0, 0%, 50%);
+    --theme-1: hsl(0, 75%, 50%);
+    --theme-2: hsl(16, 100%, 50%);
+    --theme-3: hsl(40, 100%, 40%);
+    --theme-4: hsl(144, 100%, 30%);
+    --theme-5: hsl(177, 99%, 40%);
+    --theme-6: hsl(217, 93%, 65%);
+    --theme-7: hsl(269, 90%, 55%);
+    --theme-8: hsl(324, 100%, 34%);
+    --theme-9: hsl(342, 100%, 50%);
 
-    --cl-theme: var(--theme-graphite);
+    --cl-theme: var(--theme-0);
 
     --cl-light: var(--cl-white);
     --cl-mid-light: var(--cl-light-grey);

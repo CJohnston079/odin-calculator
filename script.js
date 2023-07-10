@@ -702,8 +702,8 @@ const clear = {
 
 const select = {
     theme: function() {
-        let x = Math.floor(Math.random()*10);
-        update.theme(themeSwatches[x]);
+        let themeIndex = Math.floor(Math.random()*10);
+        update.theme(themeIndex);
     }
 }
 
