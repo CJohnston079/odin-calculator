@@ -63,6 +63,8 @@ html {
     --numpad-shadow: var(--inner-shadow-dark);
 
     --offset-width: translateX(15px);
+    --first-colour: var(--cl-theme);
+    --second-colour: var(--foreground);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -337,10 +339,8 @@ footer ul {
 }
 
 @keyframes colour-change {
-    0% { color: var(--cl-theme); }
-    /* 2% { transform: scale(1.2); }
-    8% { transform: scale(1.0); } */
-    100% { color: var(--foreground); }
+    0% { color: var(--first-colour); }
+    100% { color: var(--second-colour); }
 }
 
 @keyframes grow-margin {
@@ -351,9 +351,4 @@ footer ul {
 @keyframes shrink-margin {
     0% { margin-left: 0.85rem; }
     100% { margin-left: 0rem; }
-}
-
-@keyframes cl-grey-to-accent {
-    0% { color: var(--cl-grey); }
-    100% { color: var(--cl-accent); }
 }

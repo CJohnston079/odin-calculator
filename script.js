@@ -93,7 +93,10 @@ const animate = {
             element.style.animation = '';
         }, duration);
     },
-    colorChange: function(element, duration) {
+    colourChange: function(element, duration, firstColour, secondColour) {
+        root.style.setProperty('--first-colour', `${firstColour}`);
+        root.style.setProperty('--second-colour', `${secondColour}`);
+        
         element.style.animation = `colour-change ${duration}ms linear`;
         setTimeout(() => {
             element.style.animation = '';
@@ -101,12 +104,6 @@ const animate = {
     },
     fade: function(element, duration, direction) {
         element.style.animation = `fade ${duration}ms linear ${direction}`;
-        setTimeout(() => {
-            element.style.animation = '';
-        }, duration);
-    },
-    greyToColour: function(element, duration) {
-        element.style.animation = `cl-grey-to-accent ${duration}ms linear`;
         setTimeout(() => {
             element.style.animation = '';
         }, duration);
@@ -160,7 +157,7 @@ const update = {
                     equation.display.append(character);
                 }
 
-                animate.colorChange(equation.display, 2000);
+                animate.colourChange(equation.display, 2000, 'var(--cl-theme)', 'var(--foreground)');
                 console.log(equation.arr);
 
                 return;
@@ -192,7 +189,7 @@ const update = {
                     animate.slideX(equation.display, 100);
                     animate.fade(equation.display.lastChild, 400, 'normal');
                 } else {
-                    animate.greyToColour(equation.display.lastChild, 2000);
+                    animate.colourChange(equation.display.lastChild, 2000, 'var(--cl-grey)', 'var(--cl-accent)');
                 }
 
                 update.previousEntry();
