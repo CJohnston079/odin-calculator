@@ -231,12 +231,11 @@ const update = {
                     char.classList.add('indices');
                     areIndicesToggled = true;
                     break;
-                case '√':
+                case 'R':
                     char.textContent = '√';
-                    char.classList.add('mid-colour');
+                    char.classList.add('accented-colour');
                     break;
                 case Math.PI:
-                    console.log('pi')
                     char.textContent = 3.14;
                     break;
                 default:
@@ -301,12 +300,16 @@ const input = {
         update.equation.arr('^');
     },
     root: function() {
-        if (previousEntry === '√') return;
-        if (isNaN(Number(previousEntry)) === false) {
+        if (previousEntry === 'R') return;
+        if (isEquationSolved === true) {
+            clear.equation();
+            clear.display();
+        }
+        if (isNaN(Number(previousEntry)) === false && equation.arr.length < 0) {
             equation.arr.push('*');
         }
         isEquationSolved === true ? clear.equation() : {};
-        update.equation.arr('√')
+        update.equation.arr('R')
     },
     floatingPoint: function() {
         if (isFloatingPointNum === true) return;
@@ -319,7 +322,7 @@ const input = {
         input.number(['.']);
     },
     negativeSign: function() {
-        if (inputNegativeNum === true || previousEntry === '√') return;
+        if (inputNegativeNum === true || previousEntry === 'R') return;
     
         inputNegativeNum = true;
         isNegativeNum = true;
@@ -345,7 +348,7 @@ const toggle = {
         if (isFactorialNum === true) return;
         for (let i = equation.arr.length-1; i >= 0; i--) {
             if (i === 0 || isNaN(Number(equation.arr[i-1])) === true && equation.arr[i-1] !== '.') {
-                if (equation.arr[i] === '(' || equation.arr[i] === ')' || equation.arr[i] === '√' || equation.arr[i-1] === '√') return;
+                if (equation.arr[i] === '(' || equation.arr[i] === ')' || equation.arr[i] === 'R' || equation.arr[i-1] === 'R') return;
                 
                 equation.arr[i] *= -1;
                 equation.display.children[i].classList.toggle('negative-num');
@@ -397,12 +400,11 @@ const toggle = {
 const convert = {
     numToDigits: function(arr) {
         const extractedDigits = [];
-
         const str = arr[0].toString();
       
         for (let i = 0; i < str.length; i++) {
             str[i] === '.' ? extractedDigits.push(str[i]) :
-          extractedDigits.push(Number(str[i]));
+            extractedDigits.push(Number(str[i]));
         }
       
         return extractedDigits;  
@@ -422,18 +424,15 @@ const convert = {
     
                 let num = Number(arr.slice(slicePosition, i).toString().replaceAll(',',''));
                 let operation = arr[i];
-                
+
                 if (Object.is(arr[slicePosition], -0) === true) {
                     num *= -1; // convert floating points numbers beginning with 0 to negative
                 }
     
                 slicePosition = i+1;
-               
-                equation.push(num);
                 
-                if (arr[i] !== undefined) {
-                    equation.push(operation);
-                }
+                if (operation !== 'R') equation.push(num);
+                if (arr[i] !== undefined) equation.push(operation);
             }
         }
         arr = equation;
@@ -444,10 +443,10 @@ const convert = {
 const resolve = {
     equation: function() {
         
-        const operations = ['+', '-', '*', '/', '!', '%', '^', '√'];
+        const operations = ['+', '-', '*', '/', '!', '%', '^', 'R'];
         if (equation.arr.some(character => operations.includes(character)) === false) return;
 
-        const inoperableChars = ['+', '-', '*', '/', '^', '√'];
+        const inoperableChars = ['+', '-', '*', '/', '^', 'R'];
         if (isNaN(Number(previousEntry)) === true && inoperableChars.includes(previousEntry)) return
         
         areBracketsEnabled === true ? input.closedBracket() : {};
@@ -515,9 +514,8 @@ const calculate = {
     },
     root: function(arr) {
         for (let i = 0; i < arr.length; i++) {
-            if (arr[i] !== '√') continue;
-
-            arr.splice(i - 1, 3, operate['√'](arr[i+1]));
+            if (arr[i] !== 'R') continue;
+            arr.splice(i, 2, operate['R'](arr[i+1]));
             i--;
         }
     },
@@ -549,8 +547,8 @@ const operate = {
     '*': function(a, b) { return a * b },
     '/': function(a, b) { return a / b },
     '^': function(a, b) { return a ** b },
-    '√': function(a) {
-        if (isNegativeNum === true) {
+    'R': function(a) {
+        if (isNegativeNum === false) {
             return Math.sqrt(a)
         }
     },
