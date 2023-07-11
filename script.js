@@ -693,10 +693,15 @@ const clear = {
         if (previousEntry === '(') {
             areBracketsEnabled = false;
             if (equation.display.children[equation.arr.length-2].textContent !== equation.arr[equation.arr.length-2] ) {
-                equation.arr.pop()
+                equation.arr.pop();
             }
         } else if (previousEntry === ')') {
             areBracketsEnabled = true;
+        }
+
+        if (equation.arr[equation.arr.length-3] === ')' && equation.display.children[equation.arr.length-2].textContent !== equation.arr[equation.arr.length-2]) {
+            console.log('test');
+            equation.arr.pop(); // removes default multiplication sign if inserted automatically between bracket and number
         }
 
         if (equation.arr[equation.arr.length-2] === '^') {
