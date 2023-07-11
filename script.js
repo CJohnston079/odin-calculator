@@ -184,7 +184,11 @@ const update = {
                     equation.display.lastChild.textContent = '';
                 }
                 char = document.createElement('sup');
-                char.textContent = previousEntry;
+                if (previousEntry === Math.PI) {
+                    char.textContent = 3.14;
+                } else {
+                    char.textContent = previousEntry;
+                }
                 char.classList.add('indices');
                 char.classList.add('accented-colour');
                 equation.display.append(char);
