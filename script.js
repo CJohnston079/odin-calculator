@@ -259,14 +259,6 @@ const update = {
     }
 }
 
-const append = {
-    // character: function(char) {
-    //     equation.display.append(char);
-    //     animate.slideX(equation.display, 100);
-    //     animate.fade(equation.display.lastChild, 400, 'normal');
-    // }
-}
-
 const input = {
     operation: function(key) {
         if (isNaN(Number(previousEntry)) === true && previousEntry !== '!' && previousEntry !== ')') {
@@ -323,7 +315,7 @@ const input = {
             clear.equation();
             clear.display();
         }
-        if (isNaN(Number(previousEntry)) === false && equation.arr.length < 0) {
+        if (isNaN(Number(previousEntry)) === false && equation.arr.length > 0) {
             equation.arr.push('*');
         }
         isEquationSolved === true ? clear.equation() : {};
@@ -797,19 +789,7 @@ memoryButtons.memoryRecall.addEventListener('mousedown', () => {
 
 document.addEventListener('keydown', activateKeyboardShortcut)
 
-function enableActiveCell() {
-    cells.forEach(cell => {
-        cell.addEventListener('mouseenter', () => {
-            cell.setAttribute('id', 'active');
-        })
-        cell.addEventListener('mouseleave', () => {
-            cell.removeAttribute('id');
-        })
-    })
-}
-
 function activateKeyboardShortcut(e) {
-    console.log(e.keyCode)
     switch (e.keyCode) {
         case 187:
             if (e.shiftKey === true) {
