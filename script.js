@@ -802,10 +802,17 @@ function activateKeyboardShortcut(e) {
             if (e.shiftKey === true) {
                 input.operation('add');
             } else if (e.ctrlKey === true) {
+                memory.update(equation.arr, '+');
+            } else if (e.altKey === true) {
                 toggle.negativeNum();
             }
             break;
         case 189:
+            if (e.ctrlKey === true) {
+                memory.update(equation.arr, '-');
+            } else {
+                input.operation('subtract');
+            }
             input.operation('subtract');
             break;
         case 191:
@@ -818,7 +825,11 @@ function activateKeyboardShortcut(e) {
             clear.all();
             break;
         case 8:
-            clear.character();
+            if (e.ctrlKey === true) {
+                memory.clear();
+            } else {
+                clear.character();
+            }
             break;
         case 49:
             if (e.shiftKey !== true) {
@@ -888,6 +899,11 @@ function activateKeyboardShortcut(e) {
         case 82:
             if (e.ctrlKey === true) {
                 input.root();
+            } 
+            break;
+        case 77:
+            if (e.ctrlKey === true) {
+                memory.recall();
             } 
             break;
     }
