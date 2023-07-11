@@ -79,6 +79,7 @@ const round = {
             arr.shift()
             arr[0] *= -1;
         }
+        return arr;
     }
 }
 
@@ -410,10 +411,10 @@ const toggle = {
     
         if (areBracketsEnabled === false) {
             areBracketsEnabled = true;
-            update.equation.arr('(');
             if (isNaN(previousEntry) === false) {
                 equation.arr.push('*'); // multiply brackets with adjacent numbers if no operation is specified
             }
+            update.equation.arr('(');
         } else {
             areBracketsEnabled = false;
             update.equation.arr(')');
@@ -666,6 +667,8 @@ const clear = {
         areBracketsEnabled = false;
     },
     character: function() {
+        if (equation.arr.length < 1) return;
+
         isEquationSolved === true ? isEquationSolved = false : {};
         if (equation.arr.length < 1 && equation.display.lastChild.classList.contains('negative-num')) {
             inputNegativeNum = false;
@@ -689,9 +692,9 @@ const clear = {
     
         if (previousEntry === '(') {
             areBracketsEnabled = false;
-            // if (equationStr[equationStr.length-2] !== equation.arr[equation.arr.length-2] ) {
-            //     equation.arr.pop()
-            // }
+            if (equation.display.children[equation.arr.length-2].textContent !== equation.arr[equation.arr.length-2] ) {
+                equation.arr.pop()
+            }
         } else if (previousEntry === ')') {
             areBracketsEnabled = true;
         }
