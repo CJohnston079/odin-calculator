@@ -781,3 +781,84 @@ memoryButtons.memorySubtract.addEventListener('mousedown', () => {
 memoryButtons.memoryRecall.addEventListener('mousedown', () => {
     memory.recall(equation.arr);
 });
+
+document.addEventListener('keydown', activateKeyboardShortcut)
+
+function enableActiveCell() {
+    cells.forEach(cell => {
+        cell.addEventListener('mouseenter', () => {
+            cell.setAttribute('id', 'active');
+        })
+        cell.addEventListener('mouseleave', () => {
+            cell.removeAttribute('id');
+        })
+    })
+}
+
+function activateKeyboardShortcut(e) {
+    console.log(e.keyCode)
+    switch (e.keyCode) {
+        case 187:
+            if (e.shiftKey === true) {
+                input.operation('add');
+            } else if (e.ctrlKey === true) {
+                toggle.negativeNum();
+            }
+            break;
+        case 189:
+            input.operation('subtract');
+            break;
+        case 56:
+            if (e.shiftKey === true) {
+                input.operation('multiply');
+            } else {
+                input.number(8)
+            }
+            break;
+        case 191:
+            input.operation('divide');
+            break;
+        case 13:
+            resolve.equation();
+            break;
+        case 27:
+            clear.all();
+            break;
+        case 8:
+            clear.character();
+            break;
+        case 49:
+            input.number(1)
+            break;
+        case 50:
+            input.number(2)
+            break;
+        case 51:
+            input.number(3)
+            break;
+        case 52:
+            input.number(4)
+            break;
+        case 53:
+            input.number(5)
+            break;
+        case 54:
+            input.number(6)
+            break;
+        case 55:
+            input.number(7)
+            break;
+        case 57:
+            input.number(9)
+            break;
+        case 48:
+            input.number(0)
+            break;
+        case 190:
+            input.floatingPoint();
+            break;
+        case 193:
+            toggle.negativeNum();
+            break;
+    }
+}
