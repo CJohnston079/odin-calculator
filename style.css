@@ -330,8 +330,12 @@ footer ul {
     display: inline-flex;
     justify-content: center;
     content: '-';
-    animation: grow-margin 200ms linear, fade 400ms linear;
+    animation: fade 400ms linear;
     overflow: hidden;
+}
+
+.grow-margin {
+    animation: grow-margin 200ms linear;
 }
 
 .shrink-margin {

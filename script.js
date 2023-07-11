@@ -167,7 +167,6 @@ const update = {
                 animate.slideX(equation.display, 100);
                 // animate.fade(equation.display.lastChild, 400, 'normal');
                 inputNegativeNum = false;
-                console.log('test')
                 return;
             }
 
@@ -345,15 +344,15 @@ const input = {
             character = document.createElement('sup');
             character.classList.add('indices');
             character.classList.add('accented-colour');
-            // animate.colourChange(equation.display.lastChild, 2000, 'var(--cl-grey)', 'var(--cl-accent)');
+        } else {
+            animate.slideX(equation.display, 100);
         }
-
+        
         character.textContent = '';
         character.classList.add('character');
         character.classList.add('negative-num');
 
         equation.display.append(character);
-        animate.slideX(equation.display, 100);
         animate.fade(equation.display.lastChild, 400, 'normal');
 
         return;
@@ -376,8 +375,11 @@ const toggle = {
 
                 if (equation.arr[i] > 0) {
                     equation.display.children[i].classList.add('shrink-margin');
+                    equation.display.children[i].classList.remove('grow-margin');
+                    
                 } else {
                     equation.display.children[i].classList.remove('shrink-margin');
+                    equation.display.children[i].classList.add('grow-margin');
                 }
                 
                 break;
