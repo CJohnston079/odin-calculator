@@ -696,7 +696,7 @@ const clear = {
     
         if (previousEntry === '(') {
             areBracketsEnabled = false;
-            if (equation.display.children[equation.arr.length-2].textContent !== equation.arr[equation.arr.length-2] ) {
+            if (equation.arr.length > 1 && equation.display.children[equation.arr.length-2].textContent !== equation.arr[equation.arr.length-2] ) {
                 equation.arr.pop();
             }
         } else if (previousEntry === ')') {
@@ -719,9 +719,18 @@ const clear = {
 
         equation.arr.pop();
         update.previousEntry();
+        animate.fade(equation.display.lastChild, 200, 'reverse')
 
-        animate.slideX(equation.display, 100, 'right');
-        equation.display.lastChild.remove();
+        if (equation.arr.length < 1) {
+            setTimeout(() => {
+                equation.display.lastChild.remove();
+            }, 200);
+        } else {
+            setTimeout(() => {
+                equation.display.lastChild.remove();
+                animate.slideX(equation.display, 100, 'right');
+            }, 100);
+        }
     },
     all: function() {
         clear.variables();
