@@ -249,6 +249,14 @@ const update = {
     }
 }
 
+const append = {
+    // character: function(char) {
+    //     equation.display.append(char);
+    //     animate.slideX(equation.display, 100);
+    //     animate.fade(equation.display.lastChild, 400, 'normal');
+    // }
+}
+
 const input = {
     operation: function(key) {
         if (isNaN(Number(previousEntry)) === true && previousEntry !== '!' && previousEntry !== ')') {
@@ -282,13 +290,13 @@ const input = {
         update.equation.display();
     },
     factorial: function() {
-        if (isNegativeNum === true || isFloatingPointNum === true) return;
+        if (isNegativeNum === true || isFloatingPointNum === true || areIndicesToggled === true) return;
         if (isNaN(Number(previousEntry)) && isFactorialNum === false) return;
         isFactorialNum = true;
         update.equation.arr('!')
     },
     percentage: function() {
-        if (isNaN(previousEntry)) return;
+        if (isNaN(previousEntry) || areIndicesToggled === true) return;
         update.equation.arr('%')
     },
     exponent: function() {
@@ -300,7 +308,7 @@ const input = {
         update.equation.arr('^');
     },
     root: function() {
-        if (previousEntry === 'R') return;
+        if (previousEntry === 'R' || areIndicesToggled === true) return;
         if (isEquationSolved === true) {
             clear.equation();
             clear.display();
@@ -368,7 +376,7 @@ const toggle = {
     },
     brackets() {
         if (areBracketsEnabled === true && previousEntry === '(') return;
-        if (previousEntry === '.') return;
+        if (previousEntry === '.' || areIndicesToggled === true) return;
     
         if (inputNegativeNum === true) {
             inputNegativeNum = false;
@@ -449,12 +457,13 @@ const resolve = {
         const inoperableChars = ['+', '-', '*', '/', '^', 'R'];
         if (isNaN(Number(previousEntry)) === true && inoperableChars.includes(previousEntry)) return
         
+        areIndicesToggled === true ? areIndicesToggled = false : {};
         areBracketsEnabled === true ? input.closedBracket() : {};
         equation.arr.includes('(') ? resolve.brackets() : {};
         equation.arr = convert.arrToEquation(equation.arr);
 
         calculate.expressions(equation.arr);
-    
+
         isEquationSolved = true;
 
         equation.arr = convert.numToDigits(equation.arr);
@@ -573,15 +582,15 @@ const memory = {
         return;
     },
     update: function(arr, operation) {
-        let test = []
+        let memValue = []
 
         for (let i = arr.length-1; i >= 0; i--) {
             if (isNaN(Number(arr[i])) && arr[i] !== '.') break;
-            test.unshift(arr[i]);
+            memValue.unshift(arr[i]);
         }
 
-        operation === '+' ? memory.value += Number(test.join('')) :
-        memory.value -= Number(test.join(''));
+        operation === '+' ? memory.value += Number(memValue.join('')) :
+        memory.value -= Number(memValue.join(''));
 
         console.log(`Stored memory: ${memory.value}`);
         return;
@@ -632,6 +641,7 @@ const clear = {
         areBracketsEnabled = false;
     },
     character: function() {
+        isEquationSolved === true ? isEquationSolved = false : {};
         if (equation.arr.length < 1 && equation.display.lastChild.classList.contains('negative-num')) {
             inputNegativeNum = false;
             animate.fade(equation.display, 200, 'reverse');
