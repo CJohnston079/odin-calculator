@@ -167,7 +167,8 @@ const update = {
                 animate.slideX(equation.display, 100);
                 // animate.fade(equation.display.lastChild, 400, 'normal');
                 inputNegativeNum = false;
-                if (areIndicesToggled === false) return;
+                console.log('test')
+                return;
             }
 
             let char = document.createElement('span');
@@ -336,9 +337,21 @@ const input = {
         isNegativeNum = true;
         
         let character = document.createElement('span');
-        character.classList.add('character');
+
+        if (areIndicesToggled === true) {
+            if (equation.arr[equation.arr.length-1] === '^') {
+                equation.display.lastChild.textContent = '';
+            }
+            character = document.createElement('sup');
+            character.classList.add('indices');
+            character.classList.add('accented-colour');
+            // animate.colourChange(equation.display.lastChild, 2000, 'var(--cl-grey)', 'var(--cl-accent)');
+        }
+
         character.textContent = '';
+        character.classList.add('character');
         character.classList.add('negative-num');
+
         equation.display.append(character);
         animate.slideX(equation.display, 100);
         animate.fade(equation.display.lastChild, 400, 'normal');
