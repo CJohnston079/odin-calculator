@@ -73,7 +73,12 @@ const round = {
     arr: function(arr) {
         let num = Number(convert.arrToStr(arr));
         num = Math.round(num*decimalPlaces)/decimalPlaces;
-        return convert.strToArr(num.toString());
+        arr = convert.strToArr(num.toString());
+        if (arr[0] === '-') {
+            console.log(arr)
+            arr.shift()
+            arr[0] *= -1;
+        }
     }
 }
 
@@ -426,10 +431,15 @@ const convert = {
         const str = arr[0].toString();
       
         for (let i = 0; i < str.length; i++) {
-            str[i] === '.' ? extractedDigits.push(str[i]) :
-            extractedDigits.push(Number(str[i]));
+            if (str[i] === '.') {
+                extractedDigits.push(str[i])
+            } else if (str[i] === '-' ) {
+                extractedDigits.push(str[i+1] * -1);
+                i++;
+            } else {
+                extractedDigits.push(Number(str[i]));
+            }
         }
-      
         return extractedDigits;  
     },
     arrToStr: function(arr) {
