@@ -808,13 +808,6 @@ function activateKeyboardShortcut(e) {
         case 189:
             input.operation('subtract');
             break;
-        case 56:
-            if (e.shiftKey === true) {
-                input.operation('multiply');
-            } else {
-                input.number(8)
-            }
-            break;
         case 191:
             input.operation('divide');
             break;
@@ -828,37 +821,74 @@ function activateKeyboardShortcut(e) {
             clear.character();
             break;
         case 49:
-            input.number(1)
+            if (e.shiftKey !== true) {
+                input.number(1);
+            } else {
+                input.factorial();
+            }
             break;
         case 50:
-            input.number(2)
+            input.number(2);
             break;
         case 51:
-            input.number(3)
+            input.number(3);
             break;
         case 52:
-            input.number(4)
+            input.number(4);
             break;
         case 53:
-            input.number(5)
+            if (e.shiftKey !== true) {
+                input.number(5);
+            } else {
+                input.percentage();
+            }
             break;
         case 54:
-            input.number(6)
+            if (e.shiftKey !== true) {
+                input.number(6);
+            } else {
+                input.exponent();
+            }
             break;
         case 55:
-            input.number(7)
+            input.number(7);
+            break;
+        case 56:
+            if (e.shiftKey !== true) {
+                input.number(8);
+            } else {
+                input.operation('multiply');
+            }
             break;
         case 57:
-            input.number(9)
+            if (e.shiftKey !== true) {
+                input.number(0);
+            } else if (areBracketsEnabled === false) {
+                toggle.brackets();
+            }
             break;
         case 48:
-            input.number(0)
+            if (e.shiftKey !== true) {
+                input.number(0);
+            } else if (areBracketsEnabled === true) {
+                toggle.brackets();
+            }
             break;
         case 190:
             input.floatingPoint();
             break;
         case 193:
             toggle.negativeNum();
+            break;
+        case 80:
+            if (e.ctrlKey === true) {
+                input.pi();
+            } 
+            break;
+        case 82:
+            if (e.ctrlKey === true) {
+                input.root();
+            } 
             break;
     }
 }
