@@ -296,6 +296,17 @@ footer ul {
     letter-spacing: -0.2rem;
 }
 
+
+#exponent {
+    transform: translate(0.4rem, -0.0rem);
+}
+
+#exponent::after {
+    content: 'y';
+    font-size: 1rem;
+    transform: translate(0.0rem, -0.5rem);
+}
+
 .multiply {
     rotate: 45deg;
 }
