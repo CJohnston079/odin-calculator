@@ -138,6 +138,7 @@ const show = {
 const append = {
     equationToHistory: function() {
         history.display.prepend(history.arr[0]);
+        history.display.children.length > 4 ? history.display.lastElementChild.remove() : {};
     }
 }
 
@@ -510,6 +511,7 @@ const resolve = {
         equation.arr = convert.numToDigits(equation.arr);
         equation.arr = round.arr(equation.arr);
 
+        append.equationToHistory();
         update.equation.display();
     },
     brackets: function() {
@@ -791,10 +793,7 @@ functionButtons.percentage.addEventListener('mousedown', input.percentage);
 functionButtons.exponent.addEventListener('mousedown', input.exponent);
 functionButtons.root.addEventListener('mousedown', input.root);
 
-functionButtons.equals.addEventListener('mousedown', () => {
-    resolve.equation(),
-    append.equation();
-});
+functionButtons.equals.addEventListener('mousedown', resolve.equation);
 functionButtons.clear.addEventListener('mousedown', clear.character);
 functionButtons.allClear.addEventListener('mousedown', clear.all);
 
