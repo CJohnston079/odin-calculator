@@ -658,8 +658,8 @@ const clear = {
         return equation.arr;
     },
     equationHistory: function() {
-        history = [];
-        return history;
+        equation.history = [];
+        return equation.history;
     },
     display: function() {
         equation.display.textContent = '';
