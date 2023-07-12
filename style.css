@@ -194,24 +194,33 @@ footer ul {
 #calculation {
     align-self: flex-end;
     min-height: 4rem;
-    font-size: 3rem;
     padding-bottom: 1rem !important;
+    font-size: 3rem;
 }
 
 #history {
-    margin: 0.5rem;
+    display: flex;
+    flex-direction: column-reverse;
     align-self: flex-end;
     font-size: 1.5rem;
-    line-height: 2.5rem;
+    line-height: 1.5rem;
     color: var(--cl-medium);
 }
 
-#history p:first-child {
-    opacity: 0.4;
+#history p {
+    transition: opacity 500ms;
 }
 
-#history p:nth-last-child(2) {
-    opacity: 0.7;
+#history p:nth-child(2) {
+    opacity: 0.8;
+}
+
+#history p:nth-child(3) {
+    opacity: 0.5;
+}
+
+#history p:nth-child(4) {
+    opacity: 0.2;
 }
 
 #function-panel {
