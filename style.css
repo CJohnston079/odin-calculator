@@ -193,8 +193,24 @@ footer ul {
 
 #calculation {
     align-self: flex-end;
+    min-height: 4rem;
     font-size: 3rem;
     padding-bottom: 1rem !important;
+}
+
+#history {
+    align-self: flex-end;
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+    color: var(--cl-medium);
+}
+
+#history p:first-child {
+    opacity: 0.4;
+}
+
+#history p:nth-last-child(2) {
+    opacity: 0.7;
 }
 
 #function-panel {
