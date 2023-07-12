@@ -199,6 +199,7 @@ footer ul {
 }
 
 #history {
+    margin: 0.5rem;
     align-self: flex-end;
     font-size: 1.5rem;
     line-height: 2.5rem;
