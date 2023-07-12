@@ -139,6 +139,19 @@ const append = {
     equationToHistory: function() {
         history.display.prepend(history.arr[0]);
         history.display.children.length > 4 ? history.display.lastElementChild.remove() : {};
+    },
+    solutionToHistory: function() {
+        let equals = document.createElement('span');
+        equals.classList.add('character');
+        equals.classList.add('accented-colour');
+        equals.classList.add('extra-padding');
+        equals.textContent = ('=');
+        history.arr[0].append(equals);
+
+        let solution = document.createElement('span');
+        solution.classList.add('character');
+        solution.textContent = equation.arr[0];
+        history.arr[0].append(solution);
     }
 }
 
@@ -505,12 +518,13 @@ const resolve = {
         equation.arr = convert.arrToEquation(equation.arr);
 
         calculate.expressions(equation.arr);
+        append.solutionToHistory();
 
         isEquationSolved = true;
 
         equation.arr = convert.numToDigits(equation.arr);
         equation.arr = round.arr(equation.arr);
-
+        
         append.equationToHistory();
         update.equation.display();
     },
