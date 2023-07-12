@@ -378,7 +378,7 @@ const input = {
         input.number(['.']);
     },
     negativeSign: function() {
-        if (inputNegativeNum === true || previousEntry === 'R') return;
+        if (inputNegativeNum === true || previousEntry === 'R' || previousEntry == '.') return;
     
         inputNegativeNum = true;
         isNegativeNum = true;
@@ -693,6 +693,7 @@ const memory = {
 const clear = {
     equation: function() {
         equation.arr = [];
+        isFloatingPointNum = false;
         return equation.arr;
     },
     equationHistory: function() {
@@ -852,7 +853,6 @@ memoryButtons.memoryRecall.addEventListener('mousedown', () => {
 document.addEventListener('keydown', activateKeyboardShortcut)
 
 function activateKeyboardShortcut(e) {
-    console.log(e.keyCode)
     switch (e.keyCode) {
         case 187:
             if (e.shiftKey === true) {
