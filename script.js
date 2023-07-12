@@ -1,10 +1,12 @@
 const equation = {
     display: document.querySelector('#calculation'),
-    arr: [],
-    history: []
+    arr: []
 }
 
-const history = document.querySelector('#history');
+const history = {
+    display: document.querySelector('#history'),
+    arr: []
+}
 
 const functionButtonElements = document.querySelector('#function-panel').querySelectorAll('.button');
 const numberButtonElements = document.querySelector('#numpad').querySelectorAll('.button');
@@ -134,17 +136,15 @@ const show = {
 }
 
 const append = {
-    equation: function() {
-        for (let i = 0; i < equation.display.children.length; i++) {
-            let solvedEquation = equation.display.children[i].cloneNode(true);
-            history.lastElementChild.append(solvedEquation);
-        }
+    equationToHistory: function() {
+        history.display.prepend(history.arr[0]);
     }
 }
 
 const update = {
     previousEntry: function() {
         console.log(equation.arr);
+        equation.arr.length > 10 ? clear.equationHistory() : {};
         return previousEntry = equation.arr[equation.arr.length-1];
     },
     theme: function(themeIndex) {
@@ -153,6 +153,17 @@ const update = {
             document.documentElement.style.transition = '2000ms';
         }, 100);
         return;
+    },
+    history: {
+        arr: function() {
+            let newEquation = document.createElement('p');
+            for (let i = 0; i < equation.display.children.length; i++) {
+                let character = equation.display.children[i].cloneNode(true);
+                newEquation.appendChild(character);
+            }
+            history.arr.unshift(newEquation);
+            history.arr.length > 4 ? history.arr.pop() : {};
+        }
     },
     equation: {
         arr: function(character) {
@@ -166,11 +177,6 @@ const update = {
             }
             update.previousEntry();
             update.equation.display();
-        },
-        history: function() {
-            equation.history.push(equation.display.textContent)
-            history.length > 3 ? history.pop() : {};
-            return history;
         },
         display: function() {
             if (isEquationSolved === true) {
@@ -489,6 +495,8 @@ const resolve = {
 
         const inoperableChars = ['+', '-', '*', '/', '^', 'R'];
         if (isNaN(Number(previousEntry)) === true && inoperableChars.includes(previousEntry)) return
+
+        update.history.arr();
         
         areIndicesToggled === true ? areIndicesToggled = false : {};
         areBracketsEnabled === true ? input.closedBracket() : {};
@@ -503,7 +511,6 @@ const resolve = {
         equation.arr = round.arr(equation.arr);
 
         update.equation.display();
-        update.equation.history();
     },
     brackets: function() {
         let slicePosition = 0;
@@ -658,8 +665,9 @@ const clear = {
         return equation.arr;
     },
     equationHistory: function() {
-        equation.history = [];
-        return equation.history;
+        history.arr = [];
+        history.display.textContent = '';
+        return;
     },
     display: function() {
         equation.display.textContent = '';
@@ -783,7 +791,10 @@ functionButtons.percentage.addEventListener('mousedown', input.percentage);
 functionButtons.exponent.addEventListener('mousedown', input.exponent);
 functionButtons.root.addEventListener('mousedown', input.root);
 
-functionButtons.equals.addEventListener('mousedown', resolve.equation);
+functionButtons.equals.addEventListener('mousedown', () => {
+    resolve.equation(),
+    append.equation();
+});
 functionButtons.clear.addEventListener('mousedown', clear.character);
 functionButtons.allClear.addEventListener('mousedown', clear.all);
 
@@ -824,6 +835,7 @@ function activateKeyboardShortcut(e) {
             break;
         case 13:
             resolve.equation();
+            append.equationToHistory();
             break;
         case 27:
             clear.all();
@@ -877,7 +889,7 @@ function activateKeyboardShortcut(e) {
             break;
         case 57:
             if (e.shiftKey !== true) {
-                input.number(0);
+                input.number(9);
             } else if (areBracketsEnabled === false) {
                 toggle.brackets();
             }
