@@ -183,6 +183,13 @@ footer ul {
     overflow: hidden;
 }
 
+#status-bar {
+    position: absolute;
+    top: 0;
+    display: flex;
+    text-transform: uppercase;
+}
+
 #screen p {
     align-self: flex-end;
     margin: 0.5rem;
@@ -289,7 +296,8 @@ footer ul {
     transition: box-shadow 100ms, transform 100ms;
 }
 
-.operation:active {
+.operation:active, 
+.operation:focus {
     transform: translate(0.0rem, 0.0rem);
     box-shadow: 0.0rem 0.0rem 0 var(--foreground);
 }
@@ -307,13 +315,15 @@ footer ul {
     transition: border 800ms;
 }
 
-.number:hover{
+.number:hover {
     border: solid 0.1rem var(--foreground);
     transition: border 200ms;
 }
 
 .number:active,
-.operation:active {
+.operation:active,
+.number:focus,
+.operation:focus {
     background-color: var(--foreground);
     color: var(--background);
 }
@@ -407,4 +417,11 @@ footer ul {
 @keyframes shrink-margin {
     0% { margin-left: 0.85rem; }
     100% { margin-left: 0rem; }
+}
+
+@keyframes highlight {
+    0% {
+        background-color: var(--foreground);
+        color: var(--background);
+    }
 }

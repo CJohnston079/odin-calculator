@@ -123,6 +123,13 @@ const animate = {
         setTimeout(() => {
             element.style.animation = '';
         }, duration);
+    },
+    highlight: function(element, duration) {
+        element.style.animation = '';
+        element.style.animation = `highlight ${duration}ms`;
+        setTimeout(() => {
+            element.style.animation = '';
+        }, duration); 
     }
 }
 
@@ -845,113 +852,139 @@ memoryButtons.memoryRecall.addEventListener('mousedown', () => {
 document.addEventListener('keydown', activateKeyboardShortcut)
 
 function activateKeyboardShortcut(e) {
+    console.log(e.keyCode)
     switch (e.keyCode) {
         case 187:
             if (e.shiftKey === true) {
                 input.operation('add');
+                animate.highlight(operationButtons['add'].element, 500);
             } else if (e.ctrlKey === true) {
                 memory.update(equation.arr, '+');
+                animate.highlight(memoryButtons.memoryAdd, 500);
             } else if (e.altKey === true) {
                 toggle.negativeNum();
+                animate.highlight(numberButtons['±'].element, 500);
             }
             break;
         case 189:
             if (e.ctrlKey === true) {
                 memory.update(equation.arr, '-');
+                animate.highlight(memoryButtons.memorySubtract, 500);
             } else {
                 input.operation('subtract');
+                animate.highlight(operationButtons['subtract'].element, 500);
             }
-            input.operation('subtract');
             break;
         case 191:
             input.operation('divide');
+            animate.highlight(operationButtons['divide'].element, 500);
             break;
         case 13:
             resolve.equation();
+            animate.highlight(functionButtons.equals, 500);
             break;
         case 27:
             clear.all();
+            animate.highlight(functionButtons.allClear, 500);
             break;
         case 8:
             if (e.ctrlKey === true) {
                 memory.clear();
+                animate.highlight(memoryButtons.memoryClear, 500);
             } else {
                 clear.character();
+                animate.highlight(functionButtons.clear, 500);
             }
             break;
         case 49:
             if (e.shiftKey !== true) {
                 input.number(1);
+                animate.highlight(numberButtons[1].element, 500);
             } else {
                 input.factorial();
+                animate.highlight(functionButtons.factorial, 500);
             }
             break;
         case 50:
             input.number(2);
+            animate.highlight(numberButtons[2].element, 500);
             break;
         case 51:
             input.number(3);
+            animate.highlight(numberButtons[3].element, 500);
             break;
         case 52:
             input.number(4);
+            animate.highlight(numberButtons[4].element, 500);
             break;
         case 53:
             if (e.shiftKey !== true) {
                 input.number(5);
+                animate.highlight(numberButtons[5].element, 500);
             } else {
                 input.percentage();
+                animate.highlight(functionButtons.percentage, 500);
             }
             break;
         case 54:
             if (e.shiftKey !== true) {
                 input.number(6);
+                animate.highlight(numberButtons[6].element, 500);
             } else {
                 input.exponent();
+                animate.highlight(functionButtons.exponent, 500);
             }
             break;
         case 55:
             input.number(7);
+            animate.highlight(numberButtons[7].element, 500);
             break;
         case 56:
             if (e.shiftKey !== true) {
                 input.number(8);
+                animate.highlight(numberButtons[8].element, 500);
             } else {
                 input.operation('multiply');
+                animate.highlight(operationButtons['multiply'].element, 500);
             }
             break;
         case 57:
             if (e.shiftKey !== true) {
                 input.number(9);
+                animate.highlight(numberButtons[9].element, 500);
             } else if (areBracketsEnabled === false) {
                 toggle.brackets();
+                animate.highlight(functionButtons.brackets, 500);
             }
             break;
         case 48:
             if (e.shiftKey !== true) {
                 input.number(0);
+                animate.highlight(numberButtons[0].element, 500);
             } else if (areBracketsEnabled === true) {
                 toggle.brackets();
             }
             break;
         case 190:
             input.floatingPoint();
-            break;
-        case 193:
-            toggle.negativeNum();
+            animate.highlight(numberButtons['.'].element, 500);
             break;
         case 80:
             if (e.ctrlKey === true) {
                 input.pi();
+                animate.highlight(functionButtons.pi, 500);
             } 
             break;
         case 82:
             if (e.ctrlKey === true) {
                 input.root();
+                animate.highlight(functionButtons.root, 500);
             } 
             break;
         case 77:
             if (e.ctrlKey === true) {
                 memory.recall();
+                animate.highlight(memoryButtons.recall, 500);
             } 
             break;
     }
