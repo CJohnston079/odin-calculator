@@ -158,7 +158,7 @@ const append = {
 
         let solution = document.createElement('span');
         solution.classList.add('character');
-        solution.textContent = equation.arr[0];
+        solution.textContent = convert.arrToEquation(equation.arr);
         history.arr[0].append(solution);
     }
 }
@@ -526,13 +526,13 @@ const resolve = {
         equation.arr = convert.arrToEquation(equation.arr);
 
         calculate.expressions(equation.arr);
-        append.solutionToHistory();
-
+        
         isEquationSolved = true;
-
+        
         equation.arr = convert.numToDigits(equation.arr);
         equation.arr = round.arr(equation.arr);
         
+        append.solutionToHistory();
         append.equationToHistory();
         update.equation.display();
     },
