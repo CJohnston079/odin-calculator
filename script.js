@@ -690,7 +690,19 @@ const clear = {
     },
     equationHistory: function() {
         history.arr = [];
-        history.display.textContent = '';
+        for (let i = history.display.children.length-1; i >= 0; i--) {
+            setTimeout(() => {
+                history.display.children[i].style.animation = '';
+                animate.fade(history.display.children[i], 200, 'reverse');
+                setTimeout(() => {
+                    history.display.children[i].style.opacity = 0;
+                }, 200)
+                console.log(i*200)
+            }, (i+1)*200)
+        }
+        setTimeout(() => {
+            history.display.textContent = '';
+        }, 1100);
         return;
     },
     display: function() {
@@ -856,7 +868,6 @@ function activateKeyboardShortcut(e) {
             break;
         case 13:
             resolve.equation();
-            append.equationToHistory();
             break;
         case 27:
             clear.all();
