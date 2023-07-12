@@ -103,6 +103,12 @@ const animate = {
             element.style.animation = '';
         }, duration);
     },
+    slideY: function(element, duration) {
+        element.style.animation = `slide-up ${duration}ms linear`;
+        setTimeout(() => {
+            element.style.animation = '';
+        }, duration);
+    },
     colourChange: function(element, duration, firstColour, secondColour) {
         root.style.setProperty('--first-colour', `${firstColour}`);
         root.style.setProperty('--second-colour', `${secondColour}`);
@@ -139,6 +145,8 @@ const append = {
     equationToHistory: function() {
         history.display.prepend(history.arr[0]);
         history.display.children.length > 4 ? history.display.lastElementChild.remove() : {};
+        animate.slideY(history.display, 200)
+        animate.fade(history.display.firstChild, 1000, 'normal');
     },
     solutionToHistory: function() {
         let equals = document.createElement('span');
