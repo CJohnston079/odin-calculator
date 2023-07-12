@@ -4,6 +4,8 @@ const equation = {
     history: []
 }
 
+const history = document.querySelector('#history');
+
 const functionButtonElements = document.querySelector('#function-panel').querySelectorAll('.button');
 const numberButtonElements = document.querySelector('#numpad').querySelectorAll('.button');
 const operationButtonElements = document.querySelectorAll('.operation');
@@ -128,6 +130,15 @@ const show = {
 
         animate.colourChange(equation.display, 2000, 'var(--cl-theme)', 'var(--foreground)');
         console.log(arr);
+    }
+}
+
+const append = {
+    equation: function() {
+        for (let i = 0; i < equation.display.children.length; i++) {
+            let solvedEquation = equation.display.children[i].cloneNode(true);
+            history.lastElementChild.append(solvedEquation);
+        }
     }
 }
 
