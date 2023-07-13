@@ -173,10 +173,11 @@ const append = {
         equals.classList.add('extra-padding');
         equals.textContent = ('=');
         history.arr[0].append(equals);
-
+        
         let solution = document.createElement('span');
         solution.classList.add('character');
-        solution.textContent = convert.arrToEquation(equation.arr);
+
+        showErrorMessage === true ? solution.textContent = 'Error': solution.textContent = convert.arrToEquation(equation.arr);
         history.arr[0].append(solution);
     }
 }
@@ -732,7 +733,6 @@ const clear = {
                 setTimeout(() => {
                     history.display.children[i].style.opacity = 0;
                 }, 200)
-                console.log(i*200)
             }, (i+1)*200)
         }
         setTimeout(() => {
@@ -823,6 +823,7 @@ const clear = {
     all: function() {
         clear.variables();
         clear.equation();
+        clear.errors();
         clear.equationHistory();
         equation.display.style.animation = 'fade 200ms reverse';
         setTimeout(clear.display, 200)
