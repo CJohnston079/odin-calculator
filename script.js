@@ -67,6 +67,8 @@ let inputNegativeNum = false;
 let toggleNegativeBrackets = false;
 let areBracketsEnabled = false;
 let areIndicesToggled = false;
+let showErrorMessage = false;
+let errorMessage = `Error`
 
 
 const round = {
@@ -138,13 +140,17 @@ const show = {
         for (let i = 0; i < arr.length; i++) {
             let character = document.createElement('span');
             character.classList.add('character');
-            character.textContent = (arr[i])
-
+            character.textContent = (arr[i]);
             equation.display.append(character);
         }
-
         animate.colourChange(equation.display, 2000, 'var(--cl-theme)', 'var(--foreground)');
+
+        showErrorMessage === true ? show.errorMessage() :
         console.log(arr);
+    },
+    errorMessage: function() {
+        equation.display.textContent = errorMessage;
+        console.error(errorMessage);
     }
 }
 
@@ -533,7 +539,10 @@ const resolve = {
         equation.arr = convert.arrToEquation(equation.arr);
 
         calculate.expressions(equation.arr);
-        
+
+        console.log(equation.arr)
+
+        isNaN(equation.arr) ? showErrorMessage = true : {};
         isEquationSolved = true;
         
         equation.arr = convert.numToDigits(equation.arr);
@@ -614,6 +623,10 @@ const calculate = {
     operations: function(arr, operation) {
         for (let i = 0; i < arr.length; i++) {
             if (arr[i] !== operation) continue;
+
+            if (operation === '/' && arr[i+1] === 0) {
+                arr.splice(i - 1, 3, NaN);
+            }
 
             arr.splice(i - 1, 3, operate[operation](arr[i - 1], arr[i + 1]));
             i--;
