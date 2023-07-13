@@ -197,11 +197,11 @@ footer ul {
     background-color: var(--cl-accent);
     color: var(--background);
     font-size: 1.5rem;
-    opacity: 0.6;
+    opacity: 0;
     transition: background-color 2000ms, opacity 500ms;
 }
 
-.memory:hover {
+.memory-visible {
     opacity: 0.6;
 }
 
