@@ -68,7 +68,8 @@ let toggleNegativeBrackets = false;
 let areBracketsEnabled = false;
 let areIndicesToggled = false;
 let showErrorMessage = false;
-let errorMessage = `Error`
+let errorMessage = `Error: number too large`
+let numOfErrors = 0;
 
 
 const round = {
@@ -149,7 +150,11 @@ const show = {
         console.log(arr);
     },
     errorMessage: function() {
+        if (numOfErrors > 1) {
+            errorMessage = 'Error: multiple errors'
+        }
         equation.display.textContent = errorMessage;
+        equation.display.classList.add('error');
         console.error(errorMessage);
     }
 }
@@ -542,7 +547,9 @@ const resolve = {
 
         console.log(equation.arr)
 
-        isNaN(equation.arr) ? showErrorMessage = true : {};
+        if (isNaN(equation.arr) || equation.arr[0] === Infinity) {
+            showErrorMessage = true;
+        }
         isEquationSolved = true;
         
         equation.arr = convert.numToDigits(equation.arr);
@@ -604,6 +611,10 @@ const calculate = {
     root: function(arr) {
         for (let i = 0; i < arr.length; i++) {
             if (arr[i] !== 'R') continue;
+            if (arr[i+1] < 0) {
+                errorMessage = 'Error: imaginary number'
+                numOfErrors++;
+            }
             arr.splice(i, 2, operate['R'](arr[i+1]));
             i--;
         }
@@ -626,6 +637,8 @@ const calculate = {
 
             if (operation === '/' && arr[i+1] === 0) {
                 arr.splice(i - 1, 3, NaN);
+                errorMessage = 'Error: cannot divide by 0'
+                numOfErrors++;
             }
 
             arr.splice(i - 1, 3, operate[operation](arr[i - 1], arr[i + 1]));
