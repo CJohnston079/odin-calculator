@@ -389,6 +389,12 @@ footer ul {
     animation: shrink-margin 100ms linear;
 }
 
+.error {
+    display: flex;
+    align-items: flex-end;
+    font-size: 1.5rem !important;
+}
+
 @keyframes slide-from-right {
     0% { transform: var(--offset-width); }
     100% { transform: translateX(0); }

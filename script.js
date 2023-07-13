@@ -333,6 +333,7 @@ const input = {
     number: function(key) {
         if (isEquationSolved === true) {
             clear.equation();
+            clear.errors();
             clear.display();
         }
         if (previousEntry === ')' && equation.arr.length > 0) {
@@ -741,6 +742,12 @@ const clear = {
     },
     display: function() {
         equation.display.textContent = '';
+    },
+    errors: function() {
+        errorMessage = 'Error: number too large';
+        showErrorMessage = false;
+        numOfErrors = 0;
+        equation.display.classList.remove('error');
     },
     variables: function() {
         isEquationSolved = false;
