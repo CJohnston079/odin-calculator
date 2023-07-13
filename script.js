@@ -12,6 +12,7 @@ const functionButtonElements = document.querySelector('#function-panel').querySe
 const numberButtonElements = document.querySelector('#numpad').querySelectorAll('.button');
 const operationButtonElements = document.querySelectorAll('.operation');
 
+const memoryDisplay = document.querySelector('#status-bar').firstElementChild
 const themeSwatches = document.querySelectorAll('.theme');
 const root = document.querySelector(':root');
 
@@ -59,6 +60,7 @@ const operationButtons = {
 
 let previousEntry;
 let decimalPlaces = 10 ** 9;
+let isMemoryStored = false;
 let isEquationSolved = false;
 let isFloatingPointNum = false;
 let isFactorialNum = false;
@@ -194,6 +196,10 @@ const update = {
             document.documentElement.style.transition = '2000ms';
         }, 100);
         return;
+    },
+    memoryDisplay: function() {
+        memoryDisplay.textContent = `M: ${memory.value}`;
+        animate.fade(memoryDisplay, 200, 'normal')
     },
     history: {
         arr: function() {
@@ -425,6 +431,9 @@ const input = {
 }
 
 const toggle = {
+    memoryDisplay: function() {
+        memoryDisplay.classList.toggle('memory-visible');
+    },
     negativeNum() {
         if (isFactorialNum === true) return;
         for (let i = equation.arr.length-1; i >= 0; i--) {
@@ -677,11 +686,18 @@ const memory = {
     value: 0,
     clear: function() {
         memory.value = 0;
+        toggle.memoryDisplay();
+        isMemoryStored = false;
         console.log(`Stored memory: ${memory.value}`);
         return;
     },
     update: function(arr, operation) {
-        let memValue = []
+        if (isMemoryStored === false) {
+            isMemoryStored = true;
+            toggle.memoryDisplay();
+        }
+
+        let memValue = [];
 
         for (let i = arr.length-1; i >= 0; i--) {
             if (isNaN(Number(arr[i])) && arr[i] !== '.') break;
@@ -690,6 +706,7 @@ const memory = {
 
         operation === '+' ? memory.value += Number(memValue.join('')) :
         memory.value -= Number(memValue.join(''));
+        update.memoryDisplay();
 
         console.log(`Stored memory: ${memory.value}`);
         return;
