@@ -187,7 +187,22 @@ footer ul {
     position: absolute;
     top: 0;
     display: flex;
+    width: 100%;
     text-transform: uppercase;
+}
+
+.memory {
+    padding: 0.2rem 0.8rem !important;
+    border-radius: 0.5rem 0.2rem 0.2rem 0.2rem;
+    background-color: var(--cl-accent);
+    color: var(--background);
+    font-size: 1.5rem;
+    opacity: 0.6;
+    transition: background-color 2000ms, opacity 500ms;
+}
+
+.memory:hover {
+    opacity: 0.6;
 }
 
 #screen p {
