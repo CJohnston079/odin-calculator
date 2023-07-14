@@ -135,6 +135,13 @@ const animate = {
         setTimeout(() => {
             element.style.animation = '';
         }, duration); 
+    },
+    wobble: function(element, duration) {
+        element.style.animation = '';
+        element.style.animation = `wobble ${duration}ms linear 2`;
+        setTimeout(() => {
+            element.style.animation = '';
+        }, duration*2); 
     }
 }
 
@@ -328,6 +335,8 @@ const input = {
         if (isNaN(Number(previousEntry)) === true && previousEntry !== '!' && previousEntry !== ')') {
             if (operationButtons[key].value === '-') {
                 input.negativeSign()
+            } else {
+                animate.wobble(equation.display, 120);
             }
             return;
         }
@@ -545,7 +554,10 @@ const resolve = {
         if (equation.arr.some(character => operations.includes(character)) === false) return;
 
         const inoperableChars = ['+', '-', '*', '/', '^', 'R'];
-        if (isNaN(Number(previousEntry)) === true && inoperableChars.includes(previousEntry)) return
+        if (isNaN(Number(previousEntry)) === true && inoperableChars.includes(previousEntry)) {
+            animate.wobble(equation.display, 120);
+            return;
+        }
 
         update.history.arr();
         
