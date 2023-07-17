@@ -217,7 +217,8 @@ footer ul {
     letter-spacing: -0.1rem;
 }
 
-#calculation {
+#calculation,
+.conversion {
     align-self: flex-end;
     min-height: 4rem;
     padding-bottom: 1rem !important;
@@ -373,6 +374,12 @@ footer ul {
 
 .character {
     display: inline-block;
+}
+
+.unit {
+    margin-left: 0.5rem;
+    font-size: 2rem;
+    font-weight: 300;
 }
 
 .accented-colour {
