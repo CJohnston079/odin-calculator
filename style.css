@@ -191,6 +191,11 @@ footer ul {
     text-transform: uppercase;
 }
 
+#calculator,
+#converter  {
+    align-self: flex-end;
+}
+
 .memory {
     padding: 0.2rem 0.8rem !important;
     border-radius: 0.5rem 0.2rem 0.2rem 0.2rem;
@@ -206,7 +211,6 @@ footer ul {
 }
 
 #screen p {
-    align-self: flex-end;
     margin: 0.5rem;
     padding: 0 2rem;
     text-align: right;
