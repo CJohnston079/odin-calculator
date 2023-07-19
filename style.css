@@ -387,9 +387,27 @@ hr {
 }
 
 .unit {
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: bottom;
+    min-width: 4ch;
     margin-left: 0.5rem;
+    margin-right: -1rem;
+    padding: 0.4rem 0.8rem;
     font-size: 2rem;
     font-weight: 300;
+    text-align: left;
+    background-color: transparent;
+    border: solid 0.1rem transparent;
+    border-radius: 0.1rem 0.2rem 0.2rem 0.1rem;
+    transform: translateY(0.2rem);
+    transition: background-color 0.5s, border 0.5s !important;
+    cursor: pointer;
+}
+
+.unit:hover {
+    background-color: var(--cl-trans);
+    border: solid 0.1rem var(--cl-grey);
 }
 
 .accented-colour {
