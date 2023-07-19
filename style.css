@@ -196,6 +196,10 @@ footer ul {
     align-self: flex-end;
 }
 
+#converter {
+    width: 100%;
+}
+
 .memory {
     padding: 0.2rem 0.8rem !important;
     border-radius: 0.5rem 0.2rem 0.2rem 0.2rem;
@@ -223,6 +227,12 @@ footer ul {
     min-height: 4rem;
     padding-bottom: 1rem !important;
     font-size: 3rem;
+}
+
+hr {
+    margin: 0 1rem;
+    border: solid 0.0625rem var(--cl-grey);
+    opacity: 0.5;
 }
 
 #history {
